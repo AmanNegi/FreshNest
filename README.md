@@ -1,5 +1,5 @@
-<p align="center"> Agro-Millets </p>
-<p float="center">
+<h1 align="center"> Agro-Millets </h1>
+<p align="middle">
   <img src="/images/farm.jpg" width="20%" />
   <img src="/images/farmer.jpg" width="20%" /> 
   <img src="/images/field.jpg" width="20%" />
