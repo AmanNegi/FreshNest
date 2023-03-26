@@ -1,20 +1,28 @@
+import 'package:agro_millets/core/auth/application/auth.dart';
 import 'package:agro_millets/core/auth/presentation/login_page.dart';
 import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/core/home/home_page.dart';
 import 'package:agro_millets/widgets/action_button.dart';
 import 'package:agro_millets/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 
-class SignUpPage extends StatefulWidget {
+class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 
   @override
-  State<SignUpPage> createState() => _SignUpPageState();
+  ConsumerState<SignUpPage> createState() => _SignUpPageState();
 }
 
-class _SignUpPageState extends State<SignUpPage> {
+class _SignUpPageState extends ConsumerState<SignUpPage> {
+  late AuthManager _authManager;
   String dropdownValue = "customer";
   String email = "", password = "", username = "", phone = "";
+
+  @override
+  void initState() {
+    _authManager = AuthManager(context, ref);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,10 +54,24 @@ class _SignUpPageState extends State<SignUpPage> {
             _getUserTypeDropDown(context),
             SizedBox(height: 0.2 * getHeight(context)),
             ActionButton(
-              onPressed: () {
-                goToPage(context, const HomePage(), clearStack: true);
+              onPressed: () async {
+                await _authManager.signUpUsingEmailPassword(
+                  email: email,
+                  name: username,
+                  password: password,
+                  phone: phone,
+                  userType: dropdownValue,
+                );
+                // goToPage(context, const HomePage(), clearStack: true);
               },
               text: "Signup",
+            ),
+            SizedBox(height: 0.015 * getHeight(context)),
+            ActionButton(
+              onPressed: () async {
+                await _authManager.googleAuth();
+              },
+              text: "Sign Up using Google",
             ),
             SizedBox(height: 0.015 * getHeight(context)),
             GestureDetector(
@@ -75,13 +97,6 @@ class _SignUpPageState extends State<SignUpPage> {
       padding: const EdgeInsets.symmetric(vertical: 10.0),
       child: DropdownButtonFormField(
         value: dropdownValue,
-        decoration: const InputDecoration(
-            // border: InputBorder.none,
-            // contentPadding: EdgeInsets.symmetric(
-            //   horizontal: 15.0,
-            //   vertical: 10.0,
-            // ),
-            ),
         items: const [
           DropdownMenuItem(value: "customer", child: Text("Customer")),
           DropdownMenuItem(value: "farmer", child: Text("Farmer")),

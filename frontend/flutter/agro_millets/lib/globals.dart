@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 
 Future goToPage(BuildContext context, Widget destination,
     {bool clearStack = false}) {
@@ -8,6 +9,10 @@ Future goToPage(BuildContext context, Widget destination,
   }
   return Navigator.of(context)
       .push(MaterialPageRoute(builder: (context) => destination));
+}
+
+showToast(String message) {
+  Fluttertoast.showToast(msg: message);
 }
 
 double getWidth(context) => MediaQuery.of(context).size.width;
