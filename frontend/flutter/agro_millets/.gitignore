@@ -43,9 +43,12 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
+/android/app/google-services.json
+
 #! Not a Web or desktop application
 web/*
 windows/*
 
 #! Ignore secrets.dart
 secrets.dart
+
