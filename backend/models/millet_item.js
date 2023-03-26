@@ -1,0 +1,44 @@
+const mongoose = require("mongoose");
+const Joi = require("joi");
+const JoiObjectId = require("joi-objectid")(Joi);
+
+const milletItemSchema = new mongoose.Schema({
+  listedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+    required: true,
+  },
+  name: {
+    type: String,
+    required: true,
+  },
+  description: {
+    type: String,
+    required: true,
+  },
+  images: {
+    type: [String],
+    required: true,
+  },
+  listedAt: {
+    type: Date,
+    default: () => {
+      return new Date();
+    },
+  },
+});
+
+const MilletItem = mongoose.model("MilletItem", milletItemSchema);
+
+function validateMilletItem(item) {
+  const schema = Joi.object().keys({
+    listedBy: JoiObjectId().required(),
+    name: Joi.string().required(),
+    description: Joi.string().required(),
+    images: Joi.array().items(Joi.string().required()).required(),
+  });
+  return schema.validate(item);
+}
+
+exports.MilletItem = MilletItem;
+exports.validateMilletItem = validateMilletItem;
