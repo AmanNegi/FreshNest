@@ -46,3 +46,6 @@ app.*.map.json
 #! Not a Web or desktop application
 web/*
 windows/*
+
+#! Ignore secrets.dart
+secrets.dart

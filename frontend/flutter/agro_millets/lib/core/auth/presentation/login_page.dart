@@ -1,4 +1,5 @@
-import 'package:agro_millets/core/auth/signup_page.dart';
+import 'package:agro_millets/core/auth/application/auth.dart';
+import 'package:agro_millets/core/auth/presentation/signup_page.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/widgets/action_button.dart';
 import 'package:agro_millets/widgets/custom_text_field.dart';
@@ -12,7 +13,14 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  late AuthManager _authManager;
   String email = "", password = "";
+
+  @override
+  void initState() {
+    _authManager = AuthManager(context);
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -22,6 +30,7 @@ class _LoginPageState extends State<LoginPage> {
         padding: const EdgeInsets.symmetric(horizontal: 15.0),
         child: Column(
           children: [
+            SizedBox(height: 0.025 * getHeight(context)),
             CustomTextField(
               onChanged: (v) => email = v,
               label: "Email",
@@ -30,20 +39,25 @@ class _LoginPageState extends State<LoginPage> {
               onChanged: (v) => password = v,
               label: "Password",
             ),
-            const SizedBox(height: 20),
+            SizedBox(height: 0.5 * getHeight(context)),
             ActionButton(
-              onPressed: () {},
+              onPressed: () async {
+                await _authManager.loginUsingEmailPassword(
+                    email: email, password: password);
+              },
               text: "Login",
             ),
+            SizedBox(height: 0.015 * getHeight(context)),
             GestureDetector(
               onTap: () => goToPage(context, const SignUpPage()),
               child: RichText(
                 text: TextSpan(
-                    style: Theme.of(context).textTheme.bodyMedium,
-                    children: const [
-                      TextSpan(text: "Don't have an account?"),
-                      TextSpan(text: "SignUp"),
-                    ]),
+                  style: Theme.of(context).textTheme.bodyMedium,
+                  children: const [
+                    TextSpan(text: "Don't have an account?"),
+                    TextSpan(text: "SignUp"),
+                  ],
+                ),
               ),
             ),
           ],
