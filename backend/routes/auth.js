@@ -1,7 +1,7 @@
 const { User } = require("../models/user");
 const Joi = require("joi");
 const express = require("express");
-const { getSuccessResponse } = require("../utils/response");
+const { getSuccessResponse, getErrorResponse } = require("../utils/response");
 const router = express.Router();
 const _ = require("lodash");
 /**
@@ -15,15 +15,16 @@ router.post("/login", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ email: req.body.email });
-  if (!user) return res.status(400).send("Invalid Email or Password");
+  if (!user)
+    return res.send(getErrorResponse("No User Exists with this email"));
 
   const validPassword = req.body.password === user.password;
-  if (!validPassword) return res.status(400).send("Invalid Email or Password");
+  if (!validPassword) return res.send(getErrorResponse("Invalid Email"));
 
   return res.send(
     getSuccessResponse(
       "Login Success",
-      _.pick(user, ["name", "email", "userType", "createdAt"])
+      _.pick(user, ["__id", "name", "email", "userType", "createdAt"])
     )
   );
 });
@@ -39,7 +40,8 @@ router.post("/signup", async (req, res) => {
   if (error) return res.status(400).send(error.details[0].message);
 
   let user = await User.findOne({ email: req.body.email });
-  if (user) return res.status(400).send("User with this email already exists");
+  if (user)
+    return res.send(getErrorResponse("User with this email already exists"));
 
   let userType = req.body.userType;
   if (!userType || userType === "admin") userType = "customer";
@@ -56,7 +58,10 @@ router.post("/signup", async (req, res) => {
   });
 
   await user.save();
-  return res.send("Sign Up Successfully");
+  return res.send(  
+    getSuccessResponse("Signup Successfull"),
+    _.pick(user, ["__id", "name", "email", "userType", "createdAt"])
+  );
 });
 
 function validateLogin(req) {
