@@ -1,6 +1,8 @@
-import 'package:agro_millets/core/auth/login_page.dart';
+import 'package:agro_millets/core/auth/presentation/login_page.dart';
 import 'package:easy_localization/easy_localization.dart';
 import "package:flutter/material.dart";
+import 'package:google_fonts/google_fonts.dart';
+
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -8,9 +10,9 @@ void main() async {
 
   runApp(
     EasyLocalization(
-      supportedLocales: const [Locale('en', 'US'), Locale('hi', 'IN')],
+      supportedLocales: const [Locale('en'), Locale('hi')],
       path: 'assets/translations',
-      fallbackLocale: const Locale('en', 'US'),
+      fallbackLocale: const Locale('en'),
       child: const App(),
     ),
   );
@@ -27,7 +29,10 @@ class App extends StatelessWidget {
       supportedLocales: context.supportedLocales,
       locale: context.locale,
       debugShowCheckedModeBanner: false,
-      theme: ThemeData(useMaterial3: true),
+
+      theme: ThemeData(useMaterial3: true,
+      fontFamily: GoogleFonts.poppins().fontFamily,
+      ),
       home: const LoginPage(),
     );
   }
