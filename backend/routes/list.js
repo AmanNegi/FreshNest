@@ -11,6 +11,7 @@ router.get("/getAll", async (req, res) => {
 });
 
 router.post("/addItem", async (req, res) => {
+  console.log(req.body);
   const { error } = validateMilletItem(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 

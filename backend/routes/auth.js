@@ -19,13 +19,10 @@ router.post("/login", async (req, res) => {
     return res.send(getErrorResponse("No User Exists with this email"));
 
   const validPassword = req.body.password === user.password;
-  if (!validPassword) return res.send(getErrorResponse("Invalid Email"));
+  if (!validPassword) return res.send(getErrorResponse("Invalid Password"));
 
   return res.send(
-    getSuccessResponse(
-      "Login Success",
-      _.pick(user, ["__id", "name", "email", "userType", "createdAt"])
-    )
+    getSuccessResponse("Login Success", _.omit(user, ["password", "__v"]))
   );
 });
 
@@ -58,9 +55,20 @@ router.post("/signup", async (req, res) => {
   });
 
   await user.save();
-  return res.send(  
-    getSuccessResponse("Signup Successfull"),
-    _.pick(user, ["__id", "name", "email", "userType", "createdAt"])
+  return res.send(
+    getSuccessResponse("Signup Successful", _.omit(user, ["password", "__v"]))
+  );
+});
+
+router.post("/exists", async (req, res) => {
+  var email = req.body.email;
+  if (!email) return res.send(getErrorResponse("Enter a valid email"));
+
+  const user = await User.findOne({ email: email });
+  if (!user)
+    return res.send(getErrorResponse("No User Exists with this email address"));
+  return res.send(
+    getSuccessResponse("User Found", _.omit(user, ["password", "__v"]))
   );
 });
 
