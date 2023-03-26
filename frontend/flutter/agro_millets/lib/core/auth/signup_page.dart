@@ -1,6 +1,6 @@
 import 'package:agro_millets/core/auth/login_page.dart';
 import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/home_page.dart';
+import 'package:agro_millets/core/home/home_page.dart';
 import 'package:agro_millets/widgets/action_button.dart';
 import 'package:agro_millets/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
