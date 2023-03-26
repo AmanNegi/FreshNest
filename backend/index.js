@@ -1,9 +1,8 @@
 const express = require("express");
-var app = express();
 
-const port = process.env.port || 3000;
-const server = app.listen(port, () =>
-  console.log("Listening at port http://localhost:3000...")
-);
+const app = express();
+require("./startup/routes")(app);
+require("./startup/db")();
 
-module.exports = server;
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on Port ${port}...`));
