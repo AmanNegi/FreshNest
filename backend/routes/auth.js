@@ -10,6 +10,7 @@ const _ = require("lodash");
  */
 
 router.post("/login", async (req, res) => {
+  console.log("Request Body: ", req.body);
   const { error } = validateLogin(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
@@ -33,6 +34,7 @@ router.post("/login", async (req, res) => {
  */
 
 router.post("/signup", async (req, res) => {
+  console.log("Request Body: ", req.body);
   const { error } = validateSignUp(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
