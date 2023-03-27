@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const JoiObjectId = require("joi-objectid")(Joi);
+const { commentSchema } = require("./comment");
 
 const milletItemSchema = new mongoose.Schema({
   listedBy: {
@@ -20,7 +21,7 @@ const milletItemSchema = new mongoose.Schema({
     type: [String],
     required: true,
   },
-  price:{
+  price: {
     type: Number,
     required: true,
     min: 0,
@@ -31,6 +32,7 @@ const milletItemSchema = new mongoose.Schema({
       return new Date();
     },
   },
+  comments: [commentSchema],
 });
 
 const MilletItem = mongoose.model("MilletItem", milletItemSchema);
@@ -41,6 +43,7 @@ function validateMilletItem(item) {
     name: Joi.string().required(),
     description: Joi.string().required(),
     images: Joi.array().items(Joi.string().required()).required(),
+    comments: Joi.array(),
     price: Joi.number().required(),
   });
   return schema.validate(item);

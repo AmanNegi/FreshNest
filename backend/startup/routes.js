@@ -9,5 +9,6 @@ const list = require("../routes/list");
 module.exports = function (app) {
   app.use("/api/auth", auth);
   app.use("/api/list", list);
+
   //   app.use(error);
 };
