@@ -7,6 +7,8 @@ import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_fonts/google_fonts.dart';
 
+import 'colors.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
@@ -36,6 +38,9 @@ class App extends ConsumerWidget {
       locale: context.locale,
       debugShowCheckedModeBanner: false,
       theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: accentColor,
+        ),
         useMaterial3: true,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),

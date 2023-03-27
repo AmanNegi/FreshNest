@@ -1,4 +1,5 @@
-import 'package:agro_millets/core/home/application/home.dart';
+import 'package:agro_millets/core/home/application/home_manager.dart';
+import 'package:agro_millets/core/home/application/home_provider.dart';
 import 'package:agro_millets/core/home/presentation/add_item/add_item.dart';
 import 'package:agro_millets/core/home/presentation/widgets/grid_item.dart';
 import 'package:agro_millets/data/auth_state_repository.dart';
@@ -8,22 +9,26 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 
-class HomePage extends StatefulWidget {
+class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  ConsumerState<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends ConsumerState<HomePage> {
   late HomeManager _homeManager;
-  late Future getItemsFuture;
 
   @override
   void initState() {
-    _homeManager = HomeManager(context);
+    _homeManager = HomeManager(context, ref);
     super.initState();
-    getItemsFuture = _homeManager.getAllItems();
+  }
+
+  @override
+  void dispose() {
+    _homeManager.dispose();
+    super.dispose();
   }
 
   @override
@@ -34,12 +39,10 @@ class _HomePageState extends State<HomePage> {
           var val = ref.read(authProvider);
           if (val.isAdmin() || val.isFarmer()) {
             return FloatingActionButton(
-              onPressed: () {
-                goToPage(context, AddItemPage(homeManager: _homeManager))
-                    .then((value) {
-                  getItemsFuture = _homeManager.getAllItems();
-                  setState(() {});
-                });
+              onPressed: () async {
+                _homeManager.dispose();
+                await goToPage(context, AddItemPage(homeManager: _homeManager));
+                _homeManager.attach();
               },
               child: const Icon(Icons.add),
             );
@@ -47,23 +50,14 @@ class _HomePageState extends State<HomePage> {
           return Container();
         },
       ),
-      appBar: AppBar(title: const Text("HomePage")),
-      body: FutureBuilder(
-        future: getItemsFuture,
-        builder: (context, snapshot) {
-          if (snapshot.hasData && snapshot.data != null) {
-            print("Getting Data: ${snapshot.data}");
-            List<MilletItem> data = snapshot.data!;
-            return ListView(
-              children: [
-                _getGridView(data),
-              ],
-            );
-          }
-          return const Center(
-            child: CircularProgressIndicator(),
-          );
-        },
+      appBar: AppBar(
+        title: const Text("Agro Millets"),
+        centerTitle: true,
+      ),
+      body: ListView(
+        children: [
+          _getGridView(ref.watch(homeProvider).getItems()),
+        ],
       ),
     );
   }
