@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:flutter/foundation.dart';
 
 class MilletItem {
+  final String id;
   final String name;
   final String listedBy;
   final String description;
@@ -16,12 +17,14 @@ class MilletItem {
     required this.description,
     required this.price,
     required this.images,
+    required this.id,
   });
 
   MilletItem copyWith({
     String? name,
     String? listedBy,
     String? description,
+    String? id,
     double? price,
     List<dynamic>? images,
   }) {
@@ -31,6 +34,7 @@ class MilletItem {
       description: description ?? this.description,
       price: price ?? this.price,
       images: images ?? this.images,
+      id: id ?? this.id,
     );
   }
 
@@ -41,6 +45,7 @@ class MilletItem {
       'description': description,
       'price': price,
       'images': images,
+      "_id": id,
     };
   }
 
@@ -51,6 +56,7 @@ class MilletItem {
       description: map['description'] as String,
       price: map['price'] * 1.0,
       images: List<dynamic>.from((map['images'] as List<dynamic>)),
+      id: map['_id'],
     );
   }
 
@@ -68,7 +74,8 @@ class MilletItem {
   bool operator ==(covariant MilletItem other) {
     if (identical(this, other)) return true;
 
-    return other.name == name &&
+    return other.id == id &&
+        other.name == name &&
         other.listedBy == listedBy &&
         other.description == description &&
         other.price == price &&

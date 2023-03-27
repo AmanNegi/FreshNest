@@ -31,6 +31,7 @@ class AuthProvider extends ChangeNotifier {
     _authState = AuthState(isLoggedIn: true, user: user);
     appCache.authState.value = _authState;
     notifyListeners();
+    print("Updated Listeners about entering app...");
   }
 
   exitApp() {

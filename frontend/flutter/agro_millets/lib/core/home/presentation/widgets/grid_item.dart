@@ -31,7 +31,7 @@ class GridItem extends StatelessWidget {
                 padding: const EdgeInsets.all(8.0),
                 margin: const EdgeInsets.all(2.0),
                 decoration: BoxDecoration(
-                  color: Colors.white,
+                  color: Theme.of(context).cardColor,
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black.withOpacity(0.05),

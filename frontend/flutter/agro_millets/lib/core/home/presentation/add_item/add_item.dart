@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:agro_millets/core/home/application/home.dart';
+import 'package:agro_millets/core/home/application/home_manager.dart';
 import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/utils/firebase_storage.dart';
 import 'package:agro_millets/widgets/action_button.dart';
@@ -37,7 +37,6 @@ class AddItemPageState extends State<AddItemPage> {
         centerTitle: true,
         title: const Text(
           "Add Product",
-          style: TextStyle(color: Colors.black),
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
@@ -61,7 +60,7 @@ class AddItemPageState extends State<AddItemPage> {
           images: [url],
           price: price,
         );
-        // Navigator.pop(context);
+        Navigator.pop(context);
       },
       label: Row(
         children: const [

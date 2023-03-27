@@ -18,7 +18,7 @@ class AuthManager {
     required String email,
     required String password,
   }) async {
-    print(email + password);
+    ref.read(authProvider).exitApp();
     var response = await http.post(
       Uri.parse("$DB_URL/auth/login"),
       headers: {
@@ -79,6 +79,7 @@ class AuthManager {
     required String phone,
     required String userType,
   }) async {
+    ref.read(authProvider).exitApp();
     var response = await http.post(
       Uri.parse("$DB_URL/auth/signup"),
       body: {
