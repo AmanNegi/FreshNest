@@ -33,3 +33,7 @@ AgroMillets is an online platform that connects farmers who produce grains and m
 | Database | MongoDB |
 
 > [Contribute to `Agro-Millets`](./doc/CONTRIBUTING.md)
+
+## Contributors
+- Aman Negi
+<!-- Mai apne naam se karkek dikhara tu apne naam se kariyo -->
