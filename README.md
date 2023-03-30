@@ -37,4 +37,6 @@ AgroMillets is an online platform that connects farmers who produce grains and m
 ## Contributors
 - Aman Negi
 - Amit Koli
-<!-- Mai apne naam se karkek dikhara tu apne naam se kariyo -->
+
+## License
+Distributed under the AGPLv3 License. See [`LICENSE.md`](./LICENSE) for more information.
