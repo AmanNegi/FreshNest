@@ -50,5 +50,5 @@ web/*
 windows/*
 
 #! Ignore secrets.dart
-secrets.dart
+# secrets.dart
 

@@ -26,11 +26,11 @@ void main() async {
   );
 }
 
-class App extends ConsumerWidget {
+class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  Widget build(BuildContext context) {
     return MaterialApp(
       title: "Agro-Millets",
       localizationsDelegates: context.localizationDelegates,
@@ -44,9 +44,16 @@ class App extends ConsumerWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      home: ref.watch(authProvider).isLoggedIn()
-          ? const HomePage()
-          : const LoginPage(),
+      home: Consumer(
+        builder: (_, ref, __) {
+          var loggedIn = ref.watch(authProvider).isLoggedIn();
+          print("Is Logged In: $loggedIn");
+
+          return ref.watch(authProvider).isLoggedIn()
+              ? const HomePage()
+              : const LoginPage();
+        },
+      ),
     );
   }
 }
