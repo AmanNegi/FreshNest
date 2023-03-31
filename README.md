@@ -8,6 +8,30 @@
 
 AgroMillets is an online platform that connects farmers who produce grains and millets with customers who want to buy them directly. By eliminating intermediaries and providing a direct connection between farmers and customers, AgroMillets makes it easier for farmers to sell their products and for customers to find fresh and high-quality grains and millets at lower prices. The platform provides secure payment options, shipping services, and customer service to ensure safe and efficient transactions. With AgroMillets, farmers can expand their customer base and customers can support sustainable farming practices while enjoying a wider variety of products.
 
+## Getting Started
+
+To get started with Agro Millets, follow these steps:<br>
+1. Fork the project repository by clicking the "Fork" button at the top-right of this page.<br>
+2. Clone the forked repository to your local machine by running the following command in your terminal:<br>
+```
+git clone https://github.com/[your-username]/agro-millets.git
+```
+Replace [your-username] with your GitHub username.<br><br>
+ 3. Install Node.js if you haven't already. You can download the latest version of Node.js from the official website: https://nodejs.org/en/download/ <br>
+ 4. Navigate to the project directory by running the following command in your terminal: <br>
+```
+cd agro-millets/frontend/react/agro-millets/
+```
+5. Install the project dependencies by running the following command:
+```
+npm install
+```
+6. Start the development server by running the following command:
+```
+npm run dev
+```
+This will launch the application in your default web browser.
+
 ## Advantages
 
 1. Accessibility: With Agro Millets, farmers can easily list their grains and millets online, making it easier for customers to find and purchase them. This accessibility can benefit both farmers and customers by reducing the time and effort required for transactions.
