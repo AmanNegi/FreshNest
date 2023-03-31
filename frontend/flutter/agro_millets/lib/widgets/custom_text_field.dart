@@ -24,6 +24,7 @@ class CustomTextField extends StatelessWidget {
       ),
       child: TextField(
         keyboardType: keyboardType,
+        onTapOutside: (e) => FocusScope.of(context).unfocus(),
         onChanged: (e) => onChanged(e),
         decoration: InputDecoration(
           border: InputBorder.none,
