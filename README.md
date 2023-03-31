@@ -42,7 +42,7 @@
 | Database | ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white) |
 
 ## 🤝 Contributing
-Check the [`CONTRIBUTING.md`](./doc/CONTRIBUTING.md) for information regarding contributions
+Check the [`CONTRIBUTING.md`](./docs/CONTRIBUTING.md) for information regarding contributions
 
 ## 👨‍💻 Contributors
 <a href="https://github.com/AmanNegi/AgroMillets/graphs/contributors">
