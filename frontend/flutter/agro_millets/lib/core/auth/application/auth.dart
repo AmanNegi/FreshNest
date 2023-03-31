@@ -20,7 +20,7 @@ class AuthManager {
   }) async {
     ref.read(authProvider).exitApp();
     var response = await http.post(
-      Uri.parse("$DB_URL/auth/login"),
+      Uri.parse("$API_URL/auth/login"),
       headers: {
         "Content-Type": "application/json",
       },
@@ -81,7 +81,7 @@ class AuthManager {
   }) async {
     ref.read(authProvider).exitApp();
     var response = await http.post(
-      Uri.parse("$DB_URL/auth/signup"),
+      Uri.parse("$API_URL/auth/signup"),
       body: {
         "name": name,
         "email": email,
@@ -102,7 +102,7 @@ class AuthManager {
 
   Future<User?> searchForUser(String email) async {
     var response = await http.post(
-      Uri.parse("$DB_URL/auth/exists"),
+      Uri.parse("$API_URL/auth/exists"),
       body: {"email": email},
     );
 
