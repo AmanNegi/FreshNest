@@ -1,9 +1,21 @@
 const express = require("express");
-var app = express();
+var bodyParser = require("body-parser");
+const cors = require("cors");
 
-const port = process.env.port || 3000;
-const server = app.listen(port, () =>
-  console.log("Listening at port http://localhost:3000...")
+const app = express();
+
+app.use(cors());
+app.use(express.json());
+app.use(bodyParser.json());
+
+app.use(
+  bodyParser.urlencoded({
+    extended: true,
+  })
 );
 
-module.exports = server;
+require("./startup/routes")(app);
+require("./startup/db")();
+
+const port = process.env.PORT || 3000;
+app.listen(port, () => console.log(`Listening on Port ${port}...`));

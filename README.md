@@ -33,3 +33,6 @@ AgroMillets is an online platform that connects farmers who produce grains and m
 | Database | MongoDB |
 
 > [Contribute to `Agro-Millets`](./doc/CONTRIBUTING.md)
+
+## License
+Distributed under the AGPLv3 License. See [`LICENSE.md`](./LICENSE) for more information.
