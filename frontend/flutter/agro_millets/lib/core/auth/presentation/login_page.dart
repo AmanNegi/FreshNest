@@ -40,7 +40,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
               height: 100,
               width: 100,
             ),
-            SizedBox(height: 0.025*getHeight(context)),
+            SizedBox(height: 0.025 * getHeight(context)),
             const Center(
               child: Text(
                 "Agro Millets",
@@ -65,6 +65,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
             ),
             const SizedBox(height: 10),
             CustomTextField(
+              isPassword: true,
               onChanged: (v) => password = v,
               label: "Password",
             ),
