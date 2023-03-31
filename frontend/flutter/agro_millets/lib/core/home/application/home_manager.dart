@@ -41,7 +41,7 @@ class HomeManager {
 
   Future<List<MilletItem>> getAllItems() async {
     var response = await http.get(
-      Uri.parse("$DB_URL/list/getAll"),
+      Uri.parse("$API_URL/list/getAll"),
     );
     debugPrint(response.body);
     Map data = json.decode(response.body);
@@ -63,7 +63,7 @@ class HomeManager {
     required double price,
   }) async {
     var response = await http.post(
-      Uri.parse("$DB_URL/list/addItem"),
+      Uri.parse("$API_URL/list/addItem"),
       headers: {"content-type": "application/json"},
       body: json.encode(
         {

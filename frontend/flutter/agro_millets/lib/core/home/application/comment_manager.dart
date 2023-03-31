@@ -45,7 +45,7 @@ class CommentManager {
 
   Future<List<CommentItem>> getAllComments() async {
     var response = await http.post(
-      Uri.parse("$DB_URL/list/getComments"),
+      Uri.parse("$API_URL/list/getComments"),
       body: {"itemID": itemID},
     );
     debugPrint(response.body);
@@ -61,7 +61,7 @@ class CommentManager {
 
   Future<void> addComment(String content) async {
     var response = await http.post(
-      Uri.parse("$DB_URL/list/comment"),
+      Uri.parse("$API_URL/list/comment"),
       body: {
         "itemID": itemID,
         "commentBy": appCache.authState.value.user!.id,
@@ -80,7 +80,7 @@ class CommentManager {
     required double price,
   }) async {
     var response = await http.post(
-      Uri.parse("$DB_URL/list/addItem"),
+      Uri.parse("$API_URL/list/addItem"),
       headers: {"content-type": "application/json"},
       body: json.encode(
         {
