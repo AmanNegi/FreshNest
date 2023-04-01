@@ -72,6 +72,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
             const SizedBox(height: 10),
             CustomTextField(
               keyboardType: TextInputType.visiblePassword,
+              isPassword: true,
               onChanged: (v) => password = v,
               label: "Password",
             ),
