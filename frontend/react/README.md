@@ -1,14 +1,24 @@
-# Contribute to `Agro-Millets`
+## Getting Started
 
-**Web (React initialized using Vite)**
+To get started with Agro Millets, follow these steps:
+1. Fork the project repository by clicking the "Fork" button at the top-right of this page.<br>
+2. Clone the forked repository to your local machine by running the following command in your terminal:<br>
+```
+git clone https://github.com/[your-username]/agro-millets.git
+```
+Replace [your-username] with your GitHub username.<br>
 
-1. Install Node.js and `npm` on your development machine by following the instructions on the Node.js website.
-2. Clone the project repository from GitHub.
-3. Open the project in your preferred IDE or code editor.
-4. Install the required dependencies by running the **`npm install`** command in your terminal.
-5. Make changes to the code as needed, ensuring that you follow the project's coding standards and best practices.
-6. Test your changes using the project's existing test suite or by writing new tests.
-7. Submit a pull request to the project repository, detailing the changes you have made and any relevant information.
-
-
-[Style Guide](https://www.notion.so/Style-Guide-c643f05672e940fca91dd63f2e82860b)
+3. Install Node.js if you haven't already. You can download the latest version of Node.js from the official website: https://nodejs.org/en/download/<br>
+4. Navigate to the project directory by running the following command in your terminal: <br>
+```
+cd agro-millets/frontend/react/agro-millets/
+```
+ 5. Install the project dependencies by running the following command:
+```
+npm install
+```
+ 6. Start the development server by running the following command:
+```
+npm run dev
+```
+This will launch the application in your default web browser.

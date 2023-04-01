@@ -1,0 +1,42 @@
+name: Build APK
+
+on:
+  push:
+    branches:
+      - prod
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Flutter
+        uses: subosito/flutter-action@v1
+        with:
+          channel: "stable"
+
+      - name: Build APK
+        working-directory: ./frontend/flutter/agro_millets/
+        run: flutter build apk --release
+
+      - name: Save APK
+        working-directory: ./frontend/flutter/agro_millets/
+        run: |
+          mkdir -p ../../../outputs/
+          mv build/app/outputs/flutter-apk/app-release.apk ../../../outputs/app-release.apk
+      - name: Configure remote URL
+        run: |
+          git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/amannegi/agromillets.git
+      - name: Configure Git
+        run: |
+          git config user.name "amannegi"
+          git config user.email "akuro787898@gmail.com"
+      - name: Commit changes
+        run: |
+          git add .
+          git commit -m "action: Generate release APK"
+      - name: Push changes
+        run: |
+          git push origin main

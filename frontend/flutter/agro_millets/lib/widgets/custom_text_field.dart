@@ -38,9 +38,15 @@ class _CustomTextFieldState extends State<CustomTextField> {
         borderRadius: BorderRadius.circular(10.0),
       ),
       child: TextField(
+
         keyboardType: widget.keyboardType,
         onChanged: (e) => widget.onChanged(e),
         obscureText: !showPassword,
+
+       
+        onTapOutside: (e) => FocusScope.of(context).unfocus(),
+        
+
         decoration: InputDecoration(
           border: InputBorder.none,
           label: widget.label.isNotEmpty ? Text(widget.label) : null,
