@@ -12,6 +12,19 @@ router.get("/getAll", async (req, res) => {
   return res.send(getSuccessResponse("Success!", items));
 });
 
+router.get("/getAll/:farmerID", async (req, res) => {
+  var farmerID = req.params.farmerID;
+  if (!mongoose.Types.ObjectId.isValid(farmerID)) {
+    return res.status(404).send(getErrorResponse("Invalid User ID"));
+  }
+
+  let items = await MilletItem.find({});
+
+  items = items.filter((item) => item.listedBy == farmerID);
+
+  return res.send(getSuccessResponse("Success", items));
+});
+
 router.post("/addItem", async (req, res) => {
   console.log(req.body);
   const { error } = validateMilletItem(req.body);
@@ -57,6 +70,5 @@ router.post("/getComments", async (req, res) => {
   let item = await MilletItem.findOne({ _id: itemID });
   return res.send(getSuccessResponse("Success!", item.comments));
 });
-
 
 module.exports = router;

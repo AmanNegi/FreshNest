@@ -1,7 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-
 class User {
   final String id;
   final String name;
@@ -49,7 +48,7 @@ class User {
     return User(
       name: map['name'] as String,
       email: map['email'] as String,
-      phone: map['phone'] as String,
+      phone: map['phone'] ?? "",
       userType: map['userType'] as String,
       id: map['_id'] as String,
     );
