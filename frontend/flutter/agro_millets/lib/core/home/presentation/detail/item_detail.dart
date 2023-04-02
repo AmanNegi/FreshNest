@@ -46,7 +46,9 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
         actions: [
           // TODO: Check if is owner or admin
           IconButton(
-            onPressed: () {},
+            onPressed: () {
+              
+            },
             icon: const Icon(
               Icons.delete,
               color: Colors.red,

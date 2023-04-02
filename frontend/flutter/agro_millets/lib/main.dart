@@ -26,11 +26,11 @@ void main() async {
   );
 }
 
-class App extends StatelessWidget {
+class App extends ConsumerWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return MaterialApp(
       title: "Agro-Millets",
       localizationsDelegates: context.localizationDelegates,
@@ -49,9 +49,7 @@ class App extends StatelessWidget {
           var loggedIn = ref.watch(authProvider).isLoggedIn();
           print("Is Logged In: $loggedIn");
 
-          return ref.watch(authProvider).isLoggedIn()
-              ? const HomePage()
-              : const LoginPage();
+          return loggedIn ? const HomePage() : const LoginPage();
         },
       ),
     );

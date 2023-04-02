@@ -5,6 +5,7 @@ import 'package:agro_millets/core/home/presentation/widgets/grid_item.dart';
 import 'package:agro_millets/data/auth_state_repository.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/millet_item.dart';
+import 'package:agro_millets/widgets/text/large_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
@@ -56,8 +57,26 @@ class _HomePageState extends ConsumerState<HomePage> {
       ),
       body: ListView(
         children: [
+          _getHeading(),
           _getGridView(ref.watch(homeProvider).getItems()),
         ],
+      ),
+    );
+  }
+
+  _getHeading() {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
+      child: Consumer(
+        builder: (context, ref, _) {
+          var val = ref.read(authProvider);
+          if (val.isFarmer()) {
+            return const LargeText("Your Products");
+          } else if (val.isAdmin()) {
+            return const LargeText("All Products");
+          }
+          return const LargeText("Explore Products");
+        },
       ),
     );
   }
@@ -70,7 +89,6 @@ class _HomePageState extends ConsumerState<HomePage> {
         left: 15,
         right: 15,
         bottom: 30.0,
-        top: 30.0,
       ),
       crossAxisCount: 2,
       mainAxisSpacing: 10,

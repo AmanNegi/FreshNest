@@ -2,6 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:agro_millets/core/home/application/home_provider.dart';
+import 'package:agro_millets/data/auth_state_repository.dart';
 import 'package:agro_millets/models/millet_item.dart';
 import "package:agro_millets/secrets.dart";
 import 'package:flutter/material.dart';
@@ -40,19 +41,50 @@ class HomeManager {
   }
 
   Future<List<MilletItem>> getAllItems() async {
+    var provider = ref.read(authProvider);
+    if (provider.isFarmer()) {
+      return await getAllFarmerItems(provider.getCurrentUser()!.id);
+    }
+    return getAll();
+  }
+
+  Future<List<MilletItem>> getAll() async {
     var response = await http.get(
       Uri.parse("$API_URL/list/getAll"),
     );
     debugPrint(response.body);
+
     Map data = json.decode(response.body);
-    List dataMap = data["data"];
-    List<MilletItem> list = [];
+    if (data["statusCode"] == 200) {
+      List dataMap = data["data"];
+      List<MilletItem> list = [];
 
-    for (var e in dataMap) {
-      list.add(MilletItem.fromMap(e));
+      for (var e in dataMap) {
+        list.add(MilletItem.fromMap(e));
+      }
+      return list;
     }
+    return [];
+  }
 
-    return list;
+  Future<List<MilletItem>> getAllFarmerItems(String id) async {
+    var response = await http.get(
+      Uri.parse("$API_URL/list/getAll/$id"),
+    );
+    debugPrint(response.body);
+    Map data = json.decode(response.body);
+
+    if (data["statusCode"] == 200) {
+      List dataMap = data["data"];
+      List<MilletItem> list = [];
+
+      for (var e in dataMap) {
+        list.add(MilletItem.fromMap(e));
+      }
+
+      return list;
+    }
+    return [];
   }
 
   Future<void> addItem({
