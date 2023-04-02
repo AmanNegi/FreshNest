@@ -39,4 +39,4 @@ jobs:
           git commit -m "action: Generate release APK"
       - name: Push changes
         run: |
-          git push origin main
+          git push origin prod
