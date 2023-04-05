@@ -26,6 +26,18 @@ router.post("/addItem", async (req, res) => {
   return res.send(getSuccessResponse("Added Item", item));
 });
 
+router.get("/getItem/:id", async (req, res) => {
+  console.log(req.params.id);
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.status(404).send(getErrorResponse("Invalid Product ID"));
+  }
+  let item = await MilletItem.findOne({ _id: req.params.id });
+  if (!item) {
+    return res.status(404).send(getErrorResponse("No Product Found"));
+  }
+  return res.send(getSuccessResponse("Success", item));
+});
+
 router.post("/comment", async (req, res) => {
   const { commentBy, itemID } = req.body;
   if (!mongoose.Types.ObjectId.isValid(itemID)) {
