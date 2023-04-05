@@ -11,6 +11,11 @@ import {
 import Home from "./pages/Home/presentation/Home";
 import Shop from "./pages/shop/presentation/Shop";
 import About from "./pages/About/presentation/about";
+import ItemDetail from "./pages/shop/presentation/ItemDetail";
+import "@fortawesome/fontawesome-free/css/all.css";
+
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -23,16 +28,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/about",
-    element: <About/>,
+    element: <About />,
   },
   {
     path: "/shop",
     element: <Shop />,
+  },
+  {
+    path: "/item/:id",
+    element: <ItemDetail />,
   },
 ]);
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%]">
     <RouterProvider router={router} />
+    <ToastContainer theme="dark"/>
   </main>
 );

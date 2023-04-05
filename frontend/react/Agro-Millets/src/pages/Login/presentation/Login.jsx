@@ -13,9 +13,9 @@ function Login() {
     <>
       <section className="float-left relative h-screen w-screen lg:w-[50%] bg-white">
         {/* Top Left Icon and Text */}
-        <div className="absolute left-3 top-3 flex flex-row justify-center">
+        <div className="absolute flex flex-row justify-center left-3 top-3">
           <img className="h-[25px] mr-1 opacity-50" src={icon} alt="" />
-          <p className="text-slate-500 opacity-75 text-sm">Agro-Millets</p>
+          <p className="text-sm opacity-75 text-slate-500">Agro-Millets</p>
         </div>
         {/* Center Item  */}
         <div className="absolute inset-0 h-100% flex flex-col justify-center items-center px-8">
