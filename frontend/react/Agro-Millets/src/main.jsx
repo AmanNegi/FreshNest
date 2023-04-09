@@ -16,6 +16,9 @@ import "@fortawesome/fontawesome-free/css/all.css";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Search from "./pages/Search/presentation/Search";
+import authManager from "./data/AuthRepository";
+import Profile from "./pages/Profile/presentation/Profile";
 
 const router = createBrowserRouter([
   {
@@ -38,11 +41,21 @@ const router = createBrowserRouter([
     path: "/item/:id",
     element: <ItemDetail />,
   },
+  {
+    path: "/search",
+    element: <Search />,
+  },
+  {
+    path: "/profile",
+    element: <Profile />,
+  },
 ]);
+
+authManager.__init__();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%]">
     <RouterProvider router={router} />
-    <ToastContainer theme="dark"/>
+    <ToastContainer theme="dark" />
   </main>
 );
