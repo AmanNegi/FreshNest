@@ -51,13 +51,14 @@ router.get("/getItem/:id", async (req, res) => {
   return res.send(getSuccessResponse("Success", item));
 });
 
+
 router.post("/comment", async (req, res) => {
   const { commentBy, itemID } = req.body;
   if (!mongoose.Types.ObjectId.isValid(itemID)) {
     return res.status(404).send(getErrorResponse("Invalid Item ID"));
   }
   let item = await MilletItem.findOne({ _id: itemID });
-
+  
   if (!mongoose.Types.ObjectId.isValid(commentBy)) {
     return res.status(404).send(getErrorResponse("Invalid User ID"));
   }
@@ -82,5 +83,6 @@ router.post("/getComments", async (req, res) => {
   let item = await MilletItem.findOne({ _id: itemID });
   return res.send(getSuccessResponse("Success!", item.comments));
 });
+
 
 module.exports = router;

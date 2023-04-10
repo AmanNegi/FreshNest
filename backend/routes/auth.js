@@ -22,7 +22,10 @@ router.post("/login", async (req, res) => {
   if (!validPassword) return res.send(getErrorResponse("Invalid Password"));
 
   return res.send(
-    getSuccessResponse("Login Success", _.omit(user, ["password", "__v"]))
+    getSuccessResponse(
+      "Login Success",
+      _.omit(user.toObject(), ["password", "__v"])
+    )
   );
 });
 
@@ -56,7 +59,10 @@ router.post("/signup", async (req, res) => {
 
   await user.save();
   return res.send(
-    getSuccessResponse("Signup Successful", _.omit(user, ["password", "__v"]))
+    getSuccessResponse(
+      "Signup Successful",
+      _.omit(user.toObject(), ["password", "__v"])
+    )
   );
 });
 
@@ -68,7 +74,10 @@ router.post("/exists", async (req, res) => {
   if (!user)
     return res.send(getErrorResponse("No User Exists with this email address"));
   return res.send(
-    getSuccessResponse("User Found", _.omit(user, ["password", "__v"]))
+    getSuccessResponse(
+      "User Found",
+      _.omit(user.toObject(), ["password", "__v"])
+    )
   );
 });
 

@@ -1,13 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/icon.png";
 import login from "../application/auth";
+import authManager from "../../../data/AuthRepository";
+import { toast } from "react-toastify";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   var navigate = useNavigate();
+  useEffect(() => {
+    if (authManager.isLoggedIn()) {
+      navigate("/shop");
+      toast("Logged in as " + authManager.getUserData().name);
+    }
+  }, []);
 
   return (
     <>
@@ -17,8 +25,9 @@ function Login() {
           <img className="h-[25px] mr-1 opacity-50" src={icon} alt="" />
           <p className="text-sm opacity-75 text-slate-500">Agro-Millets</p>
         </div>
+
         {/* Center Item  */}
-        <div className="absolute inset-0 h-100% flex flex-col justify-center items-center px-8">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
           <h1 className="text-2xl font-black text-semiBoldColor">
             Welcome to Agro-Millets
           </h1>

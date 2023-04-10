@@ -1,6 +1,8 @@
 import farm from "../../../assets/farm.jpg";
+import { useNavigate } from "react-router";
 
 function Landing() {
+  const navigate = useNavigate();
   return (
     <>
       <section className="h-[100vh]  relative bg-yellow-500">
@@ -24,8 +26,7 @@ function Landing() {
           <button
             className="px-5 py-2 text-white rounded-md bg-accentColor"
             onClick={() => {
-              // Go to /shop
-              updateIndex(1);
+              navigate("/shop");
             }}
           >
             Shop Now

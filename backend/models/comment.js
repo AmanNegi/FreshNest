@@ -32,6 +32,7 @@ function validateComment(item) {
     name: Joi.string().required(),
     content: Joi.string().required(),
     itemID: JoiObjectId().required(),
+    commentAt: Joi.date().required(),
   });
   return schema.validate(item);
 }
