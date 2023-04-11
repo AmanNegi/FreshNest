@@ -54,6 +54,6 @@ Check the [`CONTRIBUTING.md`](./docs/CONTRIBUTING.md) for information regarding 
 Distributed under the AGPLv3 License. See [`LICENSE.md`](./LICENSE) for more information.
 
 ## 🙏 Support
-This project needs a ⭐️ from you. Don't forget to leave a star 
+This project needs a ⭐️ from you. Don't forget to leave a star.
 
 
