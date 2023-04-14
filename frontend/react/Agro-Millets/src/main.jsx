@@ -54,7 +54,7 @@ const router = createBrowserRouter([
 authManager.__init__();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%]">
+  <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%] overflow-hidden">
     <RouterProvider router={router} />
     <ToastContainer theme="dark" />
   </main>

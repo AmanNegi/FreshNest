@@ -1,14 +1,21 @@
+import { motion } from "framer-motion";
+import { useState } from "react";
+import Rating from "react-rating";
 import { useNavigate } from "react-router-dom";
 
 function ShopItem({ item }) {
+  var [count, setCount] = useState(1);
   var navigate = useNavigate();
-
   return (
     <>
-      <div
+      <motion.div
         onClick={() => navigate("/item/" + item._id)}
         key={item._id}
-        className="relative transition duration-500 rounded-lg  cursor-pointer hover:shadow-xl bg-slate-100"
+        initial={{ opacity: 0 }}
+        whileInView={{ opacity: 1 }}
+        transition={{ delay: 0.25, duration: 0.25 }}
+        viewport={{ once: true }}
+        className="border border-slate-300 relative transition duration-500 rounded-lg hover:shadow-m d bg-white "
       >
         <img
           className="h-40 w-[100%] rounded-t-lg object-cover"
@@ -19,17 +26,54 @@ function ShopItem({ item }) {
           <h1 className="text-xl font-bold text-gray-700 hover:text-gray-900 hover:cursor-pointer">
             {item.name}
           </h1>
-          <p className="overflow-hidden text-sm text-gray-700 h-6 lg:h-14 text-ellipsis">
-            {item.description}
+
+          <p className="text-lg text-green-500 font-bold">
+            {`₹ ` + item.price + "/kg"}
           </p>
-          <button className="px-2 py-1 mt-3 mb-3 text-white transition duration-300 rounded-lg shadow-md text-md bg-accentColor hover:shadow-lg">
-            Buy Now
-          </button>
+
+          <div className="h-[1vh]"></div>
+          <Rating
+            initialRating={4.0}
+            fullSymbol="fa-solid fa-star text-amber-400 "
+            emptySymbol="fa-regular fa-star text-gray-300"
+          />
+          {/* <RatingComponent /> */}
+
+          <div className="h-[1vh]"></div>
+          <div className="flex flex-row">
+            <div className="w-[40%] h-[40px] flex flex-row items-center justify-center border border-gray-300 rounded-md px-2">
+              <div
+                onClick={() => {
+                  if (count > 0) {
+                    setCount((count) => {
+                      return count - 1;
+                    });
+                  }
+                }}
+                className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
+              >
+                <i className="fa-solid fa-minus"></i>
+              </div>
+              <div className="flex-1 h-[100%] flex justify-center items-center text-center bg-slate-200">
+                {count}
+              </div>
+              <div
+                onClick={() => {
+                  setCount((count) => count + 1);
+                  console.log(count);
+                }}
+                className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
+              >
+                <i className="fa-solid fa-plus"></i>
+              </div>
+            </div>
+            <div className="ml-4 w-[40px] h-[40px] bg-green-400 flex justify-center items-center rounded-md">
+              <i className="fa-solid fa-cart-shopping text-white"></i>
+            </div>
+          </div>
         </div>
-        <div className="absolute px-4 py-2 bg-white rounded-lg shadow-lg top-2 right-2">
-          <span className="text-md">{"₹ " + item.price}</span>
-        </div>
-      </div>
+        <div className="h-[1vh]"></div>
+      </motion.div>
     </>
   );
 }

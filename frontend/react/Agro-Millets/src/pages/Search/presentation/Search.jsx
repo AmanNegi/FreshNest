@@ -68,7 +68,7 @@ function Search() {
 function LoadedPage({ items }) {
   return (
     <>
-      <section className="mt-5 min-h-[92vh] w-[100%] p-6 lg:px-24 lg:py-12 bg-slate-200">
+      <section className=" min-h-[92vh] w-[100%] p-6 lg:px-24 ">
         <h1 className="text-3xl font-bold">
           {items.length > 0 ? "Results" : "No Results"}
         </h1>
