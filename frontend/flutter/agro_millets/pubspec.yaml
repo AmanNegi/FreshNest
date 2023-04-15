@@ -44,6 +44,7 @@ dependencies:
   http: ^0.13.5
   image_picker: ^0.8.7
   material_design_icons_flutter: ^6.0.7096
+  shared_preferences: ^2.1.0
   timeago: ^3.3.0
   uuid: ^3.0.7
 

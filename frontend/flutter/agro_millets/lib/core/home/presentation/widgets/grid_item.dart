@@ -1,17 +1,23 @@
 import 'package:agro_millets/core/home/presentation/detail/item_detail.dart';
+import 'package:agro_millets/data/auth_state_repository.dart';
+import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/globals.dart';
+import 'package:agro_millets/models/cart_item.dart';
 import 'package:agro_millets/models/millet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class GridItem extends StatelessWidget {
+class AgroItem extends StatelessWidget {
+  /// Index is for sizing
   final int index;
   final MilletItem item;
+  final bool showAddCartIcon;
 
-  const GridItem({
+  const AgroItem({
     super.key,
     required this.index,
     required this.item,
+    this.showAddCartIcon = true,
   });
 
   @override
@@ -99,35 +105,45 @@ class GridItem extends StatelessWidget {
               ),
             ),
           ),
-          Positioned(
-            right: 0,
-            top: 0,
-            child: GestureDetector(
-              onTap: () async {
-                showToast("Added to cart");
-              },
-              child: Container(
-                width: 40,
-                height: 40,
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
-                      blurRadius: 5.0,
-                      spreadRadius: 3.0,
-                      offset: const Offset(0.0, 0.0),
-                    )
-                  ],
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: const Icon(
-                  MdiIcons.cartPlus,
-                  color: Colors.black,
+          if (showAddCartIcon)
+            Positioned(
+              right: 0,
+              top: 0,
+              child: GestureDetector(
+                onTap: () async {
+                  showToast("Added to cart");
+
+                  appCache.updateAppCache(AppState(
+                    cart: [
+                      CartItem(count: 1, item: item),
+                      ...appCache.appState.value.cart
+                    ],
+                    user: appCache.appState.value.user,
+                    isLoggedIn: appCache.appState.value.isLoggedIn,
+                  ));
+                },
+                child: Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 5.0,
+                        spreadRadius: 3.0,
+                        offset: const Offset(0.0, 0.0),
+                      )
+                    ],
+                    borderRadius: BorderRadius.circular(10.0),
+                  ),
+                  child: const Icon(
+                    MdiIcons.cartPlus,
+                    color: Colors.black,
+                  ),
                 ),
               ),
             ),
-          ),
         ],
       ),
     );

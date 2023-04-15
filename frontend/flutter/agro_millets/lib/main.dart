@@ -1,6 +1,7 @@
 import 'package:agro_millets/core/auth/presentation/login_page.dart';
 import 'package:agro_millets/core/home/presentation/home_page.dart';
 import 'package:agro_millets/data/auth_state_repository.dart';
+import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
@@ -13,6 +14,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   await EasyLocalization.ensureInitialized();
+  await appCache.getDataFromDevice();
 
   runApp(
     ProviderScope(
@@ -44,12 +46,9 @@ class App extends ConsumerWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      home: Consumer(
-        builder: (_, ref, __) {
-          var loggedIn = ref.watch(authProvider).isLoggedIn();
-          return loggedIn ? const HomePage() : const LoginPage();
-        },
-      ),
+      home: appCache.appState.value.isLoggedIn
+          ? const HomePage()
+          : const LoginPage(),
     );
   }
 }
