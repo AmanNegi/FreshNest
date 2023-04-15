@@ -1,4 +1,5 @@
 import 'package:agro_millets/core/auth/presentation/login_page.dart';
+import 'package:agro_millets/core/cart/presentation/cart_page.dart';
 import 'package:agro_millets/core/home/presentation/profile/user_profile.dart';
 import 'package:agro_millets/data/auth_state_repository.dart';
 import 'package:agro_millets/data/cache/app_cache.dart';
@@ -28,6 +29,13 @@ class _AgroDrawerState extends State<AgroDrawer> {
             leading: const Icon(Icons.people),
             onTap: () {
               goToPage(context, const UserProfile());
+            },
+          ),
+          ListTile(
+            title: const Text("Cart"),
+            leading: const Icon(Icons.shopping_cart_outlined),
+            onTap: () {
+              goToPage(context, const CartPage());
             },
           ),
           Consumer(builder: (context, ref, child) {

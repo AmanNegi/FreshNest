@@ -63,8 +63,8 @@ class CommentManager {
       Uri.parse("$API_URL/list/comment"),
       body: {
         "itemID": itemID,
-        "commentBy": appCache.authState.value.user!.id,
-        "name": appCache.authState.value.user!.name,
+        "commentBy": appCache.appState.value.user!.id,
+        "name": appCache.appState.value.user!.name,
         "content": content,
         "commentAt": DateTime.now().toIso8601String(),
       },

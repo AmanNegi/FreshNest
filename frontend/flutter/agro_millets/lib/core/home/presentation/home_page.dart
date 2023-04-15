@@ -97,7 +97,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       crossAxisSpacing: 10,
       itemCount: list.length,
       itemBuilder: (context, index) {
-        return GridItem(
+        return AgroItem(
           index: index,
           item: list[index],
         );

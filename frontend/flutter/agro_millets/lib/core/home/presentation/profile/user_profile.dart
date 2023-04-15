@@ -1,9 +1,8 @@
 import 'package:agro_millets/colors.dart';
-import 'package:agro_millets/data/auth_state_repository.dart';
+import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class UserProfile extends StatefulWidget {
   const UserProfile({super.key});
@@ -13,6 +12,8 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
+  var user = appCache.appState.value.user;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -20,43 +21,36 @@ class _UserProfileState extends State<UserProfile> {
         centerTitle: true,
         title: const Text("Profile"),
       ),
-      body: Consumer(
-        builder: (context, ref, child) {
-          var user = ref.read(authProvider).getCurrentUser();
-
-          return ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 15.0),
-            children: [
-              CustomTextField(
-                value: user == null ? "" : user.name,
-                isEditable: false,
+      body: ListView(
+        padding: const EdgeInsets.symmetric(horizontal: 15.0),
+        children: [
+          CustomTextField(
+            value: user == null ? "" : user!.name,
+            isEditable: false,
+          ),
+          const SizedBox(height: 20),
+          CustomTextField(
+            value: user == null ? "" : user!.email,
+            isEditable: false,
+          ),
+          const SizedBox(height: 20),
+          CustomTextField(
+            value: user == null ? "" : user!.phone,
+            isEditable: false,
+          ),
+          const SizedBox(height: 20),
+          Container(
+            height: 0.065 * getHeight(context),
+            decoration: BoxDecoration(
+                color: lightColor, borderRadius: BorderRadius.circular(15.0)),
+            child: Center(
+              child: Text(
+                "App Access: ${user!.userType}",
+                style: const TextStyle(color: Colors.white),
               ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                value: user == null ? "" : user.email,
-                isEditable: false,
-              ),
-              const SizedBox(height: 20),
-              CustomTextField(
-                value: user == null ? "" : user.phone,
-                isEditable: false,
-              ),
-              const SizedBox(height: 20),
-              Container(
-                height: 0.065 * getHeight(context),
-                decoration: BoxDecoration(
-                    color: lightColor,
-                    borderRadius: BorderRadius.circular(15.0)),
-                child: Center(
-                  child: Text(
-                    "App Access: ${user!.userType}",
-                    style: const TextStyle(color: Colors.white),
-                  ),
-                ),
-              ),
-            ],
-          );
-        },
+            ),
+          ),
+        ],
       ),
     );
   }

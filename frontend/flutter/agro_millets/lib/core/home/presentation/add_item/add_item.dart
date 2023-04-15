@@ -55,7 +55,7 @@ class AddItemPageState extends State<AddItemPage> {
 
         await widget.homeManager.addItem(
           name: name,
-          listedBy: appCache.authState.value.user!.id,
+          listedBy: appCache.appState.value.user!.id,
           description: description,
           images: [url],
           price: price,
