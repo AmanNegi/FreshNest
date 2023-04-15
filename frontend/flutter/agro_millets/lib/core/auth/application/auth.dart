@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:agro_millets/core/home/presentation/home_page.dart';
 import 'package:agro_millets/data/auth_state_repository.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/user.dart';
@@ -14,11 +15,11 @@ class AuthManager {
   final WidgetRef ref;
   const AuthManager(this.context, this.ref);
 
-  Future<void> loginUsingEmailPassword({
+  Future<int> loginUsingEmailPassword({
     required String email,
     required String password,
   }) async {
-    ref.read(authProvider).exitApp();
+    ref.read(authProvider).clearUserData();
     var response = await http.post(
       Uri.parse("$API_URL/auth/login"),
       headers: {
@@ -33,9 +34,14 @@ class AuthManager {
     Map<String, dynamic> data = json.decode(response.body);
 
     if (data["statusCode"] == 200) {
-      ref.read(authProvider).enterApp(User.fromMap(data["data"]));
+      ref.read(authProvider).updateUserData(User.fromMap(data["data"]));
+      if (context.mounted) {
+        goToPage(context, const HomePage(), clearStack: true);
+      }
+      return 1;
     } else {
       showToast(data["message"]);
+      return -1;
     }
   }
 
@@ -72,14 +78,14 @@ class AuthManager {
     }
   }
 
-  Future<void> signUpUsingEmailPassword({
+  Future<int> signUpUsingEmailPassword({
     required String name,
     required String email,
     required String password,
     required String phone,
     required String userType,
   }) async {
-    ref.read(authProvider).exitApp();
+    ref.read(authProvider).clearUserData();
     var response = await http.post(
       Uri.parse("$API_URL/auth/signup"),
       body: {
@@ -94,9 +100,16 @@ class AuthManager {
     Map<String, dynamic> data = json.decode(response.body);
 
     if (data["statusCode"] == 200) {
-      ref.read(authProvider).enterApp(User.fromMap(data["data"]));
+      ref.read(authProvider).updateUserData(User.fromMap(data["data"]));
+
+      if (context.mounted) {
+        goToPage(context, const HomePage(), clearStack: true);
+      }
+
+      return 1;
     } else {
       showToast(data["message"]);
+      return -1;
     }
   }
 

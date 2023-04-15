@@ -5,6 +5,7 @@ import 'package:agro_millets/models/millet_item.dart';
 import 'package:agro_millets/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:timeago/timeago.dart' as timeago;
 
 class ItemDetailPage extends ConsumerStatefulWidget {
   final MilletItem item;
@@ -17,6 +18,8 @@ class ItemDetailPage extends ConsumerStatefulWidget {
 class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
   late CommentManager _commentManager;
   late MilletItem item;
+  final TextEditingController _commentController = TextEditingController();
+
   int amount = 1;
 
   @override
@@ -46,9 +49,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
         actions: [
           // TODO: Check if is owner or admin
           IconButton(
-            onPressed: () {
-              
-            },
+            onPressed: () {},
             icon: const Icon(
               Icons.delete,
               color: Colors.red,
@@ -131,22 +132,56 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                   leading: CircleAvatar(
                     child: Text(list[index].name[0]),
                   ),
-                  title: Text(list[index].content),
-                  subtitle: Text(list[index].name),
+                  title: Row(
+                    children: [
+                      Text(
+                        list[index].name,
+                        style: const TextStyle(
+                          fontSize: 13,
+                        ),
+                      ),
+                      const Spacer(),
+                      Text(
+                        timeago.format(list[index].commentAt,locale: 'en_short'),
+                        style: const TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey,
+                        ),
+                      ),
+                    ],
+                  ),
+                  subtitle: Text(list[index].content),
                 );
               },
             ),
             const SizedBox(height: 20),
-            CustomTextField(
-              hint: "Type comment here...",
-              onChanged: (v) {},
+            Row(
+              children: [
+                Expanded(
+                  child: CustomTextField(
+                    hint: "Type comment here...",
+                    controller: _commentController,
+                    onChanged: (v) {},
+                    onSubmitted: (v) => postComment(),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.message_rounded),
+                  onPressed: () => postComment(),
+                ),
+              ],
             ),
-            SizedBox(height: 0.1*getHeight(context)),
+            SizedBox(height: 0.1 * getHeight(context)),
             // _getQuantityIncrementer(context)
           ],
         ),
       ),
     );
+  }
+
+  void postComment() {
+    _commentManager.addComment(_commentController.text);
+    _commentController.text = "";
   }
 
   Container _getQuantityIncrementer(BuildContext context) {

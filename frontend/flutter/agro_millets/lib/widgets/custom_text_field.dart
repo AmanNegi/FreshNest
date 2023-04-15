@@ -1,19 +1,32 @@
 import 'package:agro_millets/colors.dart';
+import 'package:agro_millets/globals.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {
-  final Function onChanged;
   final String label;
   final String hint;
-  final TextInputType keyboardType;
+  final String value;
+
   final bool isPassword;
+  final bool isEditable;
+
+  final Function? onChanged;
+  final Function? onSubmitted;
+  final TextInputType keyboardType;
+
+  final TextEditingController? controller;
+
   const CustomTextField({
     super.key,
-    required this.onChanged,
     this.label = "",
     this.hint = "",
-    this.keyboardType = TextInputType.text,
+    this.value = "",
     this.isPassword = false,
+    this.isEditable = true,
+    this.onChanged,
+    this.onSubmitted,
+    this.keyboardType = TextInputType.text,
+    this.controller,
   });
 
   @override
@@ -25,8 +38,8 @@ class _CustomTextFieldState extends State<CustomTextField> {
 
   @override
   void initState() {
-    super.initState();
     showPassword = false;
+    super.initState();
   }
 
   @override
@@ -37,34 +50,52 @@ class _CustomTextFieldState extends State<CustomTextField> {
         color: lightColor.withOpacity(0.05),
         borderRadius: BorderRadius.circular(10.0),
       ),
-      child: TextField(
-
-        keyboardType: widget.keyboardType,
-        onChanged: (e) => widget.onChanged(e),
-        obscureText: !showPassword,
-
-       
-        onTapOutside: (e) => FocusScope.of(context).unfocus(),
-        
-
-        decoration: InputDecoration(
-          border: InputBorder.none,
-          label: widget.label.isNotEmpty ? Text(widget.label) : null,
-          hintText: widget.hint,
-          suffixIcon: !widget.isPassword
-              ? null
-              : IconButton(
-                  onPressed: () {
-                    setState(() {
-                      showPassword = !showPassword;
-                    });
-                  },
-                  icon: showPassword
-                      ? const Icon(Icons.remove_red_eye)
-                      : const Icon(Icons.remove_red_eye_outlined),
-                ),
+      child: GestureDetector(
+        onTap: () {
+          if (!widget.isEditable) {
+            showToast("Field is not editable");
+          }
+        },
+        child: TextField(
+          enabled: widget.isEditable,
+          decoration: InputDecoration(
+            border: InputBorder.none,
+            label: widget.label.isNotEmpty ? Text(widget.label) : null,
+            hintText: widget.hint,
+            suffixIcon: getSuffixIcon(),
+          ),
+          keyboardType: widget.keyboardType,
+          controller: widget.controller ??
+              (widget.value.isEmpty
+                  ? null
+                  : TextEditingController(text: widget.value)),
+          obscureText: widget.isPassword ? !showPassword : false,
+          onTapOutside: (e) => FocusScope.of(context).unfocus(),
+          onSubmitted: (value) {
+            if (widget.onSubmitted != null) {
+              widget.onSubmitted!(value);
+            }
+          },
+          onChanged: (e) {
+            if (widget.onChanged != null) {
+              widget.onChanged!(e);
+            }
+          },
         ),
       ),
+    );
+  }
+
+  Widget? getSuffixIcon() {
+    if (!widget.isPassword) {
+      return null;
+    }
+
+    return IconButton(
+      onPressed: () => setState(() => showPassword = !showPassword),
+      icon: showPassword
+          ? const Icon(Icons.remove_red_eye)
+          : const Icon(Icons.remove_red_eye_outlined),
     );
   }
 }

@@ -16,14 +16,13 @@ class CommentManager {
   final String itemID;
 
   CommentManager(this.context, this.ref, this.itemID) {
-    ref.read(commentProvider).updateItems([]);
+    ref.read(commentProvider).updateItems([], notify: false);
     attach();
   }
 
   dispose() {
     debugPrint("CommentManager: Detaching Listeners...");
     timer.cancel();
-    ref.read(commentProvider).updateItems([]);
   }
 
   // Using Polling instead of WebSockets
@@ -67,8 +66,10 @@ class CommentManager {
         "commentBy": appCache.authState.value.user!.id,
         "name": appCache.authState.value.user!.name,
         "content": content,
+        "commentAt": DateTime.now().toIso8601String(),
       },
     );
+    debugPrint("Comment Added Successfully");
     debugPrint(response.body);
   }
 
