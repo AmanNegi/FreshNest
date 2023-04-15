@@ -1,6 +1,7 @@
 import 'package:agro_millets/core/home/application/home_manager.dart';
 import 'package:agro_millets/core/home/application/home_provider.dart';
 import 'package:agro_millets/core/home/presentation/add_item/add_item.dart';
+import 'package:agro_millets/core/home/presentation/widgets/drawer.dart';
 import 'package:agro_millets/core/home/presentation/widgets/grid_item.dart';
 import 'package:agro_millets/data/auth_state_repository.dart';
 import 'package:agro_millets/globals.dart';
@@ -35,6 +36,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      drawer: const AgroDrawer(),
       floatingActionButton: Consumer(
         builder: (_, ref, __) {
           var val = ref.read(authProvider);

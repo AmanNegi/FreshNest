@@ -47,8 +47,6 @@ class App extends ConsumerWidget {
       home: Consumer(
         builder: (_, ref, __) {
           var loggedIn = ref.watch(authProvider).isLoggedIn();
-          print("Is Logged In: $loggedIn");
-
           return loggedIn ? const HomePage() : const LoginPage();
         },
       ),

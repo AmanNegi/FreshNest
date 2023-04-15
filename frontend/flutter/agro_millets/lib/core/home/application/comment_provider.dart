@@ -1,5 +1,4 @@
 import 'package:agro_millets/models/comment.dart';
-import 'package:agro_millets/models/millet_item.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
@@ -11,10 +10,9 @@ class CommentProvider extends ChangeNotifier {
 
   List<CommentItem> getComments() => [..._items];
 
-  void updateItems(List<CommentItem> items) {
+  void updateItems(List<CommentItem> items, {bool notify = true}) {
     if (listEquals(items, _items)) return;
-    print("Updating Comments...");
     _items = items;
-    notifyListeners();
+    if (notify) notifyListeners();
   }
 }
