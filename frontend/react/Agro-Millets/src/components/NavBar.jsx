@@ -77,7 +77,7 @@ function NavBar() {
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
         // whileInView={{ y: 0 }}
-        className="fixed top-0 z-[2] h-[8vh] w-[100%] bg-white  flex px-2 md lg:px-16  items-center shadow-md "
+        className="fixed top-0 z-[2] h-[8vh] w-[100%] bg-white  flex px-2 md lg:px-10  items-center shadow-md "
       >
         {/* <h1>LOGO</h1> */}
         <img className="h-20  py-2 object-contain" src={logo} alt="" />
@@ -88,17 +88,17 @@ function NavBar() {
         <NavBarItem text="Shop" route="/shop" />
         <i
           onClick={() => navigate("/search")}
-          className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-magnifying-glass text-opacity-60 hover:text-opacity-100"
+          className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-magnifying-glass hover:bg-green-100 "
         ></i>
         <i
-          onClick={() => {
-            //TODO: Show bottom popup
-          }}
-          className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-user text-opacity-60 hover:text-opacity-100"
+          onClick={() => navigate("/profile")}
+          className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-user hover:bg-green-100  "
         ></i>
-        <UserOptionsMenu/>
-
-        <Button additionalClasses="hidden md:block" text="Contact" />
+ <i
+          onClick={() => navigate("/cart")}
+          className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-cart-shopping hover:bg-green-100  "
+        ></i>
+        {/* <Button additionalClasses="hidden md:block" text="Contact" /> */}
 
         <div
           onClick={() => {
@@ -154,20 +154,3 @@ function NavBarItem({ text = "NavItem", route = "/" }) {
 }
 
 export default NavBar;
-
-function UserOptionsMenu() {
-  return (
-    <>
-      <select name="User Options">
-        {["one", "two", "three", "four"].map((e, i) => {
-          return (
-            <option id="i" value={e}>
-              {" "}
-              {e}
-            </option>
-          );
-        })}
-      </select>
-    </>
-  );
-}

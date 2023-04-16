@@ -3,17 +3,17 @@ import { useNavigate } from "react-router-dom";
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/icon.png";
 import login from "../application/auth";
-import authManager from "../../../data/AuthRepository";
 import { toast } from "react-toastify";
+import appState from "../../../data/AppState";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   var navigate = useNavigate();
   useEffect(() => {
-    if (authManager.isLoggedIn()) {
+    if (appState.isUserLoggedIn()) {
       navigate("/shop");
-      toast("Logged in as " + authManager.getUserData().name);
+      toast("Logged in as " + appState.getUserData().name);
     }
   }, []);
 

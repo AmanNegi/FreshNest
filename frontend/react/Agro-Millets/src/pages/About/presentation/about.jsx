@@ -74,10 +74,10 @@ function About() {
         <div className="overlay absolute inset-0 bg-black opacity-50"></div>
 
         <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20 relative">
-          <h2 className="text-white text-4xl sm:text-5xl md:text-6xl font-bold mb-8 relative ">
+          <div className="text-white text-4xl sm:text-5xl md:text-6xl font-bold mb-8 relative ">
             <h1 className="mb-10"> Supporting</h1>
             आत्मनिर्भर भारत
-          </h2>
+          </div>
         </div>
       </section>
 

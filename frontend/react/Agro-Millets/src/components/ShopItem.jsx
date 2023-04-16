@@ -2,6 +2,8 @@ import { motion } from "framer-motion";
 import { useState } from "react";
 import Rating from "react-rating";
 import { useNavigate } from "react-router-dom";
+import appState from "../data/AppState";
+import { toast } from "react-toastify";
 
 function ShopItem({ item }) {
   var [count, setCount] = useState(1);
@@ -9,7 +11,6 @@ function ShopItem({ item }) {
   return (
     <>
       <motion.div
-        onClick={() => navigate("/item/" + item._id)}
         key={item._id}
         initial={{ opacity: 0 }}
         whileInView={{ opacity: 1 }}
@@ -18,6 +19,7 @@ function ShopItem({ item }) {
         className="border border-slate-300 relative transition duration-500 rounded-lg hover:shadow-m d bg-white "
       >
         <img
+          onClick={() => navigate("/item/" + item._id)}
           className="h-40 w-[100%] rounded-t-lg object-cover"
           src={item.images[0]}
           alt=""
@@ -67,7 +69,13 @@ function ShopItem({ item }) {
                 <i className="fa-solid fa-plus"></i>
               </div>
             </div>
-            <div className="ml-4 w-[40px] h-[40px] bg-green-400 flex justify-center items-center rounded-md">
+            <div
+              onClick={() => {
+                appState.addItemToCart(item);
+                toast.success("Item added to cart");
+              }}
+              className="ml-4 w-[40px] h-[40px] bg-green-400 flex justify-center items-center rounded-md"
+            >
               <i className="fa-solid fa-cart-shopping text-white"></i>
             </div>
           </div>

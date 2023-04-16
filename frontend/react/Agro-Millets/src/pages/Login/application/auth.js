@@ -1,7 +1,7 @@
 import axios from "axios";
 import { API_URL } from "../../../constants";
-import authManager from "../../../data/AuthRepository";
 import { toast } from "react-toastify";
+import appState from "../../../data/AppState";
 
 // http://localhost:3000/api/auth/login
 
@@ -17,6 +17,6 @@ export default async function login(email, password) {
   } else {
     toast.error(res.data.message);
   }
-  authManager.logInUser(res.data.data);
+  appState.setUserData(res.data.data, true, {});
   return res.data;
 }
