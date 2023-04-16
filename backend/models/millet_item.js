@@ -51,3 +51,4 @@ function validateMilletItem(item) {
 
 exports.MilletItem = MilletItem;
 exports.validateMilletItem = validateMilletItem;
+exports.milletItemSchema = milletItemSchema;

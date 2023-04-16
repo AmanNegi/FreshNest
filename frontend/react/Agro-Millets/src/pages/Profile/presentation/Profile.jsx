@@ -1,10 +1,9 @@
-import { useEffect, useState } from "react";
-import authManager from "../../../data/AuthRepository";
 import NavBar from "../../../components/NavBar";
 import { useNavigate } from "react-router-dom";
+import appState from "../../../data/AppState";
 
 function Profile() {
-  var user = authManager.getUserData();
+  var user = appState.getUserData();
   console.log(user);
   var navigate = useNavigate();
   return (
