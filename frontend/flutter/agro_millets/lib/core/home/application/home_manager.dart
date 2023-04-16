@@ -66,48 +66,60 @@ class HomeManager {
     }
     return [];
   }
+}
 
-  Future<List<MilletItem>> getAllFarmerItems(String id) async {
-    var response = await http.get(
-      Uri.parse("$API_URL/list/getAll/$id"),
-    );
-    debugPrint(response.body);
-    Map data = json.decode(response.body);
+Future<List<MilletItem>> getAllFarmerItems(String id) async {
+  var response = await http.get(
+    Uri.parse("$API_URL/list/getAll/$id"),
+  );
+  debugPrint(response.body);
+  Map data = json.decode(response.body);
 
-    if (data["statusCode"] == 200) {
-      List dataMap = data["data"];
-      List<MilletItem> list = [];
+  if (data["statusCode"] == 200) {
+    List dataMap = data["data"];
+    List<MilletItem> list = [];
 
-      for (var e in dataMap) {
-        list.add(MilletItem.fromMap(e));
-      }
-
-      return list;
+    for (var e in dataMap) {
+      list.add(MilletItem.fromMap(e));
     }
-    return [];
-  }
 
-  Future<void> addItem({
-    required String name,
-    required String listedBy,
-    required String description,
-    required List<String> images,
-    required double price,
-  }) async {
-    var response = await http.post(
-      Uri.parse("$API_URL/list/addItem"),
-      headers: {"content-type": "application/json"},
-      body: json.encode(
-        {
-          "listedBy": listedBy,
-          "name": name,
-          "description": description,
-          "images": images,
-          "price": price,
-          "comments": [],
-        },
-      ),
-    );
-    print(response.body);
+    return list;
   }
+  return [];
+}
+
+Future<void> addItem({
+  required String name,
+  required String listedBy,
+  required String description,
+  required List<String> images,
+  required double price,
+}) async {
+  var response = await http.post(
+    Uri.parse("$API_URL/list/addItem"),
+    headers: {"content-type": "application/json"},
+    body: json.encode(
+      {
+        "listedBy": listedBy,
+        "name": name,
+        "description": description,
+        "images": images,
+        "price": price,
+        "comments": [],
+      },
+    ),
+  );
+  print(response.body);
+}
+
+Future<MilletItem?> getItemById(String id) async {
+  var response = await http.get(Uri.parse("$API_URL/list/getItem/$id"));
+  debugPrint(response.body);
+  Map data = json.decode(response.body);
+
+  if (data["statusCode"] == 200) {
+    MilletItem item = MilletItem.fromMap(data["data"]);
+    return item;
+  }
+  return null;
 }

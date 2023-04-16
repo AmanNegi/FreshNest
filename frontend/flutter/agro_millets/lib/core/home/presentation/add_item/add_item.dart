@@ -53,7 +53,7 @@ class AddItemPageState extends State<AddItemPage> {
         String url =
             await storageManager.uploadItemImage(itemId, File(imageUrl));
 
-        await widget.homeManager.addItem(
+        await addItem(
           name: name,
           listedBy: appCache.appState.value.user!.id,
           description: description,
