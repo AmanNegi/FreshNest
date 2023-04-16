@@ -23,6 +23,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   void initState() {
     _authManager = AuthManager(context, ref);
     super.initState();
+    _authManager.loginUsingEmailPassword(
+        email: "asterjoules@gmail.com", password: "~");
   }
 
   @override

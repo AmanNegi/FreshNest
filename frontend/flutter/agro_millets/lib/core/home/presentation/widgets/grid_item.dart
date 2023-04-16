@@ -1,10 +1,11 @@
+import 'package:agro_millets/core/cart/application/cart_manager.dart';
+import 'package:agro_millets/core/cart/application/cart_provider.dart';
 import 'package:agro_millets/core/home/presentation/detail/item_detail.dart';
-import 'package:agro_millets/data/auth_state_repository.dart';
-import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/cart_item.dart';
 import 'package:agro_millets/models/millet_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
 class AgroItem extends StatelessWidget {
@@ -12,6 +13,7 @@ class AgroItem extends StatelessWidget {
   final int index;
   final MilletItem item;
   final bool showAddCartIcon;
+  
 
   const AgroItem({
     super.key,
@@ -106,44 +108,42 @@ class AgroItem extends StatelessWidget {
             ),
           ),
           if (showAddCartIcon)
-            Positioned(
-              right: 0,
-              top: 0,
-              child: GestureDetector(
-                onTap: () async {
-                  showToast("Added to cart");
+            Consumer(builder: (context, ref, child) {
+              return Positioned(
+                right: 0,
+                top: 0,
+                child: GestureDetector(
+                  onTap: () async {
+                    CartItem cartItem = CartItem(item: item.id, count: 1);
+                    ref.read(cartProvider).addItemToCart(cartItem);
+                    CartManager(context, ref).addItemToCart(item: cartItem);
 
-                  appCache.updateAppCache(AppState(
-                    cart: [
-                      CartItem(count: 1, item: item),
-                      ...appCache.appState.value.cart
-                    ],
-                    user: appCache.appState.value.user,
-                    isLoggedIn: appCache.appState.value.isLoggedIn,
-                  ));
-                },
-                child: Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black.withOpacity(0.05),
-                        blurRadius: 5.0,
-                        spreadRadius: 3.0,
-                        offset: const Offset(0.0, 0.0),
-                      )
-                    ],
-                    borderRadius: BorderRadius.circular(10.0),
-                  ),
-                  child: const Icon(
-                    MdiIcons.cartPlus,
-                    color: Colors.black,
+                    showToast("Added to cart");
+
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 5.0,
+                          spreadRadius: 3.0,
+                          offset: const Offset(0.0, 0.0),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: const Icon(
+                      MdiIcons.cartPlus,
+                      color: Colors.black,
+                    ),
                   ),
                 ),
-              ),
-            ),
+              );
+            }),
         ],
       ),
     );

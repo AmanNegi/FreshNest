@@ -52,7 +52,7 @@ class AppState {
   final bool isLoggedIn;
   final User? user;
 
-  /// Cart is saved locally on device only
+  /// Cart is saved locally on device also 
   final List<CartItem> cart;
 
   const AppState({
