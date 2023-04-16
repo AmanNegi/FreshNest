@@ -3,7 +3,6 @@ const APP_STATE_KEY = "AgroMillets-AppState";
 class AppState {
   userData = {};
   isLoggedIn = false;
-  cart = [];
 
   __init__() {
     console.log("In __init__ AppState.js...");
@@ -11,40 +10,28 @@ class AppState {
     console.log("Local AppState Data: ", data);
     this.userData = data.userData ?? {};
     this.isLoggedIn = data.isLoggedIn ?? false;
-    this.cart = data.cart ?? [];
   }
 
   /**
    * @param {Map} userData
    * @param {boolean} isLoggedIn
-   * @param {List} cart
    */
-  saveUserData(userData, isLoggedIn, cart) {
+  saveUserData(userData, isLoggedIn) {
     this.userData = userData;
     this.isLoggedIn = isLoggedIn;
-    this.cart = cart;
     localStorage.setItem(
       APP_STATE_KEY,
-      JSON.stringify({ userData, isLoggedIn, cart })
+      JSON.stringify({ userData, isLoggedIn })
     );
   }
 
-  addItemToCart(item) {
-    var exists = this.cart.filter((e) => e._id == item._id);
-    if (exists) {
-      //TODO: Simply increase the count here
-      console.log("Item Prexists in Cart");
-      return;
-    }
-    this.saveUserData(this.userData, this.isLoggedIn, [...this.cart, item]);
-  }
-
   logOutUser() {
-    this.saveUserData({}, false, []);
+    this.saveUserData({}, false);
   }
 
   isUserLoggedIn() {
-    if (!this.loggedIn || this.userData == null) return false;
+    // console.log("IS USER LOGGED IN : ", this.loggedIn, this.userData);
+    if (!this.isLoggedIn || !this.userData) return false;
     return true;
   }
 
@@ -53,7 +40,7 @@ class AppState {
   }
 
   setUserData(data) {
-    this.saveUserData(data, this.isLoggedIn, this.cart);
+    this.saveUserData(data, this.isLoggedIn);
   }
 }
 
