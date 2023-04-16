@@ -13,6 +13,12 @@ const cartItemSchema = new mongoose.Schema({
     ref: "MilletItem",
     required: true,
   },
+  addedAt: {
+    type: Date,
+    default: () => {
+      return new Date();
+    },
+  },
 });
 
 const cartSchema = new mongoose.Schema({
@@ -20,12 +26,6 @@ const cartSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
     required: true,
-  },
-  createdAt: {
-    type: Date,
-    default: () => {
-      return new Date();
-    },
   },
   items: [cartItemSchema],
 });
