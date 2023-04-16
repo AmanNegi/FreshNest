@@ -17,6 +17,6 @@ export default async function login(email, password) {
   } else {
     toast.error(res.data.message);
   }
-  appState.setUserData(res.data.data, true, {});
+  appState.saveUserData(res.data.data, true);
   return res.data;
 }
