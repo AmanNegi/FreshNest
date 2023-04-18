@@ -1,3 +1,4 @@
+import 'package:agro_millets/core/auth/presentation/login_page.dart';
 import 'package:agro_millets/core/home/application/home_manager.dart';
 import 'package:agro_millets/core/home/application/home_provider.dart';
 import 'package:agro_millets/core/home/presentation/add_item/add_item.dart';
@@ -55,6 +56,33 @@ class _HomePageState extends ConsumerState<HomePage> {
         title: const Text("Agro Millets"),
         centerTitle: true,
       ),
+      drawer:  Drawer(
+        child: ListView(
+          padding: EdgeInsets.zero,
+          children: [
+           const DrawerHeader(child: Text('drawer header')
+            ),
+            
+            ListTile(
+              title: const Text('item 1'),
+              onTap: () {
+                 Navigator.of(context).pushReplacement(MaterialPageRoute(
+                  builder: (context) => const LoginPage(),
+                  ),
+                );
+              },
+            ),
+            ListTile(
+              title: const Text('item 2'),
+              onTap: () {
+                Navigator.pop(context);
+              },
+            ),
+
+          ],
+        ),
+      ),
+
       body: ListView(
         children: [
           _getHeading(),
