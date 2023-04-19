@@ -15,7 +15,7 @@
 
 ## 🚀 Live Preview 
 + **Website**: [`AgroMillets.com`](https://agro-millets.netlify.app/)
-+ **App**: Under Releases
++ **App**: [`APK`](https://github.com/AmanNegi/AgroMillets/releases/tag/v0.0.2)
 
 
 ## 💪 Advantages
