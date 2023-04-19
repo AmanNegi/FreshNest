@@ -12,6 +12,12 @@
 + The platform provides **secure payment options, shipping services, and customer service** to ensure *safe and efficient transactions. *
 + With **AgroMillets**, farmers can expand their customer base and customers can support sustainable farming practices while enjoying a wider variety of products.
 
+
+## 🚀 Live Preview 
++ **Website**: [`AgroMillets.com`](https://agro-millets.netlify.app/)
++ **App**: Under Releases
+
+
 ## 💪 Advantages
 
 1. **Accessibility:** 
