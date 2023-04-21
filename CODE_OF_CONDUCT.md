@@ -1,6 +1,6 @@
 # Contributor Covenant Code of Conduct
 
-Agro Millers is committed to providing a safe, respectful and inclusive environment for all its contributors, collaborators, and users. We expect all members of our community to abide by the following code of conduct:
+AgroMillets is committed to providing a safe, respectful and inclusive environment for all its contributors, collaborators, and users. We expect all members of our community to abide by the following code of conduct:
 
 ## Respect
 We respect everyone’s identities, culture, and work. We expect all members of our community to:
@@ -11,7 +11,7 @@ We respect everyone’s identities, culture, and work. We expect all members of 
 - Avoid demeaning, discriminatory, or harassing behavior
 
 ## Harassment
-Agro Millers does not tolerate any form of harassment or discrimination, including but not limited to:
+AgroMillets does not tolerate any form of harassment or discrimination, including but not limited to:
 
 - Offensive, derogatory or belittling comments
 - Hate speech, including discriminatory language or slurs based on someone’s identity
@@ -31,7 +31,7 @@ Disagreements and conflicts can arise in any community. We encourage all members
 We welcome questions and encourage our community to help each other. If you don't know something, don't be afraid to ask. Once you find the answer, document it in the first place you looked.
 
 ## Enforcement
-Agro Millers is committed to upholding this code of conduct. We expect everyone to adhere to these guidelines. We reserve the right to take appropriate action, including but not limited to:
+AgroMillets is committed to upholding this code of conduct. We expect everyone to adhere to these guidelines. We reserve the right to take appropriate action, including but not limited to:
 
 - Warning the offender and reminding them of our code of conduct
 - Asking the offender to leave the project or event immediately
