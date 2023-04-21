@@ -56,16 +56,17 @@ function ShopItem({ itemId, isCart = false }) {
               src={item.images[0]}
               alt=""
             />
-
-            <div
-              onClick={async () => {
-                await removeFromCart(itemId);
-                window.location.reload();
-              }}
-              className="absolute top-2 right-2 ml-2 lg:ml-4 w-[40px] h-[40px] bg-red-400 flex justify-center items-center rounded-md"
-            >
-              <i className="fa-solid fa-trash text-white"></i>
-            </div>
+            {isCart && (
+              <div
+                onClick={async () => {
+                  await removeFromCart(itemId);
+                  window.location.reload();
+                }}
+                className="absolute top-2 right-2 ml-2 lg:ml-4 w-[40px] h-[40px] bg-red-400 flex justify-center items-center rounded-md"
+              >
+                <i className="fa-solid fa-trash text-white"></i>
+              </div>
+            )}
           </div>
 
           <div className="px-4 py-2  rounded-lg ">

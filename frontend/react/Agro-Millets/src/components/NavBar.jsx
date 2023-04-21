@@ -76,7 +76,6 @@ function NavBar() {
         initial={{ y: -100 }}
         animate={{ y: 0 }}
         transition={{ duration: 0.5 }}
-        // whileInView={{ y: 0 }}
         className="fixed top-0 z-[2] h-[8vh] w-[100%] bg-white  flex px-2 md lg:px-10  items-center shadow-md "
       >
         {/* <h1>LOGO</h1> */}
@@ -86,18 +85,29 @@ function NavBar() {
         <NavBarItem text="Home" route="/home" />
         <NavBarItem text="About" route="/about" />
         <NavBarItem text="Shop" route="/shop" />
-        <i
-          onClick={() => navigate("/search")}
-          className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-magnifying-glass hover:bg-green-100 "
-        ></i>
-        <i
-          onClick={() => navigate("/profile")}
-          className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-user hover:bg-green-100  "
-        ></i>
- <i
-          onClick={() => navigate("/cart")}
-          className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-cart-shopping hover:bg-green-100  "
-        ></i>
+
+        {/* Desktop Icons */}
+        <div className="hidden md:flex">
+          <i
+            onClick={() => navigate("/search")}
+            className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-magnifying-glass hover:bg-green-100 "
+          ></i>
+        </div>
+
+        <div className="hidden md:flex">
+          <i
+            onClick={() => navigate("/profile")}
+            className="hidden md:block cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-user hover:bg-green-100  "
+          ></i>
+        </div>
+
+        <div className="hidden md:flex">
+          <i
+            onClick={() => navigate("/cart")}
+            className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-cart-shopping hover:bg-green-100  "
+          ></i>
+        </div>
+
         {/* <Button additionalClasses="hidden md:block" text="Contact" /> */}
 
         <div
@@ -118,8 +128,11 @@ function NavBar() {
           transition={{ duration: 0.5 }}
           className="fixed top-[8vh] z-[1] visible md:hidden w-[100%] flex flex-col"
         >
-          <MobileNavBarItem text="Home" route="/" />
+          <MobileNavBarItem text="Home" route="/home" />
           <MobileNavBarItem text="Shop" route="/shop" />
+          <MobileNavBarItem text="Search" route="/search" />
+          <MobileNavBarItem text="Profile" route="/profile" />
+          <MobileNavBarItem text="Cart" route="/cart" />
           <MobileNavBarItem text="About" route="/about" />
         </motion.div>
       )}
