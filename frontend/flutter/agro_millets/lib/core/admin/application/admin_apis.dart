@@ -1,0 +1,70 @@
+import 'dart:convert';
+
+import 'package:agro_millets/data/cache/app_cache.dart';
+import 'package:agro_millets/models/millet_item.dart';
+import 'package:agro_millets/models/user.dart';
+import 'package:agro_millets/secrets.dart';
+import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+
+class AdminAPIs {
+  // http://localhost:3000/api/auth/getAll
+
+  static Future<List<User>> getAllUsers() async {
+    List<User> listOfUsers = [];
+    String userId = appCache.appState.value.user!.id;
+    var response = await http.post(
+      Uri.parse("$API_URL/auth/getAll"),
+      body: {"adminId": userId},
+    );
+
+    if (response.body.isNotEmpty) {
+      var data = json.decode(response.body);
+      if (data["statusCode"] == 200) {
+        List list = data["data"] as List;
+        for (var e in list) {
+          listOfUsers.add(User.fromMap(e));
+        }
+      }
+    }
+    return listOfUsers;
+  }
+
+  static Future<List<MilletItem>> getAllItems() async {
+    var response = await http.get(
+      Uri.parse("$API_URL/list/getAll"),
+    );
+    debugPrint(response.body);
+
+    Map data = json.decode(response.body);
+    if (data["statusCode"] == 200) {
+      List dataMap = data["data"];
+      List<MilletItem> list = [];
+
+      for (var e in dataMap) {
+        list.add(MilletItem.fromMap(e));
+      }
+      return list;
+    }
+    return [];
+  }
+
+  static Future<List<MilletItem>> getRecentItems() async {
+    var response = await http.get(
+      Uri.parse("$API_URL/list/getRecent"),
+    );
+    debugPrint(response.body);
+
+    Map data = json.decode(response.body);
+    if (data["statusCode"] == 200) {
+      List dataMap = data["data"];
+      List<MilletItem> list = [];
+
+      for (var e in dataMap) {
+        list.add(MilletItem.fromMap(e));
+      }
+      return list;
+    }
+    return [];
+  }
+}

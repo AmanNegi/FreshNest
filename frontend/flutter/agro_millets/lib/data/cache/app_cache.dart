@@ -45,6 +45,36 @@ class AppCache {
     }
     return appState.value.user!.email;
   }
+
+  bool isAdmin() {
+    return appState.value.user == null
+        ? false
+        : appState.value.user!.userType == "admin";
+  }
+
+  bool isFarmer() {
+    return appState.value.user == null
+        ? false
+        : appState.value.user!.userType == "farmer";
+  }
+
+  bool isCustomer() {
+    return appState.value.user == null
+        ? true
+        : appState.value.user!.userType == "customer";
+  }
+
+  bool isLoggedIn() {
+    if (appState.value.user == null || appState.value.user!.id == "") {
+      return false;
+    }
+
+    return appState.value.isLoggedIn;
+  }
+
+  bool isOwnerOf(String id) {
+    return appState.value.user!.id == id;
+  }
 }
 
 AppCache appCache = AppCache();

@@ -88,10 +88,10 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
               isFilled: false,
               onPressed: () async {
                 await _authManager.signUpUsingEmailPassword(
-                  email: email,
-                  name: username,
-                  password: password,
-                  phone: phone,
+                  email: email.trim(),
+                  name: username.trim(),
+                  password: password.trim(),
+                  phone: phone.trim(),
                   userType: dropdownValue,
                 );
               },

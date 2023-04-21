@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:agro_millets/core/cart/application/cart_provider.dart';
 import 'package:agro_millets/data/cache/app_cache.dart';
+import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/cart_item.dart';
 import "package:agro_millets/secrets.dart";
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'package:http/http.dart' as http;
 
 class CartManager {
   final BuildContext context;
-  late Timer timer;
+  Timer? timer;
   final WidgetRef ref;
 
   CartManager(this.context, this.ref, {bool poll = true}) {
@@ -22,7 +23,9 @@ class CartManager {
 
   dispose() {
     debugPrint("Detaching Listeners...");
-    timer.cancel();
+    if (timer != null) {
+      timer!.cancel();
+    }
   }
 
   // Using Polling instead of WebSockets
@@ -43,6 +46,7 @@ class CartManager {
   }
 
   Future<List<CartItem>> getCart() async {
+    if (appCache.appState.value.user == null) return [];
     var response = await http.get(
       Uri.parse("$API_URL/cart/get/${appCache.appState.value.user!.id}"),
     );
@@ -76,6 +80,27 @@ class CartManager {
         },
       ),
     );
+
+    showToast("Added Item to cart");
+    print(response.body);
+  }
+
+  Future<void> removeItemFromCart({
+    required String itemId,
+  }) async {
+    var userId = appCache.appState.value.user!.id;
+    var response = await http.post(
+      Uri.parse("$API_URL/cart/remove"),
+      headers: {"content-type": "application/json"},
+      body: json.encode(
+        {
+          "userId": userId,
+          "itemId": itemId,
+        },
+      ),
+    );
+
+    showToast("Removed Item from Cart");
     print(response.body);
   }
 }

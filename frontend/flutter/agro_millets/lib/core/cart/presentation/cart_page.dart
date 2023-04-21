@@ -2,7 +2,7 @@ import 'package:agro_millets/colors.dart';
 import 'package:agro_millets/core/cart/application/cart_manager.dart';
 import 'package:agro_millets/core/cart/application/cart_provider.dart';
 import 'package:agro_millets/core/home/application/home_manager.dart';
-import 'package:agro_millets/core/home/presentation/widgets/grid_item.dart';
+import 'package:agro_millets/core/home/presentation/widgets/agro_item.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/cart_item.dart';
 import 'package:agro_millets/models/millet_item.dart';
@@ -72,7 +72,9 @@ class _CartPageState extends ConsumerState<CartPage> {
                             child: Text("Error Occured"),
                           );
                         }
-                        return const CircularProgressIndicator();
+                        return const Center(
+                          child: CircularProgressIndicator(),
+                        );
                       },
                     );
                   },

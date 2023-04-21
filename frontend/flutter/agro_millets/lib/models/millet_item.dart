@@ -10,53 +10,59 @@ class MilletItem {
   final String description;
   final double price;
   final List<dynamic> images;
+  final DateTime listedAt;
 
   MilletItem({
+    required this.id,
     required this.name,
     required this.listedBy,
     required this.description,
     required this.price,
     required this.images,
-    required this.id,
+    required this.listedAt,
   });
 
   MilletItem copyWith({
+    String? id,
     String? name,
     String? listedBy,
     String? description,
-    String? id,
     double? price,
     List<dynamic>? images,
+    DateTime? listedAt,
   }) {
     return MilletItem(
+      id: id ?? this.id,
       name: name ?? this.name,
       listedBy: listedBy ?? this.listedBy,
       description: description ?? this.description,
       price: price ?? this.price,
       images: images ?? this.images,
-      id: id ?? this.id,
+      listedAt: listedAt ?? this.listedAt,
     );
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
+      '_id': id,
       'name': name,
       'listedBy': listedBy,
       'description': description,
       'price': price,
       'images': images,
-      "_id": id,
+      'listedAt': listedAt.toIso8601String(),
     };
   }
 
   factory MilletItem.fromMap(Map<String, dynamic> map) {
     return MilletItem(
+      id: map['_id'] as String,
       name: map['name'] as String,
       listedBy: map['listedBy'] as String,
       description: map['description'] as String,
       price: map['price'] * 1.0,
       images: List<dynamic>.from((map['images'] as List<dynamic>)),
-      id: map['_id'],
+      listedAt: DateTime.parse(map['listedAt']),
     );
   }
 
@@ -67,7 +73,7 @@ class MilletItem {
 
   @override
   String toString() {
-    return 'MilletItem(name: $name, listedBy: $listedBy, description: $description, price: $price, images: $images)';
+    return 'MilletItem(id: $id, name: $name, listedBy: $listedBy, description: $description, price: $price, images: $images, listedAt: $listedAt)';
   }
 
   @override
@@ -79,15 +85,18 @@ class MilletItem {
         other.listedBy == listedBy &&
         other.description == description &&
         other.price == price &&
-        listEquals(other.images, images);
+        listEquals(other.images, images) &&
+        other.listedAt == listedAt;
   }
 
   @override
   int get hashCode {
-    return name.hashCode ^
+    return id.hashCode ^
+        name.hashCode ^
         listedBy.hashCode ^
         description.hashCode ^
         price.hashCode ^
-        images.hashCode;
+        images.hashCode ^
+        listedAt.hashCode;
   }
 }

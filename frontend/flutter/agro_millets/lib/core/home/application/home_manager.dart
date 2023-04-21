@@ -11,7 +11,7 @@ import 'package:http/http.dart' as http;
 
 class HomeManager {
   final BuildContext context;
-  late Timer timer;
+  late Timer? timer;
   final WidgetRef ref;
 
   HomeManager(this.context, this.ref) {
@@ -20,7 +20,9 @@ class HomeManager {
 
   dispose() {
     debugPrint("Detaching Listeners...");
-    timer.cancel();
+    if (timer != null) {
+      timer!.cancel();
+    }
   }
 
   // Using Polling instead of WebSockets

@@ -34,6 +34,10 @@ function ItemDetail() {
 function LoadedPage({ item }) {
   const [comment, setComment] = useState("");
   var navigate = useNavigate();
+
+
+
+
   return (
     <>
       <section className="mt-[8vh] min-h-[52vh] w-[100%] p-6 lg:p-12 ">

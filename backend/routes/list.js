@@ -6,6 +6,12 @@ const { Comment, validateComment } = require("../models/comment");
 const { User } = require("../models/user");
 const mongoose = require("mongoose");
 
+router.get("/getRecent", async (req, res) => {
+  const items = await MilletItem.find().sort({ dateField: -1 }).limit(5);
+
+  return res.send(getSuccessResponse("Success!", items));
+});
+
 router.get("/getAll", async (req, res) => {
   const items = await MilletItem.find({});
 
@@ -20,7 +26,8 @@ router.get("/getAll/:farmerID", async (req, res) => {
 
   let items = await MilletItem.find({});
 
-  items = items.filter((item) => item.listedBy == farmerID);
+  //TODO: Check if this works
+  items = items.filter((item) => item.listedBy === farmerID);
 
   return res.send(getSuccessResponse("Success", items));
 });
@@ -51,14 +58,13 @@ router.get("/getItem/:id", async (req, res) => {
   return res.send(getSuccessResponse("Success", item));
 });
 
-
 router.post("/comment", async (req, res) => {
   const { commentBy, itemID } = req.body;
   if (!mongoose.Types.ObjectId.isValid(itemID)) {
     return res.status(404).send(getErrorResponse("Invalid Item ID"));
   }
   let item = await MilletItem.findOne({ _id: itemID });
-  
+
   if (!mongoose.Types.ObjectId.isValid(commentBy)) {
     return res.status(404).send(getErrorResponse("Invalid User ID"));
   }
@@ -83,6 +89,5 @@ router.post("/getComments", async (req, res) => {
   let item = await MilletItem.findOne({ _id: itemID });
   return res.send(getSuccessResponse("Success!", item.comments));
 });
-
 
 module.exports = router;

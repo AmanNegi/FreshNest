@@ -1,10 +1,17 @@
+import 'package:agro_millets/colors.dart';
+import 'package:agro_millets/core/cart/application/cart_manager.dart';
+import 'package:agro_millets/core/cart/application/cart_provider.dart';
 import 'package:agro_millets/core/home/application/comment_manager.dart';
 import 'package:agro_millets/core/home/application/comment_provider.dart';
+import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/globals.dart';
+import 'package:agro_millets/models/cart_item.dart';
+import 'package:agro_millets/models/comment.dart';
 import 'package:agro_millets/models/millet_item.dart';
 import 'package:agro_millets/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:timeago/timeago.dart' as timeago;
 
 class ItemDetailPage extends ConsumerStatefulWidget {
@@ -48,13 +55,25 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
         ),
         actions: [
           // TODO: Check if is owner or admin
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(
-              Icons.delete,
-              color: Colors.red,
+          if (appCache.isCustomer())
+            IconButton(
+              onPressed: () {
+                CartItem cartItem = CartItem(item: item.id, count: 1);
+                ref.read(cartProvider).addItemToCart(cartItem);
+                CartManager(context, ref, poll: false)
+                    .addItemToCart(item: cartItem);
+              },
+              icon: const Icon(MdiIcons.cartPlus),
             ),
-          ),
+
+          if (appCache.isAdmin() || appCache.isOwnerOf(item.listedBy))
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(
+                Icons.delete,
+                color: Colors.red,
+              ),
+            ),
         ],
         elevation: 0,
         centerTitle: true,
@@ -71,7 +90,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                 borderRadius: BorderRadius.circular(30.0),
               ),
               child: ClipRRect(
-                borderRadius: BorderRadius.circular(30.0),
+                borderRadius: BorderRadius.circular(10.0),
                 child: Image.network(
                   item.images[0],
                   height: 0.3 * getHeight(context),
@@ -89,8 +108,8 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                   child: Text(
                     item.name,
                     style: const TextStyle(
-                      fontSize: 30,
-                      fontWeight: FontWeight.w600,
+                      fontSize: 22,
+                      fontWeight: FontWeight.w400,
                     ),
                     maxLines: 2,
                     overflow: TextOverflow.ellipsis,
@@ -101,7 +120,7 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                   "₹ ${item.price}",
                   style: const TextStyle(
                       fontSize: 25,
-                      // color: accentColor,
+                      color: lightColor,
                       fontWeight: FontWeight.w600),
                 ),
               ],
@@ -110,51 +129,21 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
             Text(
               item.description,
               style: const TextStyle(
+                fontSize: 15,
                 color: Colors.grey,
               ),
             ),
 
             SizedBox(height: 0.025 * getHeight(context)),
-            const Divider(),
+            const Divider(height: 10),
+            SizedBox(height: 0.025 * getHeight(context)),
             const Text(
               "Comments",
               style: TextStyle(
                 fontSize: 20,
               ),
             ),
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: ref.watch(commentProvider).getComments().length,
-              itemBuilder: (context, index) {
-                var list = ref.watch(commentProvider).getComments();
-                return ListTile(
-                  leading: CircleAvatar(
-                    child: Text(list[index].name[0]),
-                  ),
-                  title: Row(
-                    children: [
-                      Text(
-                        list[index].name,
-                        style: const TextStyle(
-                          fontSize: 13,
-                        ),
-                      ),
-                      const Spacer(),
-                      Text(
-                        timeago.format(list[index].commentAt,locale: 'en_short'),
-                        style: const TextStyle(
-                          fontSize: 13,
-                          color: Colors.grey,
-                        ),
-                      ),
-                    ],
-                  ),
-                  subtitle: Text(list[index].content),
-                );
-              },
-            ),
-            const SizedBox(height: 20),
+            SizedBox(height: 0.015 * getHeight(context)),
             Row(
               children: [
                 Expanded(
@@ -166,16 +155,86 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                   ),
                 ),
                 IconButton(
-                  icon: const Icon(Icons.message_rounded),
+                  icon: const Icon(
+                    MdiIcons.sendCircle,
+                    size: 35,
+                  ),
                   onPressed: () => postComment(),
                 ),
               ],
             ),
-            SizedBox(height: 0.1 * getHeight(context)),
+
+            ListView.builder(
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: ref.watch(commentProvider).getComments().length,
+              itemBuilder: (context, index) {
+                var list = ref.watch(commentProvider).getComments();
+                if (appCache.isAdmin()) {
+                  return Dismissible(
+                    key: ValueKey(list[index].id),
+                    background: Container(
+                      decoration: const BoxDecoration(
+                        gradient: LinearGradient(
+                          begin: Alignment.centerLeft,
+                          end: Alignment.centerRight,
+                          colors: [
+                            Colors.white,
+                            Colors.red,
+                          ],
+                        ),
+                      ),
+                      child: Row(
+                        children: const [
+                          Spacer(),
+                          Icon(
+                            Icons.delete,
+                            color: Colors.white,
+                          ),
+                          SizedBox(width: 20),
+                        ],
+                      ),
+                    ),
+                    child: _getCommentItem(list, index),
+                  );
+                } else {
+                  return _getCommentItem(list, index);
+                }
+              },
+            ),
+            const SizedBox(height: 20),
+
             // _getQuantityIncrementer(context)
           ],
         ),
       ),
+    );
+  }
+
+  ListTile _getCommentItem(List<CommentItem> list, int index) {
+    return ListTile(
+      leading: CircleAvatar(
+        child: Text(list[index].name[0]),
+      ),
+      title: Row(
+        children: [
+          Text(
+            list[index].name,
+            style: const TextStyle(
+              fontSize: 13,
+            ),
+          ),
+          const Spacer(),
+          Text(
+            timeago.format(list[index].commentAt, locale: 'en_short'),
+            style: const TextStyle(
+              fontSize: 13,
+              color: Colors.grey,
+            ),
+          ),
+        ],
+      ),
+      subtitle: Text(list[index].content),
     );
   }
 

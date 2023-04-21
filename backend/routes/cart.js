@@ -76,4 +76,44 @@ router.post("/add", async (req, res) => {
   return res.send(getSuccessResponse("Saved Item to Cart", cart));
 });
 
+// Remove item from cart
+// Body: {userId, itemId}
+router.post("/remove", async (req, res) => {
+  var { userId, itemId } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).send(getErrorResponse("Invalid Cart Item ID"));
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(itemId)) {
+    return res.status(404).send(getErrorResponse("Invalid Item ID"));
+  }
+
+  var cart = await Cart.findOne({ userId: userId });
+
+  if (!cart) {
+    return res
+      .status(404)
+      .send(getErrorResponse("No cart exists for this userId"));
+  }
+
+  const len = cart.items.length;
+  
+  // If itemId doesn't match, add it back to list
+  cart.items = cart.items.filter((e) => e.item.toString() !== itemId);
+
+  if (cart.items.length === len) {
+    // No item was removed, means it doesn't exist
+    return res
+      .status(404)
+      .send(getErrorResponse("No item of this ID is present in your cart"));
+  }
+
+  await cart.save();
+
+  return res.send(
+    getSuccessResponse("Successfully removed item from cart", cart)
+  );
+});
+
 module.exports = router;

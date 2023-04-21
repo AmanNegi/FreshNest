@@ -23,6 +23,13 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  removeItemFromCart(String itemId) {
+    var cart = appCache.appState.value.cart;
+    cart.removeWhere((element) => element.item == itemId);
+
+    setCart(cart);
+  }
+
   setCart(List<CartItem> list) {
     _cart = list;
     appCache.updateAppCache(AppState(

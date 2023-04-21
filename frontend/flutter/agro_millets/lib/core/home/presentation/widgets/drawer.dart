@@ -1,3 +1,4 @@
+import 'package:agro_millets/colors.dart';
 import 'package:agro_millets/core/auth/presentation/login_page.dart';
 import 'package:agro_millets/core/cart/presentation/cart_page.dart';
 import 'package:agro_millets/core/home/presentation/profile/user_profile.dart';
@@ -21,6 +22,9 @@ class _AgroDrawerState extends State<AgroDrawer> {
       child: Column(
         children: [
           UserAccountsDrawerHeader(
+            decoration: const BoxDecoration(
+              color: semiDarkColor,
+            ),
             accountName: Text(appCache.getUserName()),
             accountEmail: Text(appCache.getEmail()),
           ),
@@ -31,6 +35,7 @@ class _AgroDrawerState extends State<AgroDrawer> {
               goToPage(context, const UserProfile());
             },
           ),
+          if(!appCache.isAdmin() && !appCache.isFarmer())
           ListTile(
             title: const Text("Cart"),
             leading: const Icon(Icons.shopping_cart_outlined),

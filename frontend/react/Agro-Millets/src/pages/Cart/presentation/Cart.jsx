@@ -24,7 +24,7 @@ function CartPage() {
         <h1 className="text-5xl font-bold mt-5 pl-5 md:pl-10">Your Cart</h1>
         <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 p-8 lg:p-10 ">
           {cartItems.map((e, i) => {
-            return <ShopItem key={i} itemId={e.item} />;
+            return <ShopItem key={i} itemId={e.item} isCart={true} />;
           })}
         </div>
       </section>

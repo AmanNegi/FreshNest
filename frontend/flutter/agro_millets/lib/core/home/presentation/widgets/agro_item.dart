@@ -1,6 +1,7 @@
 import 'package:agro_millets/core/cart/application/cart_manager.dart';
 import 'package:agro_millets/core/cart/application/cart_provider.dart';
 import 'package:agro_millets/core/home/presentation/detail/item_detail.dart';
+import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/cart_item.dart';
 import 'package:agro_millets/models/millet_item.dart';
@@ -13,7 +14,6 @@ class AgroItem extends StatelessWidget {
   final int index;
   final MilletItem item;
   final bool showAddCartIcon;
-  
 
   const AgroItem({
     super.key,
@@ -56,9 +56,9 @@ class AgroItem extends StatelessWidget {
                       Expanded(
                         child: ClipRRect(
                           borderRadius: const BorderRadius.only(
-                            topRight: Radius.circular(15.0),
-                            bottomRight: Radius.circular(15.0),
-                            topLeft: Radius.circular(15.0),
+                            topRight: Radius.circular(10.0),
+                            bottomRight: Radius.circular(10.0),
+                            topLeft: Radius.circular(10.0),
                           ),
                           child: Image.network(
                             item.images[0].toString(),
@@ -107,7 +107,7 @@ class AgroItem extends StatelessWidget {
               ),
             ),
           ),
-          if (showAddCartIcon)
+          if (showAddCartIcon && !appCache.isAdmin())
             Consumer(builder: (context, ref, child) {
               return Positioned(
                 right: 0,
@@ -116,10 +116,8 @@ class AgroItem extends StatelessWidget {
                   onTap: () async {
                     CartItem cartItem = CartItem(item: item.id, count: 1);
                     ref.read(cartProvider).addItemToCart(cartItem);
-                    CartManager(context, ref).addItemToCart(item: cartItem);
-
-                    showToast("Added to cart");
-
+                    CartManager(context, ref, poll: false)
+                        .addItemToCart(item: cartItem);
                   },
                   child: Container(
                     width: 40,
@@ -139,6 +137,40 @@ class AgroItem extends StatelessWidget {
                     child: const Icon(
                       MdiIcons.cartPlus,
                       color: Colors.black,
+                    ),
+                  ),
+                ),
+              );
+            }),
+          if (!showAddCartIcon)
+            Consumer(builder: (context, ref, child) {
+              return Positioned(
+                right: 0,
+                top: 0,
+                child: GestureDetector(
+                  onTap: () async {
+                    ref.read(cartProvider).removeItemFromCart(item.id);
+                    CartManager(context, ref, poll: false)
+                        .removeItemFromCart(itemId: item.id);
+                  },
+                  child: Container(
+                    width: 40,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.05),
+                          blurRadius: 5.0,
+                          spreadRadius: 3.0,
+                          offset: const Offset(0.0, 0.0),
+                        )
+                      ],
+                      borderRadius: BorderRadius.circular(10.0),
+                    ),
+                    child: const Icon(
+                      MdiIcons.delete,
+                      color: Colors.red,
                     ),
                   ),
                 ),

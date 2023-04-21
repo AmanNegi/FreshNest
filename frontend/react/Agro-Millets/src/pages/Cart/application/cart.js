@@ -37,6 +37,34 @@ export async function addToCart(itemId, count) {
     count: count,
   });
 
+  if (res.data.statusCode == 200) {
+    toast.success(res.data.message);
+  } else {
+    toast.error(res.data.message);
+  }
+
+  console.log(res);
+  return 1;
+}
+
+export async function removeFromCart(itemId) {
+  // http://localhost:3000/api/admin/deleteItem
+  if (!appState.isUserLoggedIn()) {
+    toast.error("You must be logged in to remove item from cart");
+    return 0;
+  }
+
+  var res = await axios.post(API_URL + "/cart/remove", {
+    userId: appState.userData._id,
+    itemId: itemId,
+  });
+
+  if (res.data.statusCode == 200) {
+    toast.success(res.data.message);
+  } else {
+    toast.error(res.data.message);
+  }
+
   console.log(res);
   return 1;
 }

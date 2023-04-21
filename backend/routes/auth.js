@@ -4,6 +4,8 @@ const express = require("express");
 const { getSuccessResponse, getErrorResponse } = require("../utils/response");
 const router = express.Router();
 const _ = require("lodash");
+const { default: mongoose } = require("mongoose");
+
 /**
  * Login as a user using {email} {password}
  * body: {email:"email",password:"password"}
@@ -62,6 +64,42 @@ router.post("/signup", async (req, res) => {
     getSuccessResponse(
       "Signup Successful",
       _.omit(user.toObject(), ["password", "__v"])
+    )
+  );
+});
+
+/**
+ * Get All Users (For Admin Panel)
+ * {adminId: Objectid}
+ */
+
+router.post("/getAll", async (req, res) => {
+  console.log("Request Body: ", req.body);
+
+  // Validate if Id is valid
+  if (!mongoose.Types.ObjectId.isValid(req.body.adminId)) {
+    return res.status(404).send(getErrorResponse("Invalid Admin ID"));
+  }
+
+  let user = await User.findOne({ _id: req.body.adminId });
+  // Check if user exists
+  if (!user)
+    return res.send(getErrorResponse("No User Exists with this email"));
+
+  // Check if user is admin
+  if (user.userType !== "admin") {
+    return res.status(404).send(getErrorResponse("You are not an Admin!"));
+  }
+
+  // User is admin, fetch all users and return
+
+  var users = await User.find({}).select("-__v -password");
+
+  return res.send(
+    getSuccessResponse(
+      "Success",
+      users
+      // _.omit(user.toObject(), ["password", "__v"])
     )
   );
 });
