@@ -25,16 +25,22 @@ dependencies:
   http: ^0.13.5
   image_picker: ^0.8.7
   material_design_icons_flutter: ^6.0.7096
+  package_info_plus: ^3.1.0
   shared_preferences: ^2.1.0
   timeago: ^3.3.0
   uuid: ^3.0.7
 
 dev_dependencies:
+  flutter_launcher_icons: "^0.13.1"
   flutter_lints: ^2.0.0
   flutter_test:
     sdk: flutter
-  flutter_launcher_icons: "^0.13.1"
 
+flutter_launcher_icons:
+  android: "launcher_icon"
+  ios: true
+  image_path: "assets/logo_app.png"
+  min_sdk_android: 21 # android min sdk min:16, default 21
 
 flutter:
   uses-material-design: true

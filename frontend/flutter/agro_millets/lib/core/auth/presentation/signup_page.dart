@@ -1,4 +1,3 @@
-import 'package:agro_millets/colors.dart';
 import 'package:agro_millets/core/auth/application/auth.dart';
 import 'package:agro_millets/core/auth/presentation/login_page.dart';
 import 'package:agro_millets/core/home/presentation/widgets/loading_widget.dart';
@@ -43,8 +42,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
         children: [
           const SizedBox(height: kToolbarHeight),
           Image.asset(
-            "assets/logo.png",
-            color: lightColor,
+            "assets/logo_app.png",
             height: 100,
             width: 100,
           ),

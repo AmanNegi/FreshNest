@@ -72,6 +72,8 @@ Future<List<MilletItem>> getAllFarmerItems(String id) async {
   var response = await http.get(
     Uri.parse("$API_URL/list/getAll/$id"),
   );
+
+  debugPrint(response.request!.url.toString());
   Map data = json.decode(response.body);
 
   if (data["statusCode"] == 200) {
@@ -81,6 +83,7 @@ Future<List<MilletItem>> getAllFarmerItems(String id) async {
     for (var e in dataMap) {
       list.add(MilletItem.fromMap(e));
     }
+    debugPrint("Farmer Items $list");
 
     return list;
   }
