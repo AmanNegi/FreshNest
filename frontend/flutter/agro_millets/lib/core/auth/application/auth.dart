@@ -76,6 +76,7 @@ class AuthManager {
           );
         }
       }
+      isLoading.value = false;
       return 0;
     } catch (e) {
       debugPrint("An Exception Occurred: $e");

@@ -7,6 +7,7 @@ import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:package_info_plus/package_info_plus.dart';
 
 class AgroDrawer extends StatefulWidget {
   const AgroDrawer({super.key});
@@ -53,6 +54,24 @@ class _AgroDrawerState extends State<AgroDrawer> {
               },
             );
           }),
+          const Spacer(),
+          Image.asset("assets/logo_app.png", height: 50),
+          const SizedBox(height: 10),
+          FutureBuilder(
+              future: PackageInfo.fromPlatform(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData && snapshot.data != null) {
+                  return Text(
+                    "Agro-Millets v${snapshot.data!.version}",
+                    style: const TextStyle(color: Colors.grey, fontSize: 12),
+                  );
+                }
+                return const Text(
+                  "Agro-Millets",
+                  style: TextStyle(color: Colors.grey, fontSize: 12),
+                );
+              }),
+          const SizedBox(height: 20),
         ],
       ),
     );

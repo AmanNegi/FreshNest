@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:agro_millets/core/home/application/home_manager.dart';
+import 'package:agro_millets/core/home/presentation/widgets/loading_widget.dart';
 import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/utils/firebase_storage.dart';
 import 'package:agro_millets/widgets/action_button.dart';
@@ -23,10 +24,20 @@ class AddItemPageState extends State<AddItemPage> {
   String imageUrl = "";
   bool pickedImage = false;
 
+  ValueNotifier<bool> isLoading = ValueNotifier(false);
+
   @override
   Widget build(BuildContext context) {
     height = MediaQuery.of(context).size.height;
     width = MediaQuery.of(context).size.width;
+    return LoadingWidget(
+      isLoading: isLoading,
+      child: _getAddItemPage(context),
+    );
+    // return _getAddItemPage(context);
+  }
+
+  Scaffold _getAddItemPage(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
         automaticallyImplyLeading: false,
@@ -48,6 +59,7 @@ class AddItemPageState extends State<AddItemPage> {
   _getFloatingActionButton(BuildContext context) {
     return FloatingActionButton.extended(
       onPressed: () async {
+        isLoading.value = true;
         String itemId = const Uuid().v1();
 
         String url =
@@ -60,7 +72,10 @@ class AddItemPageState extends State<AddItemPage> {
           images: [url],
           price: price,
         );
-        Navigator.pop(context);
+        isLoading.value = false;
+        if (mounted) {
+          Navigator.pop(context);
+        }
       },
       label: Row(
         children: const [
