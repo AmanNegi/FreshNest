@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:agro_millets/core/home/presentation/home_page.dart';
 import 'package:agro_millets/data/auth_state_repository.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/user.dart';
@@ -13,13 +12,16 @@ import 'package:http/http.dart' as http;
 class AuthManager {
   final BuildContext context;
   final WidgetRef ref;
-  const AuthManager(this.context, this.ref);
+  AuthManager(this.context, this.ref);
+
+  ValueNotifier<bool> isLoading = ValueNotifier(false);
 
   Future<int> loginUsingEmailPassword({
     required String email,
     required String password,
   }) async {
     ref.read(authProvider).clearUserData();
+    isLoading.value = true;
     var response = await http.post(
       Uri.parse("$API_URL/auth/login"),
       headers: {
@@ -30,14 +32,14 @@ class AuthManager {
         "password": password,
       }),
     );
-    debugPrint(response.body);
+    isLoading.value = false;
     Map<String, dynamic> data = json.decode(response.body);
 
     if (data["statusCode"] == 200) {
-      ref.read(authProvider).updateUserData(User.fromMap(data["data"]));
-      if (context.mounted) {
-        goToPage(context, const HomePage(), clearStack: true);
-      }
+      ref.read(authProvider).updateUserData(
+            User.fromMap(data["data"]),
+          );
+
       return 1;
     } else {
       showToast(data["message"]);
@@ -45,7 +47,7 @@ class AuthManager {
     }
   }
 
-  Future<void> googleAuth() async {
+  Future<int> googleAuth() async {
     GoogleSignIn googleSignIn = GoogleSignIn(
       scopes: [
         'email',
@@ -54,12 +56,13 @@ class AuthManager {
     );
 
     try {
+      isLoading.value = true;
       await googleSignIn.signOut();
       var data = await googleSignIn.signIn();
       if (data != null) {
         User? user = await searchForUser(data.email);
         if (user == null) {
-          await signUpUsingEmailPassword(
+          return await signUpUsingEmailPassword(
               name: data.displayName ?? data.email,
               email: data.email,
               // TODO: Take these properties after google sign in success
@@ -67,14 +70,17 @@ class AuthManager {
               phone: "000",
               userType: "customer");
         } else {
-          await loginUsingEmailPassword(
+          return await loginUsingEmailPassword(
             email: user.email,
             password: "~",
           );
         }
       }
+      return 0;
     } catch (e) {
       debugPrint("An Exception Occurred: $e");
+      isLoading.value = false;
+      return 0;
     }
   }
 
@@ -86,6 +92,7 @@ class AuthManager {
     required String userType,
   }) async {
     ref.read(authProvider).clearUserData();
+    isLoading.value = true;
     var response = await http.post(
       Uri.parse("$API_URL/auth/signup"),
       body: {
@@ -96,15 +103,11 @@ class AuthManager {
         "userType": userType,
       },
     );
-    debugPrint(response.body);
+    isLoading.value = false;
     Map<String, dynamic> data = json.decode(response.body);
 
     if (data["statusCode"] == 200) {
       ref.read(authProvider).updateUserData(User.fromMap(data["data"]));
-
-      if (context.mounted) {
-        goToPage(context, const HomePage(), clearStack: true);
-      }
 
       return 1;
     } else {

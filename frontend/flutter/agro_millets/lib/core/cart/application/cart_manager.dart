@@ -22,7 +22,7 @@ class CartManager {
   }
 
   dispose() {
-    debugPrint("Detaching Listeners...");
+    debugPrint("[cart_manager] Detaching Listeners...");
     if (timer != null) {
       timer!.cancel();
     }
@@ -30,7 +30,7 @@ class CartManager {
 
   // Using Polling instead of WebSockets
   attach() async {
-    debugPrint("Attaching Listeners...");
+    debugPrint("[cart_manager] Attaching Listeners...");
     var data = await getCart();
     ref.read(cartProvider).setCart(data);
 
@@ -46,11 +46,10 @@ class CartManager {
   }
 
   Future<List<CartItem>> getCart() async {
-    if (appCache.appState.value.user == null) return [];
+    if (appState.value.user == null) return [];
     var response = await http.get(
-      Uri.parse("$API_URL/cart/get/${appCache.appState.value.user!.id}"),
+      Uri.parse("$API_URL/cart/get/${appState.value.user!.id}"),
     );
-    debugPrint(response.body);
 
     Map data = json.decode(response.body);
     if (data["statusCode"] == 200) {
@@ -68,7 +67,7 @@ class CartManager {
   Future<void> addItemToCart({
     required CartItem item,
   }) async {
-    var userId = appCache.appState.value.user!.id;
+    var userId = appState.value.user!.id;
     var response = await http.post(
       Uri.parse("$API_URL/cart/add"),
       headers: {"content-type": "application/json"},
@@ -82,13 +81,12 @@ class CartManager {
     );
 
     showToast("Added Item to cart");
-    print(response.body);
   }
 
   Future<void> removeItemFromCart({
     required String itemId,
   }) async {
-    var userId = appCache.appState.value.user!.id;
+    var userId = appState.value.user!.id;
     var response = await http.post(
       Uri.parse("$API_URL/cart/remove"),
       headers: {"content-type": "application/json"},
@@ -101,6 +99,5 @@ class CartManager {
     );
 
     showToast("Removed Item from Cart");
-    print(response.body);
   }
 }

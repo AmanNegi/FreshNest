@@ -12,7 +12,6 @@ class HomeProvider extends ChangeNotifier {
 
   void updateItems(List<MilletItem> items) {
     if (listEquals(items, _items)) return;
-    print("Updating Items");
     _items = items;
     notifyListeners();
   }

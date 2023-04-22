@@ -55,7 +55,7 @@ class AddItemPageState extends State<AddItemPage> {
 
         await addItem(
           name: name,
-          listedBy: appCache.appState.value.user!.id,
+          listedBy: appState.value.user!.id,
           description: description,
           images: [url],
           price: price,

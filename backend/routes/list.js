@@ -27,7 +27,7 @@ router.get("/getAll/:farmerID", async (req, res) => {
   let items = await MilletItem.find({});
 
   //TODO: Check if this works
-  items = items.filter((item) => item.listedBy === farmerID);
+  items = items.filter((item) => item.listedBy.toString() === farmerID);
 
   return res.send(getSuccessResponse("Success", items));
 });

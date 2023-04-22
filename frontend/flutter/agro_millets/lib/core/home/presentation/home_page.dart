@@ -3,17 +3,12 @@ import 'package:agro_millets/core/home/application/home_provider.dart';
 import 'package:agro_millets/core/home/presentation/add_item/add_item.dart';
 import 'package:agro_millets/core/home/presentation/widgets/agro_grid_view.dart';
 import 'package:agro_millets/core/home/presentation/widgets/drawer.dart';
-import 'package:agro_millets/core/home/presentation/widgets/agro_item.dart';
 import 'package:agro_millets/core/search/presentation/search_page.dart';
-import 'package:agro_millets/data/auth_state_repository.dart';
 import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/models/millet_item.dart';
 import 'package:agro_millets/widgets/text/large_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
-
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -87,12 +82,11 @@ class _HomePageState extends ConsumerState<HomePage> {
   _getHeading() {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
-      child: Consumer(
-        builder: (context, ref, _) {
-          var val = ref.read(authProvider);
-          if (val.isFarmer()) {
+      child: Builder(
+        builder: (context ) {
+          if (appCache.isFarmer()) {
             return const LargeText("Your Products");
-          } else if (val.isAdmin()) {
+          } else if (appCache.isAdmin()) {
             return const LargeText("All Products");
           }
           return const LargeText("Explore Products");

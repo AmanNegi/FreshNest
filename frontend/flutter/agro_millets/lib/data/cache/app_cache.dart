@@ -2,17 +2,18 @@ import 'package:agro_millets/data/auth_state_repository.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+
+ValueNotifier<AppState> appState = ValueNotifier(AppState.initial());
+
+// Helps along with AppStateProvider
 class AppCache {
   final String _prefsKey = "Agro_Millets";
-
-  ValueNotifier<AppState> appState =
-      ValueNotifier<AppState>(AppState.initial());
 
   getDataFromDevice() async {
     var sharedPreferences = await SharedPreferences.getInstance();
     String? data = sharedPreferences.getString(_prefsKey);
     if (data == null) return;
-    appState.value = AppState.fromJson(data);
+    appState.value = (AppState.fromJson(data));
     debugPrint("Data From Device: $data");
   }
 
@@ -23,12 +24,12 @@ class AppCache {
   }
 
   updateAppCache(AppState state) {
-    appState.value = state;
+    appState.value = (AppState.fromMap(state.toMap()));
     saveDataToDevice();
   }
 
   clearAppCache() {
-    appState.value = AppState.initial();
+    appState.value = (AppState.initial());
     saveDataToDevice();
   }
 

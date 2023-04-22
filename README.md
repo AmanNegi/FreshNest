@@ -1,4 +1,8 @@
 <h1 align="center"> Agro-Millets 🌾 </h1>
+<p align="center">
+  <img src="/images/logo.png" width="20%" />
+</p>
+
 <p align="middle">
   <img src="/images/farm.jpg" width="20%" />
   <img src="/images/farmer.jpg" width="20%" /> 
@@ -61,5 +65,6 @@ Distributed under the AGPLv3 License. See [`LICENSE.md`](./LICENSE) for more inf
 
 ## 🙏 Support
 This project needs a ⭐️ from you. Don't forget to leave a star.
+
 
 

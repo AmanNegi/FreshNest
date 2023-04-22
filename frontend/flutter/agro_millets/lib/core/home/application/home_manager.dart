@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:agro_millets/core/home/application/home_provider.dart';
-import 'package:agro_millets/data/auth_state_repository.dart';
+import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/models/millet_item.dart';
 import "package:agro_millets/secrets.dart";
 import 'package:flutter/material.dart';
@@ -19,7 +19,7 @@ class HomeManager {
   }
 
   dispose() {
-    debugPrint("Detaching Listeners...");
+    debugPrint("[home_manager] Detaching Listeners...");
     if (timer != null) {
       timer!.cancel();
     }
@@ -27,7 +27,7 @@ class HomeManager {
 
   // Using Polling instead of WebSockets
   attach() async {
-    debugPrint("Attaching Listeners...");
+    debugPrint("[home_manager] Attaching Listeners...");
     var data = await getAllItems();
     ref.read(homeProvider).updateItems(data);
 
@@ -43,9 +43,8 @@ class HomeManager {
   }
 
   Future<List<MilletItem>> getAllItems() async {
-    var provider = ref.read(authProvider);
-    if (provider.isFarmer()) {
-      return await getAllFarmerItems(provider.getCurrentUser()!.id);
+    if (appCache.isFarmer()) {
+      return await getAllFarmerItems(appState.value.user!.id);
     }
     return getAll();
   }
@@ -54,7 +53,6 @@ class HomeManager {
     var response = await http.get(
       Uri.parse("$API_URL/list/getAll"),
     );
-    debugPrint(response.body);
 
     Map data = json.decode(response.body);
     if (data["statusCode"] == 200) {
@@ -74,7 +72,6 @@ Future<List<MilletItem>> getAllFarmerItems(String id) async {
   var response = await http.get(
     Uri.parse("$API_URL/list/getAll/$id"),
   );
-  debugPrint(response.body);
   Map data = json.decode(response.body);
 
   if (data["statusCode"] == 200) {
@@ -111,12 +108,10 @@ Future<void> addItem({
       },
     ),
   );
-  print(response.body);
 }
 
 Future<MilletItem?> getItemById(String id) async {
   var response = await http.get(Uri.parse("$API_URL/list/getItem/$id"));
-  debugPrint(response.body);
   Map data = json.decode(response.body);
 
   if (data["statusCode"] == 200) {

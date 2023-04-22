@@ -21,13 +21,13 @@ class CommentManager {
   }
 
   dispose() {
-    debugPrint("CommentManager: Detaching Listeners...");
+    debugPrint("[comment_manager] Detaching Listeners...");
     timer.cancel();
   }
 
   // Using Polling instead of WebSockets
   attach() async {
-    debugPrint("CommentManager: Attaching Listeners...");
+    debugPrint("[comment_manager]: Attaching Listeners...");
     var data = await getAllComments();
     ref.read(commentProvider).updateItems(data);
 
@@ -47,7 +47,6 @@ class CommentManager {
       Uri.parse("$API_URL/list/getComments"),
       body: {"itemID": itemID},
     );
-    debugPrint(response.body);
     Map data = json.decode(response.body);
     List dataMap = data["data"];
     List<CommentItem> list = [];
@@ -63,14 +62,13 @@ class CommentManager {
       Uri.parse("$API_URL/list/comment"),
       body: {
         "itemID": itemID,
-        "commentBy": appCache.appState.value.user!.id,
-        "name": appCache.appState.value.user!.name,
+        "commentBy": appState.value.user!.id,
+        "name": appState.value.user!.name,
         "content": content,
         "commentAt": DateTime.now().toIso8601String(),
       },
     );
     debugPrint("Comment Added Successfully");
-    debugPrint(response.body);
   }
 
   Future<void> addItem({
@@ -93,6 +91,5 @@ class CommentManager {
         },
       ),
     );
-    print(response.body);
   }
 }

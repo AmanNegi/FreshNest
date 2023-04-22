@@ -13,18 +13,15 @@ class CartProvider extends ChangeNotifier {
   addItemToCart(CartItem item) {
     _cart = [..._cart, item];
     appCache.updateAppCache(AppState(
-      cart: [
-        CartItem(count: 1, item: item.item),
-        ...appCache.appState.value.cart
-      ],
-      user: appCache.appState.value.user,
-      isLoggedIn: appCache.appState.value.isLoggedIn,
+      cart: [CartItem(count: 1, item: item.item), ...appState.value.cart],
+      user: appState.value.user,
+      isLoggedIn: appState.value.isLoggedIn,
     ));
     notifyListeners();
   }
 
   removeItemFromCart(String itemId) {
-    var cart = appCache.appState.value.cart;
+    var cart = appState.value.cart;
     cart.removeWhere((element) => element.item == itemId);
 
     setCart(cart);
@@ -34,8 +31,8 @@ class CartProvider extends ChangeNotifier {
     _cart = list;
     appCache.updateAppCache(AppState(
       cart: list,
-      user: appCache.appState.value.user,
-      isLoggedIn: appCache.appState.value.isLoggedIn,
+      user: appState.value.user,
+      isLoggedIn: appState.value.isLoggedIn,
     ));
 
     notifyListeners();
