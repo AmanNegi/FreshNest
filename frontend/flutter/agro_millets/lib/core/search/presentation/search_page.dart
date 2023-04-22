@@ -64,7 +64,7 @@ class _SearchPageState extends State<SearchPage> {
   }
 
   performSearch() async {
-    print("Searching $query");
+    print("Searching $query...");
     loading.value = true;
     results = await manager.search(query);
     loading.value = false;

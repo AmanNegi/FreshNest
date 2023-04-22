@@ -1,7 +1,9 @@
 import 'package:agro_millets/colors.dart';
 import 'package:agro_millets/core/auth/application/auth.dart';
 import 'package:agro_millets/core/auth/presentation/login_page.dart';
+import 'package:agro_millets/core/home/presentation/widgets/loading_widget.dart';
 import 'package:agro_millets/globals.dart';
+import 'package:agro_millets/main.dart';
 import 'package:agro_millets/widgets/action_button.dart';
 import 'package:agro_millets/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
@@ -28,131 +30,141 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Column(
-          children: [
-            const SizedBox(height: kToolbarHeight),
-            Image.asset(
-              "assets/icon.png",
-              color: lightColor,
-              height: 100,
-              width: 100,
-            ),
-            SizedBox(height: 0.015 * getHeight(context)),
-            const Center(
-              child: Text(
-                "Agro Millets",
-                style: TextStyle(
-                  fontSize: 25,
-                  fontWeight: FontWeight.bold,
-                ),
+    return LoadingWidget(
+      isLoading: _authManager.isLoading,
+      child: _getSignUpPage(context),
+    );
+  }
+
+  SingleChildScrollView _getSignUpPage(BuildContext context) {
+    return SingleChildScrollView(
+      padding: const EdgeInsets.symmetric(horizontal: 15.0),
+      child: Column(
+        children: [
+          const SizedBox(height: kToolbarHeight),
+          Image.asset(
+            "assets/logo.png",
+            color: lightColor,
+            height: 100,
+            width: 100,
+          ),
+          SizedBox(height: 0.015 * getHeight(context)),
+          const Center(
+            child: Text(
+              "Agro Millets",
+              style: TextStyle(
+                fontSize: 25,
+                fontWeight: FontWeight.bold,
               ),
             ),
-            const Center(
-              child: Text(
-                "Bringing the farm to your doorstep",
-                style: TextStyle(
-                  fontSize: 12,
-                ),
+          ),
+          const Center(
+            child: Text(
+              "Bringing the farm to your doorstep",
+              style: TextStyle(
+                fontSize: 12,
               ),
             ),
-            SizedBox(height: 0.025 * getHeight(context)),
-            CustomTextField(
-              onChanged: (v) => username = v,
-              label: "Username",
-            ),
-            const SizedBox(height: 10),
-            CustomTextField(
-              keyboardType: TextInputType.emailAddress,
-              onChanged: (v) => email = v,
-              label: "Email",
-            ),
-            const SizedBox(height: 10),
-            CustomTextField(
-              keyboardType: TextInputType.visiblePassword,
-              isPassword: true,
-              onChanged: (v) => password = v,
-              label: "Password",
-            ),
-            const SizedBox(height: 10),
-            CustomTextField(
-              keyboardType: TextInputType.phone,
-              onChanged: (v) => phone = v,
-              label: "Phone",
-            ),
-            _getUserTypeDropDown(context),
-            SizedBox(height: 0.025 * getHeight(context)),
-            ActionButton(
-              isFilled: false,
-              onPressed: () async {
-                await _authManager.signUpUsingEmailPassword(
-                  email: email.trim(),
-                  name: username.trim(),
-                  password: password.trim(),
-                  phone: phone.trim(),
-                  userType: dropdownValue,
-                );
-              },
-              text: "Sign up",
-            ),
-            SizedBox(height: 0.015 * getHeight(context)),
-            GestureDetector(
-              onTap: () async {
-                await _authManager.googleAuth();
-              },
-              // text: "Login using Google",
-              child: Container(
-                height: 0.06 * getHeight(context),
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(10.0),
-                ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: const [
-                    Icon(
-                      MdiIcons.google,
+          ),
+          SizedBox(height: 0.025 * getHeight(context)),
+          CustomTextField(
+            onChanged: (v) => username = v,
+            label: "Username",
+          ),
+          const SizedBox(height: 10),
+          CustomTextField(
+            keyboardType: TextInputType.emailAddress,
+            onChanged: (v) => email = v,
+            label: "Email",
+          ),
+          const SizedBox(height: 10),
+          CustomTextField(
+            keyboardType: TextInputType.visiblePassword,
+            isPassword: true,
+            onChanged: (v) => password = v,
+            label: "Password",
+          ),
+          const SizedBox(height: 10),
+          CustomTextField(
+            keyboardType: TextInputType.phone,
+            onChanged: (v) => phone = v,
+            label: "Phone",
+          ),
+          _getUserTypeDropDown(context),
+          SizedBox(height: 0.025 * getHeight(context)),
+          ActionButton(
+            isFilled: false,
+            onPressed: () async {
+              var res = await _authManager.signUpUsingEmailPassword(
+                email: email.trim(),
+                name: username.trim(),
+                password: password.trim(),
+                phone: phone.trim(),
+                userType: dropdownValue,
+              );
+              if (res == 1 && mounted) {
+                goToPage(context, const RolePage(), clearStack: true);
+              }
+            },
+            text: "Sign up",
+          ),
+          SizedBox(height: 0.015 * getHeight(context)),
+          GestureDetector(
+            onTap: () async {
+              var res = await _authManager.googleAuth();
+              if (res == 1 && mounted) {
+                goToPage(context, const RolePage(), clearStack: true);
+              }
+            },
+            child: Container(
+              height: 0.06 * getHeight(context),
+              decoration: BoxDecoration(
+                color: Theme.of(context).primaryColor,
+                borderRadius: BorderRadius.circular(10.0),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(
+                    MdiIcons.google,
+                    color: Colors.white,
+                  ),
+                  SizedBox(width: 10),
+                  Text(
+                    "Sign up using Google",
+                    style: TextStyle(
                       color: Colors.white,
+                      fontSize: 16,
                     ),
-                    SizedBox(width: 10),
-                    Text(
-                      "Sign up using Google",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 16,
-                      ),
-                    )
-                  ],
-                ),
+                  )
+                ],
               ),
             ),
-            SizedBox(height: 0.015 * getHeight(context)),
-            GestureDetector(
-              onTap: () => goToPage(
-                context,
-                const LoginPage(),
-                clearStack: true,
-              ),
-              child: RichText(
-                text: TextSpan(
-                  style: Theme.of(context).textTheme.bodyMedium,
-                  children: [
-                    const TextSpan(text: "Already have an account?"),
-                    TextSpan(
-                      text: " Login",
-                      style: TextStyle(
-                        fontWeight: FontWeight.w600,
-                        color: Theme.of(context).primaryColor,
-                      ),
+          ),
+          SizedBox(height: 0.015 * getHeight(context)),
+          GestureDetector(
+            onTap: () => goToPage(
+              context,
+              const LoginPage(),
+              clearStack: true,
+            ),
+            child: RichText(
+              text: TextSpan(
+                style: Theme.of(context).textTheme.bodyMedium,
+                children: [
+                  const TextSpan(text: "Already have an account?"),
+                  TextSpan(
+                    text: " Login",
+                    style: TextStyle(
+                      fontWeight: FontWeight.w600,
+                      color: Theme.of(context).primaryColor,
                     ),
-                  ],
-                ),
+                  ),
+                ],
               ),
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

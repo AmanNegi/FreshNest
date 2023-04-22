@@ -107,7 +107,7 @@ class AgroItem extends StatelessWidget {
               ),
             ),
           ),
-          if (showAddCartIcon && !appCache.isAdmin())
+          if (showAddCartIcon && !appCache.isAdmin() && !appCache.isFarmer())
             Consumer(builder: (context, ref, child) {
               return Positioned(
                 right: 0,

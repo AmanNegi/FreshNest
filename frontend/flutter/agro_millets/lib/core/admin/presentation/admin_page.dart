@@ -1,22 +1,37 @@
-import 'package:agro_millets/core/admin/application/admin_apis.dart';
+import 'package:agro_millets/core/admin/application/admin_manager.dart';
+import 'package:agro_millets/core/admin/application/admin_provider.dart';
 import 'package:agro_millets/core/admin/presentation/products_page.dart';
 import 'package:agro_millets/core/admin/presentation/users_page.dart';
 import 'package:agro_millets/core/home/presentation/widgets/agro_item.dart';
 import 'package:agro_millets/core/home/presentation/widgets/drawer.dart';
 import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/models/millet_item.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
-class AdminPage extends StatefulWidget {
+class AdminPage extends ConsumerStatefulWidget {
   const AdminPage({super.key});
 
   @override
-  State<AdminPage> createState() => _AdminPageState();
+  ConsumerState<AdminPage> createState() => _AdminPageState();
 }
 
-class _AdminPageState extends State<AdminPage> {
+class _AdminPageState extends ConsumerState<AdminPage> {
+  late AdminManager _adminManager;
+
+  @override
+  void initState() {
+    _adminManager = AdminManager(context, ref);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    _adminManager.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -72,37 +87,27 @@ class _AdminPageState extends State<AdminPage> {
               ],
             ),
           ),
-          FutureBuilder(
-            future: AdminAPIs.getRecentItems(),
-            builder: (context, snapshot) {
-              if (snapshot.hasData && snapshot.data != null) {
-                List<MilletItem> recentItems = snapshot.data ?? [];
-
-                return MasonryGridView.count(
-                  crossAxisCount: 2,
-                  padding: const EdgeInsets.symmetric(
-                    horizontal: 15.0,
-                    vertical: 15.0,
-                  ),
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemCount: recentItems.length,
-                  itemBuilder: (context, index) {
-                    return AgroItem(
-                      index: index,
-                      item: recentItems[index],
-                    );
-                  },
+          Consumer(builder: (context, ref, child) {
+            var recentItems = ref.watch(adminProvider).getItems();
+            return MasonryGridView.count(
+              crossAxisCount: 2,
+              padding: const EdgeInsets.symmetric(
+                horizontal: 15.0,
+                vertical: 15.0,
+              ),
+              mainAxisSpacing: 10,
+              crossAxisSpacing: 10,
+              shrinkWrap: true,
+              physics: const NeverScrollableScrollPhysics(),
+              itemCount: recentItems.length,
+              itemBuilder: (context, index) {
+                return AgroItem(
+                  index: index,
+                  item: recentItems[index],
                 );
-              }
-
-              return const Center(
-                child: CircularProgressIndicator(),
-              );
-            },
-          ),
+              },
+            );
+          }),
         ],
       ),
     );

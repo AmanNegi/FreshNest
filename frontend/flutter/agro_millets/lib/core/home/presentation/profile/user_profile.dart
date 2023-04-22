@@ -12,7 +12,7 @@ class UserProfile extends StatefulWidget {
 }
 
 class _UserProfileState extends State<UserProfile> {
-  var user = appCache.appState.value.user;
+  var user = appState.value.user;
 
   @override
   Widget build(BuildContext context) {

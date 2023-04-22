@@ -5,7 +5,6 @@ import 'package:agro_millets/core/home/application/home_manager.dart';
 import 'package:agro_millets/core/home/presentation/widgets/agro_item.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/cart_item.dart';
-import 'package:agro_millets/models/millet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';

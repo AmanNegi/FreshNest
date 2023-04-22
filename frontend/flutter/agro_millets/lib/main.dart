@@ -1,5 +1,5 @@
-import 'package:agro_millets/core/auth/presentation/login_page.dart';
 import 'package:agro_millets/core/admin/presentation/admin_page.dart';
+import 'package:agro_millets/core/auth/presentation/login_page.dart';
 import 'package:agro_millets/core/home/presentation/home_page.dart';
 import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:easy_localization/easy_localization.dart';
@@ -28,33 +28,44 @@ void main() async {
   );
 }
 
-class App extends ConsumerWidget {
+class App extends StatelessWidget {
   const App({super.key});
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
-    return ValueListenableBuilder(
-        valueListenable: appCache.appState,
-        builder: (context, value, child) {
-          return MaterialApp(
-            title: "Agro-Millets",
-            localizationsDelegates: context.localizationDelegates,
-            supportedLocales: context.supportedLocales,
-            locale: context.locale,
-            debugShowCheckedModeBanner: false,
-            theme: ThemeData(
-              colorScheme: ColorScheme.fromSeed(
-                seedColor: accentColor,
-              ),
-              useMaterial3: true,
-              fontFamily: GoogleFonts.poppins().fontFamily,
-            ),
-            home: value.isLoggedIn
-                ? value.user!.userType == "admin"
-                    ? const AdminPage()
-                    : const HomePage()
-                : const LoginPage(),
-          );
-        });
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: "Agro-Millets",
+      localizationsDelegates: context.localizationDelegates,
+      supportedLocales: context.supportedLocales,
+      locale: context.locale,
+      debugShowCheckedModeBanner: false,
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSeed(
+          seedColor: accentColor,
+        ),
+        useMaterial3: true,
+        fontFamily: GoogleFonts.poppins().fontFamily,
+      ),
+      home: getHomePage(),
+    );
+  }
+
+  getHomePage() {
+    if (!appState.value.isLoggedIn) {
+      return const LoginPage();
+    }
+    return const RolePage();
+  }
+}
+
+// Only takes part during startup
+class RolePage extends StatelessWidget {
+  const RolePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return appState.value.user!.userType == "admin"
+        ? const AdminPage()
+        : const HomePage();
   }
 }

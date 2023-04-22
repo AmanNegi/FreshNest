@@ -12,7 +12,7 @@ class AdminAPIs {
 
   static Future<List<User>> getAllUsers() async {
     List<User> listOfUsers = [];
-    String userId = appCache.appState.value.user!.id;
+    String userId = appState.value.user!.id;
     var response = await http.post(
       Uri.parse("$API_URL/auth/getAll"),
       body: {"adminId": userId},
@@ -34,7 +34,6 @@ class AdminAPIs {
     var response = await http.get(
       Uri.parse("$API_URL/list/getAll"),
     );
-    debugPrint(response.body);
 
     Map data = json.decode(response.body);
     if (data["statusCode"] == 200) {
@@ -53,7 +52,6 @@ class AdminAPIs {
     var response = await http.get(
       Uri.parse("$API_URL/list/getRecent"),
     );
-    debugPrint(response.body);
 
     Map data = json.decode(response.body);
     if (data["statusCode"] == 200) {
