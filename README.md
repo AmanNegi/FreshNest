@@ -1,8 +1,6 @@
-<h1 align="center"> Agro-Millets 🌾 </h1>
+<!-- <h1 align="center"> Agro-Millets 🌾 </h1> -->
 
-<p align="center">
-  <img src="/images/agro_dark.png" width="20%" />
-</p>
+<img src="./images/agro_banner.png"  />
 
 <p align="middle">
   <img src="/images/farm.jpg" width="20%" />
