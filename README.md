@@ -2,14 +2,14 @@
 
 <img src="./images/agro_banner.png"  />
 
-<p align="middle">
+<!-- <p align="middle">
   <img src="/images/farm.jpg" width="20%" />
   <img src="/images/farmer.jpg" width="20%" /> 
   <img src="/images/field.jpg" width="20%" />
   <img src="/images/farmhouse.jpg" width="20%" />
-</p>
+</p> -->
 
-## 🚜 About 
+## 🚜 About AgroMillets
 + **AgroMillets** is an online platform that connects farmers who produce grains and millets with customers who want to buy them directly. 
 + By **eliminating intermediaries** and providing a **direct connection between farmers and customers**, AgroMillets makes it easier for farmers to sell their products and for customers to find fresh and high-quality grains and millets at lower prices. 
 + The platform provides **secure payment options, shipping services, and customer service** to ensure *safe and efficient transactions. *
