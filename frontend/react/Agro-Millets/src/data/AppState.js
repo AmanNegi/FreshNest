@@ -39,6 +39,10 @@ class AppState {
     return { ...this.userData };
   }
 
+  isAdmin() {
+    return this.userData.userType == "admin";
+  }
+
   setUserData(data) {
     this.saveUserData(data, this.isLoggedIn);
   }
