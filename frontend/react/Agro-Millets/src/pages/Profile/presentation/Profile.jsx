@@ -18,6 +18,17 @@ function Profile() {
             <p className="mt-5 bg-lightColor font-semibold tracking-  text-white px-5 py-2 rounded-md">{`Access Level: ${
               user.userType ?? "".toUpperCase()
             }`}</p>
+
+            <p
+              className="mt-5 bg-red-600 font-semibold tracking-  text-white px-5 py-2 rounded-md"
+              onClick={() => {
+                appState.logOutUser();
+                navigate("/");
+              }}
+            >
+              <i className="fa-solid fa-right-from-bracket pr-2"></i>
+              Logout
+            </p>
           </>
         ) : (
           <>

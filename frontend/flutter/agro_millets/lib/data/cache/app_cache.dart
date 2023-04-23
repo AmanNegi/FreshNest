@@ -5,7 +5,6 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 ValueNotifier<AppState> appState = ValueNotifier(AppState.initial());
 
-// Helps along with AppStateProvider
 class AppCache {
   final String _prefsKey = "Agro_Millets";
 

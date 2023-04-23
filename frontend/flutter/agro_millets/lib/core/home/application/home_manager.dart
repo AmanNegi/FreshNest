@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:agro_millets/core/home/application/home_provider.dart';
 import 'package:agro_millets/data/cache/app_cache.dart';
+import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/millet_item.dart';
 import "package:agro_millets/secrets.dart";
 import 'package:flutter/material.dart';
@@ -11,7 +12,7 @@ import 'package:http/http.dart' as http;
 
 class HomeManager {
   final BuildContext context;
-  late Timer? timer;
+  Timer? timer;
   final WidgetRef ref;
 
   HomeManager(this.context, this.ref) {
@@ -122,4 +123,23 @@ Future<MilletItem?> getItemById(String id) async {
     return item;
   }
   return null;
+}
+
+Future<void> deleteItem(String id) async {
+  if (!appState.value.isLoggedIn || appState.value.user == null) {
+    showToast("You need to login to perform this action");
+    return;
+  }
+
+  var response = await http.post(
+    Uri.parse("$API_URL/admin/deleteItem"),
+    headers: {"content-type": "application/json"},
+    body: json.encode(
+      {"itemId": id, "adminId": appState.value.user!.id},
+    ),
+  );
+
+  print(response.body.toString());
+  var data = json.decode(response.body);
+  showToast(data["message"]);
 }

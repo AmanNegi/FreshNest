@@ -1,5 +1,6 @@
 import 'package:agro_millets/colors.dart';
 import 'package:agro_millets/core/admin/application/admin_apis.dart';
+import 'package:agro_millets/core/home/application/home_manager.dart';
 import 'package:agro_millets/core/home/presentation/detail/item_detail.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/millet_item.dart';
@@ -27,12 +28,20 @@ class _ProductsPageState extends State<ProductsPage> {
                 separatorBuilder: (context, index) {
                   return Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 15.0),
-                    child: Divider(color: Colors.grey.withOpacity(0.2),),
+                    child: Divider(
+                      color: Colors.grey.withOpacity(0.2),
+                    ),
                   );
                 },
                 itemCount: list.length,
                 itemBuilder: (context, index) {
                   return Dismissible(
+                    onDismissed: (direction) {
+                      if (direction == DismissDirection.endToStart) {
+                        deleteItem(list[index].id);
+                        list.removeWhere((element) => element.id == list[index].id);
+                      }
+                    },
                     key: ValueKey(list[index].id),
                     background: Container(
                       decoration: const BoxDecoration(

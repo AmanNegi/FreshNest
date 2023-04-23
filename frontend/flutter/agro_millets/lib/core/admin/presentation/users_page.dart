@@ -1,4 +1,5 @@
 import 'package:agro_millets/core/admin/application/admin_apis.dart';
+import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/user.dart';
 import 'package:flutter/material.dart';
 
@@ -23,6 +24,10 @@ class _UsersPageState extends State<UsersPage> {
                 itemCount: list.length,
                 itemBuilder: (context, index) {
                   return Dismissible(
+                    confirmDismiss: (direction) async {
+                      showToast("Feature Coming Soon!");
+                      return false;
+                    },
                     key: ValueKey(list[index].id),
                     background: Container(
                       decoration: const BoxDecoration(
