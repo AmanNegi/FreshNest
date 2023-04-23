@@ -3,6 +3,7 @@ import 'package:agro_millets/core/cart/application/cart_manager.dart';
 import 'package:agro_millets/core/cart/application/cart_provider.dart';
 import 'package:agro_millets/core/home/application/comment_manager.dart';
 import 'package:agro_millets/core/home/application/comment_provider.dart';
+import 'package:agro_millets/core/home/application/home_manager.dart';
 import 'package:agro_millets/data/cache/app_cache.dart';
 import 'package:agro_millets/globals.dart';
 import 'package:agro_millets/models/cart_item.dart';
@@ -54,7 +55,6 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
           onPressed: () => Navigator.pop(context),
         ),
         actions: [
-          // TODO: Check if is owner or admin
           if (appCache.isCustomer())
             IconButton(
               onPressed: () {
@@ -65,10 +65,12 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
               },
               icon: const Icon(MdiIcons.cartPlus),
             ),
-
           if (appCache.isAdmin() || appCache.isOwnerOf(item.listedBy))
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                Navigator.pop(context);
+                deleteItem(item.id);
+              },
               icon: const Icon(
                 Icons.delete,
                 color: Colors.red,
