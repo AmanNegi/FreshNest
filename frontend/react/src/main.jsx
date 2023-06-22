@@ -17,7 +17,6 @@ import CartPage from "./pages/Cart/presentation/Cart";
 import appState from "./data/AppState";
 import { GoogleOAuthProvider } from "@react-oauth/google";
 
-console.log(import.meta.env);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -56,7 +55,7 @@ const router = createBrowserRouter([
 appState.__init__();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <GoogleOAuthProvider clientId={import.meta.env.CLIENT_ID}>
+  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%] overflow-hidden">
       <RouterProvider router={router} />
       <ToastContainer theme="dark" autoClose={1500} />
