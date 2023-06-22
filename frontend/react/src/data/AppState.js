@@ -40,7 +40,14 @@ class AppState {
   }
 
   isAdmin() {
-    return this.userData.userType == "admin";
+    return this.userData.userType === "admin";
+  }
+
+  isFarmer() {
+    return (this.userData.userType === "farmer");
+  }
+  isCustomer() {
+    return (this.userData.userType === "customer");
   }
 
   setUserData(data) {

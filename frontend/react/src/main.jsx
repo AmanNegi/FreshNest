@@ -1,13 +1,8 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
 import "./index.css";
-import Login from "./pages/Login/presentation/Login";
-import {
-  createBrowserRouter,
-  RouterProvider,
-  Route,
-  Link,
-} from "react-router-dom";
+import Login from "./pages/Auth/presentation/Login";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Home from "./pages/Home/presentation/Home";
 import Shop from "./pages/shop/presentation/Shop";
 import About from "./pages/About/presentation/about";
@@ -20,7 +15,9 @@ import Search from "./pages/Search/presentation/Search";
 import Profile from "./pages/Profile/presentation/Profile";
 import CartPage from "./pages/Cart/presentation/Cart";
 import appState from "./data/AppState";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
+console.log(import.meta.env);
 const router = createBrowserRouter([
   {
     path: "/",
@@ -59,8 +56,10 @@ const router = createBrowserRouter([
 appState.__init__();
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%] overflow-hidden">
-    <RouterProvider router={router} />
-    <ToastContainer theme="dark" />
-  </main>
+  <GoogleOAuthProvider clientId={import.meta.env.CLIENT_ID}>
+    <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%] overflow-hidden">
+      <RouterProvider router={router} />
+      <ToastContainer theme="dark" autoClose={1500} />
+    </main>
+  </GoogleOAuthProvider>
 );

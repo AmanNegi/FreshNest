@@ -23,6 +23,7 @@ function ShopItem({ itemId, isCart = false }) {
 
   console.log(loading, item);
 
+  // If Item removed show this card
   if (!loading && !item) {
     return (
       <div className="bg-green-100 text-green-700 text-bold text-2xl flex flex-col justify-center items-center text-center p-10 rounded-lg">
@@ -81,57 +82,63 @@ function ShopItem({ itemId, isCart = false }) {
             <div className="h-[1vh]"></div>
             <Rating
               initialRating={4.0}
+              readonly={true}
               fullSymbol="fa-solid fa-star text-amber-400 "
               emptySymbol="fa-regular fa-star text-gray-300"
             />
             {/* <RatingComponent /> */}
 
             <div className="h-[1vh]"></div>
-            <div className="flex flex-row">
-              <div className="w-[50%] h-[40px] flex flex-row items-center justify-center border border-gray-300 rounded-md px-2">
-                <div
-                  onClick={() => {
-                    if (count > 0) {
-                      setCount((count) => {
-                        return count - 1;
-                      });
-                    }
-                  }}
-                  className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
-                >
-                  <i className="fa-solid fa-minus"></i>
+            <div className="flex flex-row gap-2">
+              {appState.isCustomer() && (
+                <div className="w-[50%] h-[40px] flex flex-row items-center justify-center border border-gray-300 rounded-md px-2">
+                  <div
+                    onClick={() => {
+                      if (count > 0) {
+                        setCount((count) => {
+                          return count - 1;
+                        });
+                      }
+                    }}
+                    className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
+                  >
+                    <i className="fa-solid fa-minus"></i>
+                  </div>
+                  <div className="flex-1 h-[100%] flex justify-center items-center text-center bg-slate-200">
+                    {count}
+                  </div>
+                  <div
+                    onClick={() => {
+                      setCount((count) => count + 1);
+                      console.log(count);
+                    }}
+                    className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
+                  >
+                    <i className="fa-solid fa-plus"></i>
+                  </div>
                 </div>
-                <div className="flex-1 h-[100%] flex justify-center items-center text-center bg-slate-200">
-                  {count}
-                </div>
-                <div
-                  onClick={() => {
-                    setCount((count) => count + 1);
-                    console.log(count);
-                  }}
-                  className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
-                >
-                  <i className="fa-solid fa-plus"></i>
-                </div>
-              </div>
-              <div
-                onClick={async () => {
-                  await addToCart(item._id, count);
-                }}
-                className="ml-2 lg:ml-4 w-[40px] h-[40px] bg-green-400 flex justify-center items-center rounded-md"
-              >
-                <i className="fa-solid fa-cart-shopping text-white"></i>
-              </div>
+              )}
 
-              {!isCart && appState.getUserData().userType === "admin" && (
-                <div
+              {appState.isCustomer() && (
+                <button
+                  onClick={async () => {
+                    await addToCart(item._id, count);
+                  }}
+                  className="w-[40px] h-[40px] bg-green-400 flex justify-center items-center rounded-md"
+                >
+                  <i className="fa-solid fa-cart-shopping text-white"></i>
+                </button>
+              )}
+
+              {!isCart && appState.isAdmin() && (
+                <button
                   onClick={async () => {
                     await deleteItem(itemId);
                   }}
-                  className="ml-2 lg:ml-4 w-[40px] h-[40px] bg-red-400 flex justify-center items-center rounded-md"
+                  className="w-[40px] h-[40px] bg-red-400 flex justify-center items-center rounded-md"
                 >
                   <i className="fa-solid fa-trash text-white"></i>
-                </div>
+                </button>
               )}
             </div>
           </div>

@@ -1,5 +1,4 @@
 import axios from "axios";
-import { API_URL } from "../../../constants";
 import { toast } from "react-toastify";
 import appState from "../../../data/AppState";
 
@@ -11,7 +10,7 @@ export default async function getCart() {
   }
 
   var id = appState.userData._id;
-  var res = await axios.get(API_URL + `/cart/get/${id}`);
+  var res = await axios.get(import.meta.env.VITE_API_URL + `/cart/get/${id}`);
 
   console.log(res);
   return res.data.data.items;
@@ -19,7 +18,9 @@ export default async function getCart() {
 
 // Gets millet item
 export async function getItem(id) {
-  var res = await axios.get(API_URL + "/list/getItem/" + id);
+  var res = await axios.get(
+    import.meta.env.VITE_API_URL + "/list/getItem/" + id
+  );
   console.log(res);
   return res.data.data;
 }
@@ -31,7 +32,7 @@ export async function addToCart(itemId, count) {
     return 0;
   }
 
-  var res = await axios.post(API_URL + "/cart/add", {
+  var res = await axios.post(import.meta.env.VITE_API_URL + "/cart/add", {
     userId: appState.userData._id,
     item: itemId,
     count: count,
@@ -54,7 +55,7 @@ export async function removeFromCart(itemId) {
     return 0;
   }
 
-  var res = await axios.post(API_URL + "/cart/remove", {
+  var res = await axios.post(import.meta.env.VITE_API_URL + "/cart/remove", {
     userId: appState.userData._id,
     itemId: itemId,
   });

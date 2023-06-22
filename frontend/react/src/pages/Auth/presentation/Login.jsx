@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import farm from "../../../assets/farm.jpg";
-import icon from "../../../assets/icon.png";
+import icon from "../../../assets/logo.png";
 import login from "../application/auth";
 import { toast } from "react-toastify";
 import appState from "../../../data/AppState";
+import { GoogleLogin } from "@react-oauth/google";
+import jwtDecode from "jwt-decode";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -19,11 +21,10 @@ function Login() {
 
   return (
     <>
-      <section className="float-left relative h-screen w-screen lg:w-[50%] bg-white">
+      <section className="float-right relative h-screen w-screen lg:w-[40%] bg-white">
         {/* Top Left Icon and Text */}
-        <div className="absolute flex flex-row justify-center left-3 top-3">
-          <img className="h-[25px] mr-1 opacity-50" src={icon} alt="" />
-          <p className="text-sm opacity-75 text-slate-500">Agro-Millets</p>
+        <div className="absolute right-3 top-3">
+          <img className="h-[75px] object-contain  mr-1" src={icon} alt="" />
         </div>
 
         {/* Center Item  */}
@@ -32,8 +33,8 @@ function Login() {
             Welcome to Agro-Millets
           </h1>
           <p className="font-extralight">Please enter your details</p>
-
           <div className="pt-10"></div>
+
           {/* Email Field */}
           <div className="flex flex-col w-[100%]">
             <label htmlFor="input">Email</label>
@@ -42,8 +43,7 @@ function Login() {
                 setEmail(e.target.value);
               }}
               type="text"
-              placeholder="Your email address"
-              className="bg-semiDarkColor bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
+              className="bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
             ></input>
           </div>
           <div className="pt-2"></div>
@@ -55,28 +55,56 @@ function Login() {
                 setPassword(e.target.value);
               }}
               type="text"
-              placeholder="Enter your password"
-              className="bg-semiDarkColor bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
+              className="bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
             ></input>
           </div>
           <div className="pt-5"></div>
-
           {/* Button */}
           <button
             onClick={async () => {
+              if (email.length === 0) {
+                toast.error("Enter your email to login");
+                return;
+              }
+
+              if (password.length === 0) {
+                toast.error("Enter your password to login");
+                return;
+              }
               var data = await login(email, password);
               if (data.statusCode === 200) {
                 navigate("/home");
               }
             }}
-            className="bg-lightColor rounded-lg text-white font-semibold text-lg w-[100%]  py-3"
+            className="bg-lightColor rounded-lg text-white font-semibold text-lg w-[100%] py-3 mb-4"
           >
             Login
           </button>
+          <GoogleLogin
+            onSuccess={(credentialResponse) => {
+              const data = jwtDecode(credentialResponse.credential);
+              console.log(data);
+              // TODO : Login User
+
+              appState.saveUserData(
+                {
+                  _id: credentialResponse.clientId,
+                  name: data.name,
+                  email: data.email,
+                  userType: "customer",
+                },
+                true
+              );
+              navigate("/home");
+            }}
+            onError={() => {
+              console.log("Login Failed");
+            }}
+          />
         </div>
       </section>
       {/* Image Part */}
-      <section className="hidden lg:block float-right h-screen lg:w-[50%] bg-green-300">
+      <section className="hidden lg:block float-left h-screen lg:w-[60%] bg-green-300">
         <img className="w-[100%] h-[100%] object-cover" src={farm} alt="" />
       </section>
     </>

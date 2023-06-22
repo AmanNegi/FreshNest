@@ -3,3 +3,9 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+select {
+  -webkit-appearance: none;
+  appearance: none;
+}
+

@@ -35,15 +35,12 @@ function LoadedPage({ item }) {
   const [comment, setComment] = useState("");
   var navigate = useNavigate();
 
-
-
-
   return (
     <>
       <section className="mt-[8vh] min-h-[52vh] w-[100%] p-6 lg:p-12 ">
         <div className="flex flex-col lg:flex-row">
           <img
-            className="object-cover h-[100%] w-[100%] lg:w-[40vw] bg-white border-slate-300 rounded-md border-2 p-4 border-dashed"
+            className="object-contain min-h-[50vh] max-h-[70vh] h-[100%] w-[100%] lg:w-[40vw] bg-white border-slate-300 rounded-md border-2 p-4 border-dashed"
             src={item.images[0]}
             alt=""
           />
@@ -62,6 +59,7 @@ function LoadedPage({ item }) {
             <div className="flex flex-row gap-4 mb-2">
               <Rating
                 initialRating={4.0}
+                readonly={true}
                 fullSymbol="fa-solid fa-star text-2xl text-amber-400 "
                 emptySymbol="fa-regular fa-star text-2xl text-gray-300"
               />
@@ -98,7 +96,7 @@ function LoadedPage({ item }) {
         </button>
       </div>
 
-      {item.comments.length > 0 && (
+      {item.comments.length > 0 ? (
         <section className="px-5 md:px-12 mb-5 md:mb-12">
           {item.comments.map((comment) => (
             // <p key={comment._id}>{comment.content}</p>
@@ -116,6 +114,8 @@ function LoadedPage({ item }) {
             </div>
           ))}
         </section>
+      ) : (
+        <div className="h-5"></div>
       )}
     </>
   );

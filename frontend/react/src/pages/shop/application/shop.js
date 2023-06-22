@@ -1,18 +1,93 @@
 import axios from "axios";
-import { API_URL } from "../../../constants";
 import { toast } from "react-toastify";
 import appState from "../../../data/AppState";
 
-export default async function getAll() {
-  var res = await axios.get(API_URL + "/list/getAll");
+export default async function getItems(filter) {
+  let list;
+
+  if (appState.isFarmer()) {
+    // farmers will only see their products
+    list = await getAllFarmerItems();
+  } else {
+    // admin and user will see all items
+    list = await getAllItems();
+  }
+
+  return sortList(list, filter);
+}
+
+function sortList(list, filter) {
+  switch (filter) {
+    case "0": {
+      list.sort((a, b) => {
+        return a.listedAt > b.listedAt ? 1 : -1;
+      });
+      break;
+    }
+    case "1": {
+      list.sort((a, b) => {
+        return a.listedAt < b.listedAt ? 1 : -1;
+      });
+      break;
+    }
+    case "2": {
+      list.sort((a, b) => {
+        return a.name[0] > b.name[0] ? 1 : -1;
+      });
+      break;
+    }
+    case "3": {
+      list.sort((a, b) => {
+        return a.name[0] < b.name[0] ? 1 : -1;
+      });
+      break;
+    }
+    case "4": {
+      list.sort((a, b) => {
+        return a.price > b.price ? 1 : -1;
+      });
+      break;
+    }
+    case "5": {
+      list.sort((a, b) => {
+        return a.price < b.price ? 1 : -1;
+      });
+      break;
+    }
+
+    default: {
+      return list;
+    }
+  }
+
+  return list;
+}
+
+export async function getAllItems() {
+  var res = await axios.get(import.meta.env.VITE_API_URL + "/list/getAll");
 
   console.log(res);
   return res.data.data;
 }
 
+export async function getAllFarmerItems() {
+  var id = appState.getUserData()._id;
+  console.log("Farmers are: ", id);
+
+  var res = await axios.get(
+    `${import.meta.env.VITE_API_URL}/list/getAll/${id}`
+  );
+
+  console.log("Farmer Items are: ", res);
+
+  return res.data.data;
+}
+
 export async function getItem(id) {
   try {
-    var res = await axios.get(API_URL + "/list/getItem/" + id);
+    var res = await axios.get(
+      import.meta.env.VITE_API_URL + "/list/getItem/" + id
+    );
     console.log(res);
     return res.data.data;
   } catch (e) {
@@ -26,7 +101,7 @@ export async function addComment(comment) {
     toast.error("You must be logged in to add a comment");
     return 0;
   }
-  var res = await axios.post(API_URL + "/list/comment", {
+  var res = await axios.post(import.meta.env.VITE_API_URL + "/list/comment", {
     commentBy: appState.getUserData()._id,
     itemID: comment.itemID,
     name: appState.getUserData().name,
@@ -47,10 +122,13 @@ export async function deleteItem(itemId) {
     toast.error("You must be an admin to delete an item");
     return 0;
   }
-  var res = await axios.post(API_URL + "/admin/deleteItem", {
-    adminId: appState.getUserData()._id,
-    itemId: itemId,
-  });
+  var res = await axios.post(
+    import.meta.env.VITE_API_URL + "/admin/deleteItem",
+    {
+      adminId: appState.getUserData()._id,
+      itemId: itemId,
+    }
+  );
 
   if (res.data.statusCode == 200) {
     toast.success(res.data.message);

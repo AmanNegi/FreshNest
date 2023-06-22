@@ -26,7 +26,6 @@ router.get("/getAll/:farmerID", async (req, res) => {
 
   let items = await MilletItem.find({});
 
-  //TODO: Check if this works
   items = items.filter((item) => item.listedBy.toString() === farmerID);
 
   return res.send(getSuccessResponse("Success", items));
@@ -40,7 +39,7 @@ router.post("/addItem", async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.body.listedBy)) {
     return res.status(404).send(getErrorResponse("Invalid User ID"));
   }
-  let item = new MilletItem(req.body);
+  let item = new MilletItem(req.body);f
   await item.save();
 
   return res.send(getSuccessResponse("Added Item", item));
