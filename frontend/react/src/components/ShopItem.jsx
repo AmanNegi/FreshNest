@@ -7,8 +7,9 @@ import { addToCart, removeFromCart } from "../pages/Cart/application/cart";
 import { deleteItem, getItem } from "../pages/shop/application/shop";
 import Button from "./Button";
 
-function ShopItem({ itemId, isCart = false }) {
-  var [count, setCount] = useState(1);
+function ShopItem({ itemId, itemCount = 1, isCart = false }) {
+
+  var [count, setCount] = useState(itemCount);
   var [item, setItem] = useState(undefined);
   const [loading, setLoading] = useState(true);
 
@@ -41,7 +42,7 @@ function ShopItem({ itemId, isCart = false }) {
 
   return (
     <>
-      {item && (
+      {item !== undefined && (
         <motion.div
           key={item._id}
           initial={{ opacity: 0 }}
@@ -119,7 +120,7 @@ function ShopItem({ itemId, isCart = false }) {
                 </div>
               )}
 
-              {appState.isCustomer() && (
+              {appState.isCustomer() && !isCart && (
                 <button
                   onClick={async () => {
                     await addToCart(item._id, count);

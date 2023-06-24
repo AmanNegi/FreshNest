@@ -1,8 +1,11 @@
 import { useNavigate } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { motion } from "framer-motion";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import appState from "../data/AppState";
+import cartEmitter, {
+  getCartCount,
+} from "../pages/Cart/application/cart_event";
 
 function NavBar() {
   const [drawerVisible, setdrawerVisible] = useState(false);
@@ -39,16 +42,8 @@ function NavBar() {
           ></i>
         </div>
 
-        {appState.isCustomer() && (
-          <div className="hidden md:flex">
-            <i
-              onClick={() => navigate("/cart")}
-              className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-cart-shopping hover:bg-green-100  "
-            ></i>
-          </div>
-        )}
-
-        {/* <Button additionalClasses="hidden md:block" text="Contact" /> */}
+        <CartNotifier />
+        {/* ! Mobile Layout */}
 
         <div
           onClick={() => {
@@ -107,5 +102,43 @@ function NavBarItem({ text = "NavItem", route = "/" }) {
     </div>
   );
 }
+
+
+const MobileNavBar = () => {
+  return <div>MobileNavBar</div>;
+};
+
+const CartNotifier = () => {
+  const navigate = useNavigate();
+  let [cartCount, setCartCount] = useState(0);
+  if (!appState.isCustomer()) return;
+
+  useEffect(() => {
+    console.log("Adding Listener...");
+    setCartCount(getCartCount());
+
+    const listener = (count) => {
+      console.log("Cart Counter notified: ", count);
+      setCartCount(count);
+    };
+
+    cartEmitter.on("cartUpdate", listener);
+
+    return () => {
+      cartEmitter.off("cartUpdate", listener);
+    };
+  });
+
+  return (
+    <div className="hidden md:flex relative" onClick={() => navigate("/cart")}>
+      <i className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-cart-shopping hover:bg-green-100  "></i>
+      {cartCount > 0 && (
+        <span className="bg-red-600 text-white rounded-full w-[20px] h-[20px] text-center text-sm absolute right-0 top-0">
+          {cartCount}
+        </span>
+      )}
+    </div>
+  );
+};
 
 export default NavBar;
