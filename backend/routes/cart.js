@@ -35,7 +35,7 @@ router.post("/add", async (req, res) => {
   var data = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(data.userId)) {
-    return res.status(404).send(getErrorResponse("Invalid User ID"));
+    return res.send(getErrorResponse("Invalid User ID"));
   }
 
   var cart = await Cart.findOne({ userId: data.userId });

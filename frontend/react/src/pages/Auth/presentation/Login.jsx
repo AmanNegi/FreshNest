@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
-import login from "../application/auth";
+import login, { gSignUp } from "../application/auth";
 import { toast } from "react-toastify";
 import appState from "../../../data/AppState";
 import { GoogleLogin } from "@react-oauth/google";
@@ -81,14 +81,18 @@ function Login() {
             Login
           </button>
           <GoogleLogin
-            onSuccess={(credentialResponse) => {
+            onSuccess={async (credentialResponse) => {
+              // Save user to backend as well
+
               const data = jwtDecode(credentialResponse.credential);
               console.log(data);
+
+              var user = await gSignUp(data.name, data.email);
               // TODO : Login User
 
               appState.saveUserData(
                 {
-                  _id: credentialResponse.clientId,
+                  _id: user._id,
                   name: data.name,
                   email: data.email,
                   userType: "customer",

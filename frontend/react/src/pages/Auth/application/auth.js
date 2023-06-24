@@ -19,3 +19,16 @@ export default async function login(email, password) {
   appState.saveUserData(res.data.data, true);
   return res.data;
 }
+
+export async function gSignUp(name, email) {
+  var res = await axios.post(
+    import.meta.env.VITE_API_URL + "/auth/saveGLogin",
+    {
+      name: name,
+      email: email,
+    }
+  );
+
+  console.log(res);
+  return res.data.data;
+}
