@@ -37,6 +37,7 @@ function Search() {
                 searchForQuery();
               }
             }}
+            autoFocus={true}
             type="text"
             placeholder="Enter your query"
             className="bg-semiDarkColor bg-opacity-10 w-[100%] py-3  border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all mr-3 "
