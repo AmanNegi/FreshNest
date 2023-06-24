@@ -2,6 +2,8 @@ import NavBar from "../../../components/NavBar";
 import { useNavigate } from "react-router-dom";
 import appState from "../../../data/AppState";
 
+import { FiLogOut } from "react-icons/fi";
+
 function Profile() {
   var user = appState.getUserData();
   console.log(user);
@@ -26,7 +28,7 @@ function Profile() {
                 navigate("/");
               }}
             >
-              <i className="fa-solid fa-right-from-bracket pr-2"></i>
+              <FiLogOut className="pr-2 inline text-3xl" />
               Logout
             </p>
           </>

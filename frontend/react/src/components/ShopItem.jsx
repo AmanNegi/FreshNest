@@ -7,8 +7,15 @@ import { addToCart, removeFromCart } from "../pages/Cart/application/cart";
 import { deleteItem, getItem } from "../pages/shop/application/shop";
 import Button from "./Button";
 
-function ShopItem({ itemId, itemCount = 1, isCart = false }) {
+import { BsFillTrash3Fill, BsCartFill } from "react-icons/bs";
+import {
+  AiFillStar,
+  AiOutlineStar,
+  AiOutlineMinus,
+  AiOutlinePlus,
+} from "react-icons/ai";
 
+function ShopItem({ itemId, itemCount = 1, isCart = false }) {
   var [count, setCount] = useState(itemCount);
   var [item, setItem] = useState(undefined);
   const [loading, setLoading] = useState(true);
@@ -66,7 +73,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
                 }}
                 className="absolute top-2 right-2 ml-2 lg:ml-4 w-[40px] h-[40px] bg-red-400 flex justify-center items-center rounded-md"
               >
-                <i className="fa-solid fa-trash text-white"></i>
+                <BsFillTrash3Fill className="text-white" />
               </div>
             )}
           </div>
@@ -84,8 +91,8 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
             <Rating
               initialRating={4.0}
               readonly={true}
-              fullSymbol="fa-solid fa-star text-amber-400 "
-              emptySymbol="fa-regular fa-star text-gray-300"
+              fullSymbol={<AiFillStar className="text-amber-400" />}
+              emptySymbol={<AiOutlineStar className="text-gray-300" />}
             />
             {/* <RatingComponent /> */}
 
@@ -103,7 +110,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
                     }}
                     className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
                   >
-                    <i className="fa-solid fa-minus"></i>
+                    <AiOutlineMinus />
                   </div>
                   <div className="flex-1 h-[100%] flex justify-center items-center text-center bg-slate-200">
                     {count}
@@ -115,7 +122,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
                     }}
                     className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
                   >
-                    <i className="fa-solid fa-plus"></i>
+                    <AiOutlinePlus />
                   </div>
                 </div>
               )}
@@ -127,7 +134,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
                   }}
                   className="w-[40px] h-[40px] bg-green-400 flex justify-center items-center rounded-md"
                 >
-                  <i className="fa-solid fa-cart-shopping text-white"></i>
+                  <BsCartFill className="text-white" />
                 </button>
               )}
 
@@ -138,7 +145,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
                   }}
                   className="w-[40px] h-[40px] bg-red-400 flex justify-center items-center rounded-md"
                 >
-                  <i className="fa-solid fa-trash text-white"></i>
+                  <BsFillTrash3Fill className="text-white" />
                 </button>
               )}
             </div>

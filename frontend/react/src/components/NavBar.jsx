@@ -7,6 +7,12 @@ import cartEmitter, {
   getCartCount,
 } from "../pages/Cart/application/cart_event";
 
+// ICONS
+import { BsSearch } from "react-icons/bs";
+import { AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
+import { FaBars } from "react-icons/fa";
+import { GrClose } from "react-icons/gr";
+
 function NavBar() {
   const [drawerVisible, setdrawerVisible] = useState(false);
   const navigate = useNavigate();
@@ -19,7 +25,6 @@ function NavBar() {
         transition={{ duration: 0.5 }}
         className="fixed top-0 z-[2] h-[8vh] w-[100%] bg-white  flex px-2 md lg:px-10  items-center shadow-md "
       >
-        {/* <h1>LOGO</h1> */}
         <img className="h-20  py-2 object-contain" src={logo} alt="" />
         <div className="flex flex-1"></div>
 
@@ -29,20 +34,21 @@ function NavBar() {
 
         {/* Desktop Icons */}
         <div className="hidden md:flex">
-          <i
+          <BsSearch
             onClick={() => navigate("/search")}
-            className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-magnifying-glass hover:bg-green-100 "
-          ></i>
+            className="cursor-pointer mx-5"
+          />
         </div>
 
         <div className="hidden md:flex">
-          <i
+          <AiOutlineUser
             onClick={() => navigate("/profile")}
-            className="hidden md:block cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-user hover:bg-green-100  "
-          ></i>
+            className="cursor-pointer mx-5 text-xl"
+          />
         </div>
 
         <CartNotifier />
+
         {/* ! Mobile Layout */}
 
         <div
@@ -51,9 +57,8 @@ function NavBar() {
           }}
           className="visible md:hidden mr-2 h-[100%] w-[20%] flex justify-end items-center"
         >
-          <i
-            className={`fa-solid ${!drawerVisible ? "fa-bars" : "fa-close"} `}
-          ></i>
+          {drawerVisible && <GrClose />}
+          {!drawerVisible && <FaBars />}
         </div>
       </motion.header>
       {drawerVisible && (
@@ -103,7 +108,6 @@ function NavBarItem({ text = "NavItem", route = "/" }) {
   );
 }
 
-
 const MobileNavBar = () => {
   return <div>MobileNavBar</div>;
 };
@@ -131,10 +135,10 @@ const CartNotifier = () => {
 
   return (
     <div className="hidden md:flex relative" onClick={() => navigate("/cart")}>
-      <i className="cursor-pointer p-2 mx-5 lg:hidden fa-solid text-2xl fa-cart-shopping hover:bg-green-100  "></i>
+      <AiOutlineShoppingCart className="cursor-pointer text-xl ml-5" />
       {cartCount > 0 && (
-        <span className="bg-red-600 text-white rounded-full w-[20px] h-[20px] text-center text-sm absolute right-0 top-0">
-          {cartCount}
+        <span className="bg-red-600 text-white rounded-full w-[17px] h-[17px] text-center text-[12px] absolute right-[-10px] top-[-10px]">
+          <div className="text-center">{cartCount}</div>
         </span>
       )}
     </div>

@@ -1,3 +1,5 @@
+import { saveCartCount } from "../pages/Cart/application/cart_event";
+
 const APP_STATE_KEY = "AgroMillets-AppState";
 
 class AppState {
@@ -27,6 +29,7 @@ class AppState {
 
   logOutUser() {
     this.saveUserData({}, false);
+    saveCartCount(0);
   }
 
   isUserLoggedIn() {
@@ -44,10 +47,10 @@ class AppState {
   }
 
   isFarmer() {
-    return (this.userData.userType === "farmer");
+    return this.userData.userType === "farmer";
   }
   isCustomer() {
-    return (this.userData.userType === "customer");
+    return this.userData.userType === "customer";
   }
 
   setUserData(data) {

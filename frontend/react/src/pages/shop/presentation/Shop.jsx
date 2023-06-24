@@ -4,6 +4,8 @@ import ShopItem from "../../../components/ShopItem";
 import appState from "../../../data/AppState";
 import getItems from "../application/shop";
 
+import { FaCaretDown } from "react-icons/fa";
+
 function Shop() {
   var [list, setList] = useState([]);
 
@@ -24,7 +26,7 @@ function Shop() {
       <NavBar />
       <div className="mt-[8vh] px-10 pt-[4vh] pb-[3vh] flex flex-row justify-between">
         <h1 className="text-3xl font-semibold">{getShopHeading()}</h1>
-        {list.length > 0 &&  <Filter updateFilter={updateFilter} />}
+        {list.length > 0 && <Filter updateFilter={updateFilter} />}
       </div>
       <section className="w-[100%] bg-white min-h-screen px-10">
         <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
@@ -61,7 +63,7 @@ const Filter = ({ updateFilter }) => {
   return (
     <>
       <div className="hidden md:flex w-[20vw] relative">
-        <i className="fa-solid fa-caret-down absolute right-4 top-3"></i>
+        <FaCaretDown className="absolute right-4 top-3" />
         <select
           className="w-[20vw] border border-darkColor rounded-lg  py-2 px-2"
           onChange={(v) => {

@@ -11,7 +11,8 @@ module.exports = {
         accentColor: "#16db65",
       },
       fontFamily: {
-        poppins: ["Poppins", "sans-serif"],
+        montserrat: ["Montserrat", "sans-serif"],
+        poppins: ["poppins", "sans-serif"],
       },
     },
   },

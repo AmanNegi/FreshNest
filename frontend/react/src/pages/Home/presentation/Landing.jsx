@@ -7,7 +7,7 @@ import Button from "../../../components/Button";
 import Footer from "../../../components/Footer";
 import NavBar from "../../../components/NavBar";
 import { motion } from "framer-motion";
-import { gridItems, galleryImages, data, features } from "../../../data/data";
+import { gridItems, data, features } from "../../../data/data";
 import { useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 
@@ -51,10 +51,8 @@ function Home() {
                       key={i}
                       className="group p-8  bg-green-200 h-[100%] w-[100%] flex flex-col justify-evenly rounded-lg"
                     >
-                      <div className="  bg-green-400 rounded-full h-[75px] w-[75px] flex justify-center items-center">
-                        <motion.i
-                          className={`${e.icon} text-4xl text-white `}
-                        ></motion.i>
+                      <div className="bg-green-400 rounded-full h-[75px] w-[75px] flex justify-center items-center text-white text-2xl">
+                        {e.icon}
                       </div>
 
                       <h1 className="text-2xl font-bold  ">{e.title}</h1>
@@ -155,12 +153,10 @@ function OurMottoSection() {
                 className="group flex flex-row  flex-1 border-[2px] border-slate-200 p-[8px] rounded-lg text-center mb-1  hover:bg-green-500 hover:text-white hover:border-white hover:border-opacity-20"
               >
                 <div className="flex flex-1 border-dashed  justify-center items-center border-[2px] border-slate-200 px-3 py-2 rounded-lg hover:border-white hover:border-opacity-30">
-                  <i
-                    className={
-                      "text-4xl pr-2 text-green-400 group-hover:text-white " +
-                      e.icon
-                    }
-                  />
+                  <div className="text-3xl pr-2 text-green-400 group-hover:text-white">
+                    {e.icon}
+                  </div>
+
                   <p className="text-lg">{e.name}</p>
                 </div>
               </motion.div>

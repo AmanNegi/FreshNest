@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 import NavBar from "../../../components/NavBar";
 import Loading from "../../../components/Loading";
 import Rating from "react-rating";
-import Button from "../../../components/Button";
+
+import { AiFillStar, AiOutlineStar } from "react-icons/ai";
 
 function ItemDetail() {
   const { id } = useParams();
@@ -60,8 +61,8 @@ function LoadedPage({ item }) {
               <Rating
                 initialRating={4.0}
                 readonly={true}
-                fullSymbol="fa-solid fa-star text-2xl text-amber-400 "
-                emptySymbol="fa-regular fa-star text-2xl text-gray-300"
+                fullSymbol={<AiFillStar className="text-amber-400" />}
+                emptySymbol={<AiOutlineStar className="text-gray-300" />}
               />
               <h1 className="text-slate-500">4.5 out of 5</h1>
             </div>
