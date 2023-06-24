@@ -1,6 +1,7 @@
 import axios from "axios";
 import { toast } from "react-toastify";
 import appState from "../../../data/AppState";
+import { emitCartUpdateEvent, getCartCount, saveCartCount } from "./cart_event";
 
 // Gets user cart
 export default async function getCart() {
@@ -13,6 +14,8 @@ export default async function getCart() {
   var res = await axios.get(import.meta.env.VITE_API_URL + `/cart/get/${id}`);
 
   console.log(res);
+  saveCartCount(res.data.data.items.length);
+
   return res.data.data.items;
 }
 
@@ -39,6 +42,10 @@ export async function addToCart(itemId, count) {
   });
 
   if (res.data.statusCode == 200) {
+    console.log(res.data.data.items);
+    emitCartUpdateEvent(res.data.data.items.length);
+    saveCartCount(res.data.data.items.length);
+
     toast.success(res.data.message);
   } else {
     toast.error(res.data.message);

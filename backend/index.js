@@ -7,7 +7,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://agro-millets.netlify.app",
+    origin: ["https://agro-millets.netlify.app", "http://localhost:5173"],
     methods: ["GET", "POST", "PUT", "DELETE"],
     headers: ["Content-Type", "Authorization"],
   })
