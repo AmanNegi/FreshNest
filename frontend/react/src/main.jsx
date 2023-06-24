@@ -7,7 +7,6 @@ import Home from "./pages/Home/presentation/Home";
 import Shop from "./pages/shop/presentation/Shop";
 import About from "./pages/About/presentation/about";
 import ItemDetail from "./pages/shop/presentation/ItemDetail";
-import "@fortawesome/fontawesome-free/css/all.css";
 
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
