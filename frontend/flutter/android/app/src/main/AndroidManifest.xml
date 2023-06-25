@@ -4,7 +4,7 @@
     <uses-permission android:name="android.permission.INTERNET"/>
     
    <application
-        android:label="Agro Millets"
+        android:label="FreshNest"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
         <activity
