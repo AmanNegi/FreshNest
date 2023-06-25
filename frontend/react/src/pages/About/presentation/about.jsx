@@ -10,7 +10,7 @@ var problemStatement =
   "The agricultural industry is facing a decline as farmers struggle with low pay, leading to a decrease in the cultivation of diverse crops. Many farmers are opting to grow only government-subsidized crops or switching to other jobs altogether. This trend has led to a loss of locally grown natural grains and vegetables, which has reduced the diversity of the food supply. As a result, the country is becoming increasingly dependent on imported harvests from other nations.";
 
 var solutionStatement =
-  "Agro-Millets is a website that helps farmers connect directly with consumers who are interested in buying locally grown produce. This platform enables farmers to set their prices, which gives them more control over their income and eliminates the need to travel long distances to markets. By facilitating direct connections between farmers and consumers, Local Harvests can increase the diversity of the food supply, improve market access issues faced by farmers, and improve the livelihoods of farmers.";
+  "Freshnet is a website that helps farmers connect directly with consumers who are interested in buying locally grown produce. This platform enables farmers to set their prices, which gives them more control over their income and eliminates the need to travel long distances to markets. By facilitating direct connections between farmers and consumers, Local Harvests can increase the diversity of the food supply, improve market access issues faced by farmers, and improve the livelihoods of farmers.";
 
 function About() {
   useEffect(() => {

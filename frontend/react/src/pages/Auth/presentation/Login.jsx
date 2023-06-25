@@ -30,7 +30,7 @@ function Login() {
         {/* Center Item  */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
           <h1 className="text-2xl font-black text-semiBoldColor">
-            Welcome to Agro-Millets
+            Welcome to FreshNest
           </h1>
           <p className="font-extralight">Please enter your details</p>
           <div className="pt-10"></div>
