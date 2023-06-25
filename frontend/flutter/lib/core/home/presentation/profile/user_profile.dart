@@ -1,7 +1,7 @@
-import 'package:agro_millets/colors.dart';
-import 'package:agro_millets/data/cache/app_cache.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/widgets/custom_text_field.dart';
+import 'package:fresh_nest/colors.dart';
+import 'package:fresh_nest/data/cache/app_cache.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class UserProfile extends StatefulWidget {

@@ -1,9 +1,9 @@
-import 'package:agro_millets/colors.dart';
-import 'package:agro_millets/core/admin/application/admin_apis.dart';
-import 'package:agro_millets/core/home/application/home_manager.dart';
-import 'package:agro_millets/core/home/presentation/detail/item_detail.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/models/millet_item.dart';
+import 'package:fresh_nest/colors.dart';
+import 'package:fresh_nest/core/admin/application/admin_apis.dart';
+import 'package:fresh_nest/core/home/application/home_manager.dart';
+import 'package:fresh_nest/core/home/presentation/detail/item_detail.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/models/millet_item.dart';
 import 'package:flutter/material.dart';
 import 'package:timeago/timeago.dart' as timeago;
 

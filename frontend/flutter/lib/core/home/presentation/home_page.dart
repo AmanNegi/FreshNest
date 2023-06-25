@@ -1,12 +1,12 @@
-import 'package:agro_millets/core/home/application/home_manager.dart';
-import 'package:agro_millets/core/home/application/home_provider.dart';
-import 'package:agro_millets/core/home/presentation/add_item/add_item.dart';
-import 'package:agro_millets/core/home/presentation/widgets/agro_grid_view.dart';
-import 'package:agro_millets/core/home/presentation/widgets/drawer.dart';
-import 'package:agro_millets/core/search/presentation/search_page.dart';
-import 'package:agro_millets/data/cache/app_cache.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/widgets/text/large_text.dart';
+import 'package:fresh_nest/core/home/application/home_manager.dart';
+import 'package:fresh_nest/core/home/application/home_provider.dart';
+import 'package:fresh_nest/core/home/presentation/add_item/add_item.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/agro_grid_view.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/drawer.dart';
+import 'package:fresh_nest/core/search/presentation/search_page.dart';
+import 'package:fresh_nest/data/cache/app_cache.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/widgets/text/large_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 class HomePage extends ConsumerStatefulWidget {
@@ -37,7 +37,7 @@ class _HomePageState extends ConsumerState<HomePage> {
       drawer: const AgroDrawer(),
       floatingActionButton: _getFloatingActionButton(),
       appBar: AppBar(
-        title: const Text("Agro Millets"),
+        title: const Text("Fresh Nest"),
         centerTitle: true,
         actions: [
           if (!appCache.isAdmin())

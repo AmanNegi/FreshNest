@@ -1,10 +1,10 @@
-import 'package:agro_millets/core/auth/application/auth.dart';
-import 'package:agro_millets/core/auth/presentation/login_page.dart';
-import 'package:agro_millets/core/home/presentation/widgets/loading_widget.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/main.dart';
-import 'package:agro_millets/widgets/action_button.dart';
-import 'package:agro_millets/widgets/custom_text_field.dart';
+import 'package:fresh_nest/core/auth/application/auth.dart';
+import 'package:fresh_nest/core/auth/presentation/login_page.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/loading_widget.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/main.dart';
+import 'package:fresh_nest/widgets/action_button.dart';
+import 'package:fresh_nest/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
@@ -49,7 +49,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           SizedBox(height: 0.015 * getHeight(context)),
           const Center(
             child: Text(
-              "Agro Millets",
+              "Fresh Nest",
               style: TextStyle(
                 fontSize: 25,
                 fontWeight: FontWeight.bold,

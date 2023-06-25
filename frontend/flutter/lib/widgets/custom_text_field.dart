@@ -1,5 +1,5 @@
-import 'package:agro_millets/colors.dart';
-import 'package:agro_millets/globals.dart';
+import 'package:fresh_nest/colors.dart';
+import 'package:fresh_nest/globals.dart';
 import 'package:flutter/material.dart';
 
 class CustomTextField extends StatefulWidget {

@@ -1,11 +1,11 @@
 import 'dart:async';
 import 'dart:convert';
 
-import 'package:agro_millets/core/home/application/home_provider.dart';
-import 'package:agro_millets/data/cache/app_cache.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/models/millet_item.dart';
-import "package:agro_millets/secrets.dart";
+import 'package:fresh_nest/core/home/application/home_provider.dart';
+import 'package:fresh_nest/data/cache/app_cache.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/models/millet_item.dart';
+import "package:fresh_nest/secrets.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:http/http.dart' as http;

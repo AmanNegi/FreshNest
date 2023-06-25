@@ -1,7 +1,7 @@
-import 'package:agro_millets/core/admin/presentation/admin_page.dart';
-import 'package:agro_millets/core/auth/presentation/login_page.dart';
-import 'package:agro_millets/core/home/presentation/home_page.dart';
-import 'package:agro_millets/data/cache/app_cache.dart';
+import 'package:fresh_nest/core/admin/presentation/admin_page.dart';
+import 'package:fresh_nest/core/auth/presentation/login_page.dart';
+import 'package:fresh_nest/core/home/presentation/home_page.dart';
+import 'package:fresh_nest/data/cache/app_cache.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";

@@ -1,7 +1,7 @@
 import 'dart:async';
 
-import 'package:agro_millets/core/admin/application/admin_apis.dart';
-import 'package:agro_millets/core/admin/application/admin_provider.dart';
+import 'package:fresh_nest/core/admin/application/admin_apis.dart';
+import 'package:fresh_nest/core/admin/application/admin_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

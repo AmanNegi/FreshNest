@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'dart:convert';
 
-import 'package:agro_millets/models/millet_item.dart';
+import 'package:fresh_nest/models/millet_item.dart';
 
 class CartItem {
   final String item;

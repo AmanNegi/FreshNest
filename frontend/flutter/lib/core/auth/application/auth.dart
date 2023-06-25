@@ -1,9 +1,9 @@
 import 'dart:convert';
 
-import 'package:agro_millets/data/auth_state_repository.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/models/user.dart';
-import "package:agro_millets/secrets.dart";
+import 'package:fresh_nest/data/auth_state_repository.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/models/user.dart';
+import "package:fresh_nest/secrets.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_sign_in/google_sign_in.dart';

@@ -1,6 +1,6 @@
-import 'package:agro_millets/data/auth_state_repository.dart';
-import 'package:agro_millets/data/cache/app_cache.dart';
-import 'package:agro_millets/models/cart_item.dart';
+import 'package:fresh_nest/data/auth_state_repository.dart';
+import 'package:fresh_nest/data/cache/app_cache.dart';
+import 'package:fresh_nest/models/cart_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

@@ -1,8 +1,8 @@
 import "dart:convert";
 
-import "package:agro_millets/globals.dart";
-import "package:agro_millets/models/millet_item.dart";
-import "package:agro_millets/secrets.dart";
+import "package:fresh_nest/globals.dart";
+import "package:fresh_nest/models/millet_item.dart";
+import "package:fresh_nest/secrets.dart";
 import "package:http/http.dart" as http;
 
 class SearchManager {

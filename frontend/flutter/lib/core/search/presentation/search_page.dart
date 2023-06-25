@@ -1,9 +1,9 @@
-import 'package:agro_millets/colors.dart';
-import 'package:agro_millets/core/home/presentation/widgets/agro_grid_view.dart';
-import 'package:agro_millets/core/search/application/search_manager.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/models/millet_item.dart';
-import 'package:agro_millets/widgets/custom_text_field.dart';
+import 'package:fresh_nest/colors.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/agro_grid_view.dart';
+import 'package:fresh_nest/core/search/application/search_manager.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/models/millet_item.dart';
+import 'package:fresh_nest/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatefulWidget {

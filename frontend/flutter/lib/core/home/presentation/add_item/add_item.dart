@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:agro_millets/core/home/application/home_manager.dart';
-import 'package:agro_millets/core/home/presentation/widgets/loading_widget.dart';
-import 'package:agro_millets/data/cache/app_cache.dart';
-import 'package:agro_millets/utils/firebase_storage.dart';
-import 'package:agro_millets/widgets/action_button.dart';
+import 'package:fresh_nest/core/home/application/home_manager.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/loading_widget.dart';
+import 'package:fresh_nest/data/cache/app_cache.dart';
+import 'package:fresh_nest/utils/firebase_storage.dart';
+import 'package:fresh_nest/widgets/action_button.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:uuid/uuid.dart';

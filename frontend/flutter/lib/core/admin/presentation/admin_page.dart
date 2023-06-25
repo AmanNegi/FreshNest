@@ -1,10 +1,10 @@
-import 'package:agro_millets/core/admin/application/admin_manager.dart';
-import 'package:agro_millets/core/admin/application/admin_provider.dart';
-import 'package:agro_millets/core/admin/presentation/products_page.dart';
-import 'package:agro_millets/core/admin/presentation/users_page.dart';
-import 'package:agro_millets/core/home/presentation/widgets/agro_item.dart';
-import 'package:agro_millets/core/home/presentation/widgets/drawer.dart';
-import 'package:agro_millets/globals.dart';
+import 'package:fresh_nest/core/admin/application/admin_manager.dart';
+import 'package:fresh_nest/core/admin/application/admin_provider.dart';
+import 'package:fresh_nest/core/admin/presentation/products_page.dart';
+import 'package:fresh_nest/core/admin/presentation/users_page.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/agro_item.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/drawer.dart';
+import 'package:fresh_nest/globals.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_staggered_grid_view/flutter_staggered_grid_view.dart';

@@ -1,6 +1,6 @@
-import 'package:agro_millets/core/admin/application/admin_apis.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/models/user.dart';
+import 'package:fresh_nest/core/admin/application/admin_apis.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/models/user.dart';
 import 'package:flutter/material.dart';
 
 class UsersPage extends StatefulWidget {

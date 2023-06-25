@@ -1,4 +1,4 @@
-import 'package:agro_millets/models/comment.dart';
+import 'package:fresh_nest/models/comment.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 

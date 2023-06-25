@@ -1,10 +1,10 @@
-import 'package:agro_millets/colors.dart';
-import 'package:agro_millets/core/cart/presentation/cart_page.dart';
-import 'package:agro_millets/core/home/presentation/profile/user_profile.dart';
-import 'package:agro_millets/data/auth_state_repository.dart';
-import 'package:agro_millets/data/cache/app_cache.dart';
-import 'package:agro_millets/globals.dart';
-import 'package:agro_millets/main.dart';
+import 'package:fresh_nest/colors.dart';
+import 'package:fresh_nest/core/cart/presentation/cart_page.dart';
+import 'package:fresh_nest/core/home/presentation/profile/user_profile.dart';
+import 'package:fresh_nest/data/auth_state_repository.dart';
+import 'package:fresh_nest/data/cache/app_cache.dart';
+import 'package:fresh_nest/globals.dart';
+import 'package:fresh_nest/main.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:package_info_plus/package_info_plus.dart';
