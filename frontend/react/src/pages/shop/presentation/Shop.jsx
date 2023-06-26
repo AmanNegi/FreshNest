@@ -28,7 +28,7 @@ function Shop() {
         <h1 className="text-3xl font-semibold">{getShopHeading()}</h1>
         {list.length > 0 && <Filter updateFilter={updateFilter} />}
       </div>
-      <section className="w-[100%] bg-white min-h-screen px-10">
+      <section className="w-[100%] bg-white min-h-screen">
         <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
           {list.map((e, i) => {
             return <ShopItem key={i} itemId={e._id} isCart={false} />;

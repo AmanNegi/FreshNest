@@ -83,7 +83,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
               {item.name}
             </h1>
 
-            <p className="text-lg text-green-500 font-bold">
+            <p className="text-lg text-green-500 font-extrabold">
               {`₹ ` + item.price + "/kg"}
             </p>
 
