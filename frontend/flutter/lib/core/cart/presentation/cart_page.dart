@@ -72,7 +72,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                           );
                         }
                         return const Center(
-                          child: CircularProgressIndicator(),
+                          // child: CircularProgressIndicator(),
                         );
                       },
                     );
