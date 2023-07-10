@@ -1,4 +1,5 @@
 <img src="./images/freshnest_banner.png"  />
+<img src="./images/github_banner.png">
 
 ## 🌱 About FreshNest
 Welcome to FreshNest, an online marketplace that connects local vegetable sellers and farmers directly with customers who are seeking fresh and nutritious produce. We believe in fostering a direct connection between producers and consumers, empowering local communities and promoting sustainable farming practices.
