@@ -15,11 +15,19 @@ import Profile from "./pages/Profile/presentation/Profile";
 import CartPage from "./pages/Cart/presentation/Cart";
 import appState from "./data/AppState";
 import { GoogleOAuthProvider } from "@react-oauth/google";
+import AddItem from "./pages/AddItem/presentation/AddItem";
+import SignUp from "./pages/Auth/presentation/SignUp";
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Login />,
+  },
+  {
+    path: "/register",
+    element: <SignUp />,
   },
   {
     path: "/home",
@@ -49,9 +57,23 @@ const router = createBrowserRouter([
     path: "/cart",
     element: <CartPage />,
   },
+  {
+    path: "/add",
+    element: <AddItem />,
+  },
 ]);
 
 appState.__init__();
+
+const app = initializeApp({
+  apiKey: import.meta.env.VITE_API_KEY,
+  authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+  appId: import.meta.env.VITE_APP_ID,
+  measurementId: import.meta.env.VITE_MEASUREMENT_ID,
+});
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
@@ -61,3 +83,5 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </main>
   </GoogleOAuthProvider>
 );
+const storage = getStorage(app);
+export default storage;

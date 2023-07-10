@@ -20,6 +20,27 @@ export default async function login(email, password) {
   return res.data;
 }
 
+export async function signUp(data){
+  const { name, email, password, userType, phone } = data;
+
+  var res = await axios.post(import.meta.env.VITE_API_URL + "/auth/signup", {
+    name: name,
+    email: email,
+    password: password,
+    userType: userType,
+    phone: phone,
+  });
+
+  console.log(res);
+  if (res.data.statusCode == 200) {
+    toast.success(res.data.message);
+  } else {
+    toast.error(res.data.message);
+  }
+  appState.saveUserData(res.data.data, true);
+  return res.data;
+}
+
 export async function gSignUp(name, email) {
   var res = await axios.post(
     import.meta.env.VITE_API_URL + "/auth/saveGLogin",
