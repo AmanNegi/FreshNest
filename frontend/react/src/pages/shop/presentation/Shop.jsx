@@ -5,6 +5,7 @@ import appState from "../../../data/AppState";
 import getItems from "../application/shop";
 
 import { FaCaretDown } from "react-icons/fa";
+import Button from "../../../components/Button";
 
 function Shop() {
   var [list, setList] = useState([]);
@@ -24,9 +25,11 @@ function Shop() {
   return (
     <>
       <NavBar />
-      <div className="mt-[8vh] px-10 pt-[4vh] pb-[3vh] flex flex-row justify-between">
-        <h1 className="text-3xl font-semibold">{getShopHeading()}</h1>
+      <div className="mt-[8vh] px-10 pt-[4vh] pb-[3vh] flex flex-row ">
+        <h1 className="text-3xl font-semibold mr-auto">{getShopHeading()}</h1>
+
         {list.length > 0 && <Filter updateFilter={updateFilter} />}
+        <Button path="/add" text="Add Item" additionalClasses="ml-2" />
       </div>
       <section className="w-[100%] bg-white min-h-screen">
         <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">

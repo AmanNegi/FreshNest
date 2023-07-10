@@ -39,7 +39,7 @@ router.post("/addItem", async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.body.listedBy)) {
     return res.status(404).send(getErrorResponse("Invalid User ID"));
   }
-  let item = new MilletItem(req.body);f
+  let item = new MilletItem(req.body);
   await item.save();
 
   return res.send(getSuccessResponse("Added Item", item));

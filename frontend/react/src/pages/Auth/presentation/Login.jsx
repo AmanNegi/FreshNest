@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
 import login, { gSignUp } from "../application/auth";
@@ -105,6 +105,14 @@ function Login() {
               console.log("Login Failed");
             }}
           />
+          <div className="mt-10">
+            <p>
+              {"Don't have an account? "}
+              <Link to="/register" className="text-lightColor font-bold">
+                Sign up
+              </Link>
+            </p>
+          </div>
         </div>
       </section>
       {/* Image Part */}
