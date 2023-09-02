@@ -1,18 +1,24 @@
-import NavBar from "../../../components/NavBar";
 import { useEffect, useState } from "react";
+
 import ShopItem from "../../../components/ShopItem";
+import NavBar from "../../../components/NavBar";
+import Button from "../../../components/Button";
+import ShimmerShopItem from "../../../components/ShimmerShopItem";
+
 import appState from "../../../data/AppState";
 import getItems from "../application/shop";
 
 import { FaCaretDown } from "react-icons/fa";
-import Button from "../../../components/Button";
 
 function Shop() {
   var [list, setList] = useState([]);
+  var [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     window.scrollTo(0, 0);
+    setIsLoading(true);
     getItems("2").then((e) => {
+      setIsLoading(false);
       setList(e);
       console.log("Set List to ", e);
     });
@@ -31,13 +37,26 @@ function Shop() {
         {list.length > 0 && <Filter updateFilter={updateFilter} />}
         <Button path="/add" text="Add Item" additionalClasses="ml-2" />
       </div>
-      <section className="w-[100%] bg-white min-h-screen">
-        <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
-          {list.map((e, i) => {
-            return <ShopItem key={i} itemId={e._id} isCart={false} />;
-          })}
-        </div>
-      </section>
+
+      {isLoading ? (
+        <section className="w-full bg-white min-h-screen px-8 lg:px-10 mb-8">
+          <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
+            {[1, 2, 3, 4, 5].map((e, i) => {
+              return <ShimmerShopItem key={e} id={e} />;
+            })}
+          </div>
+
+          {/* <ShimmerPostList postStyle="STYLE_FOUR" col={4} row={1} gap={30} />; */}
+        </section>
+      ) : (
+        <section className="w-[100%] bg-white min-h-screen">
+          <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
+            {list.map((e, i) => {
+              return <ShopItem key={i} itemId={e._id} isCart={false} />;
+            })}
+          </div>
+        </section>
+      )}
     </>
   );
 

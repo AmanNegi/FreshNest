@@ -66,19 +66,15 @@ function sortList(list, filter) {
 export async function getAllItems() {
   var res = await axios.get(import.meta.env.VITE_API_URL + "/list/getAll");
 
-  console.log(res);
   return res.data.data;
 }
 
 export async function getAllFarmerItems() {
   var id = appState.getUserData()._id;
-  console.log("Farmers are: ", id);
 
   var res = await axios.get(
     `${import.meta.env.VITE_API_URL}/list/getAll/${id}`
   );
-
-  console.log("Farmer Items are: ", res);
 
   return res.data.data;
 }
@@ -88,7 +84,6 @@ export async function getItem(id) {
     var res = await axios.get(
       import.meta.env.VITE_API_URL + "/list/getItem/" + id
     );
-    console.log(res);
     return res.data.data;
   } catch (e) {
     return undefined;
@@ -96,7 +91,6 @@ export async function getItem(id) {
 }
 
 export async function addComment(comment) {
-  console.log(comment, appState.getUserData());
   if (!appState.isUserLoggedIn()) {
     toast.error("You must be logged in to add a comment");
     return 0;
@@ -109,7 +103,6 @@ export async function addComment(comment) {
     commentAt: Date.now(),
   });
 
-  console.log(res);
   return 1;
 }
 
@@ -134,6 +127,5 @@ export async function deleteItem(itemId) {
     toast.success(res.data.message);
   }
 
-  console.log(res);
   return 1;
 }

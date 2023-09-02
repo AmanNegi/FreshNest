@@ -14,11 +14,13 @@ import {
   AiOutlineMinus,
   AiOutlinePlus,
 } from "react-icons/ai";
+import ImageView from "./ImageView";
 
 function ShopItem({ itemId, itemCount = 1, isCart = false }) {
   var [count, setCount] = useState(itemCount);
   var [item, setItem] = useState(undefined);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     getItem(itemId).then((data) => {
@@ -27,14 +29,13 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
     });
   }, []);
 
-  var navigate = useNavigate();
-
-  console.log(loading, item);
-
   // If Item removed show this card
   if (!loading && !item) {
     return (
-      <div className="bg-green-100 text-green-700 text-bold text-2xl flex flex-col justify-center items-center text-center p-10 rounded-lg">
+      <div
+        id={_id}
+        className="bg-green-100 text-green-700 text-bold text-2xl flex flex-col justify-center items-center text-center p-10 rounded-lg"
+      >
         <h1>Item has been removed by admin</h1>
         <div className="h-2"></div>
         <Button
@@ -51,20 +52,24 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
     <>
       {item !== undefined && (
         <motion.div
+          onClick={() => {
+            navigate("/item/" + item._id);
+          }}
           key={item._id}
           initial={{ opacity: 0 }}
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.25, duration: 0.25 }}
           viewport={{ once: true }}
-          className="border border-slate-300 relative transition duration-500 rounded-lg hover:shadow-m d bg-white "
+          className="border cursor-pointer border-slate-300 relative transition duration-500 rounded-lg hover:shadow-m d bg-white "
         >
           <div className="h-40 w-[100%] relative">
-            <img
-              onClick={() => navigate("/item/" + item._id)}
-              className="h-40 w-[100%] rounded-t-lg object-cover"
-              src={item.images[0]}
-              alt=""
+            <ImageView
+              _id={item._id}
+              url={item.images[0]}
+              shimmerClass={"max-h-40"}
+              imageClass={"h-40"}
             />
+
             {isCart && (
               <div
                 onClick={async () => {
@@ -118,7 +123,6 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
                   <div
                     onClick={() => {
                       setCount((count) => count + 1);
-                      console.log(count);
                     }}
                     className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
                   >
