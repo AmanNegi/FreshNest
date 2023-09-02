@@ -6,6 +6,7 @@ import appState from "../data/AppState";
 import cartEmitter, {
   getCartCount,
 } from "../pages/Cart/application/cart_event";
+import { Link } from "react-router-dom";
 
 // ICONS
 import { BsSearch } from "react-icons/bs";
@@ -25,12 +26,14 @@ function NavBar() {
         transition={{ duration: 0.5 }}
         className="fixed top-0 z-[2] h-[8vh] w-[100%] bg-white  flex px-2 md lg:px-10  items-center shadow-md "
       >
-        <img className="h-20  py-2 object-contain" src={logo} alt="" />
+        <Link to={"/shop"}>
+          <img className="h-20 py-3 object-contain" src={logo} alt="" />
+        </Link>
         <div className="flex flex-1"></div>
 
-        <NavBarItem text="Home" route="/home" />
+        {/* <NavBarItem text="Home" route="/home" />
         <NavBarItem text="About" route="/about" />
-        <NavBarItem text="Shop" route="/shop" />
+        <NavBarItem text="Shop" route="/shop" /> */}
 
         {/* Desktop Icons */}
         <div className="hidden md:flex">
@@ -55,7 +58,7 @@ function NavBar() {
           onClick={() => {
             setdrawerVisible(!drawerVisible);
           }}
-          className="visible md:hidden mr-2 h-[100%] w-[20%] flex justify-end items-center"
+          className="visible md:hidden mr-2 h-[100%] mx-4 flex justify-end items-center"
         >
           {drawerVisible && <GrClose />}
           {!drawerVisible && <FaBars />}
@@ -107,10 +110,6 @@ function NavBarItem({ text = "NavItem", route = "/" }) {
     </div>
   );
 }
-
-const MobileNavBar = () => {
-  return <div>MobileNavBar</div>;
-};
 
 const CartNotifier = () => {
   const navigate = useNavigate();
