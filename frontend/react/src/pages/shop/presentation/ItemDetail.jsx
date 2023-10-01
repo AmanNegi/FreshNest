@@ -85,7 +85,7 @@ function LoadedPage({ item }) {
           }}
           type="text"
           placeholder="Enter your review"
-          className="flex-1 px-2 py-5 transition-all border-2 border-white outline-none bg-semiDarkColor bg-opacity-10 md:mr-5 focus:border-darkColor focus:rounded-lg focus:outline-none "
+          className="input input-bordered w-full mt-2 md:mr-5 px-2 py-5"
         ></input>
         <button
           className="px-5 mt-5 text-white rounded-md md:mt-0 bg-accentColor"

@@ -72,7 +72,8 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
 
             {isCart && (
               <div
-                onClick={async () => {
+                onClick={async (e) => {
+                  e.stopPropagation();
                   await removeFromCart(itemId);
                   window.location.reload();
                 }}
@@ -102,11 +103,12 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
             {/* <RatingComponent /> */}
 
             <div className="h-[1vh]"></div>
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2 items-center">
               {appState.isCustomer() && (
                 <div className="w-[50%] h-[40px] flex flex-row items-center justify-center border border-gray-300 rounded-md px-2">
                   <div
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       if (count > 0) {
                         setCount((count) => {
                           return count - 1;
@@ -121,7 +123,8 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
                     {count}
                   </div>
                   <div
-                    onClick={() => {
+                    onClick={(e) => {
+                      e.stopPropagation();
                       setCount((count) => count + 1);
                     }}
                     className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
@@ -133,10 +136,11 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
 
               {appState.isCustomer() && !isCart && (
                 <button
-                  onClick={async () => {
+                  onClick={async (e) => {
+                    e.stopPropagation();
                     await addToCart(item._id, count);
                   }}
-                  className="w-[40px] h-[40px] bg-green-400 flex justify-center items-center rounded-md"
+                  className="btn btn-accent"
                 >
                   <BsCartFill className="text-white" />
                 </button>
@@ -144,10 +148,11 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
 
               {!isCart && appState.isAdmin() && (
                 <button
-                  onClick={async () => {
+                  onClick={async (e) => {
+                    e.stopPropagation();
                     await deleteItem(itemId);
                   }}
-                  className="w-[40px] h-[40px] bg-red-400 flex justify-center items-center rounded-md"
+                  className="btn btn-error"
                 >
                   <BsFillTrash3Fill className="text-white" />
                 </button>

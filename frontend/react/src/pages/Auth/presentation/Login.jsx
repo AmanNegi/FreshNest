@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import appState from "../../../data/AppState";
 import { GoogleLogin } from "@react-oauth/google";
 import jwtDecode from "jwt-decode";
+import getCart from "../../Cart/application/cart";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -14,6 +15,7 @@ function Login() {
   var navigate = useNavigate();
   useEffect(() => {
     if (appState.isUserLoggedIn()) {
+      console.log(appState);
       navigate("/shop");
       toast("Logged in as " + appState.getUserData().name);
     }
@@ -21,7 +23,7 @@ function Login() {
 
   return (
     <>
-      <section className="float-right relative h-screen w-screen lg:w-[40%] bg-white">
+      <section className="float-right relative h-screen w-screen lg:w-[40%]">
         {/* Top Left Icon and Text */}
         <div className="absolute right-3 top-3">
           <img className="h-[75px] object-contain  mr-1" src={icon} alt="" />
@@ -29,22 +31,22 @@ function Login() {
 
         {/* Center Item  */}
         <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
-          <h1 className="text-2xl font-black text-semiBoldColor">
-            Welcome to FreshNest
-          </h1>
+          <h1 className="text-2xl font-black">Welcome to FreshNest</h1>
           <p className="font-extralight">Please enter your details</p>
           <div className="pt-10"></div>
 
           {/* Email Field */}
+
           <div className="flex flex-col w-[100%]">
             <label htmlFor="input">Email</label>
             <input
               onChange={(e) => {
                 setEmail(e.target.value);
               }}
-              type="text"
-              className="bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
-            ></input>
+              type="email"
+              placeholder=""
+              className="input input-bordered w-full mt-2"
+            />
           </div>
           <div className="pt-2"></div>
           {/* Password Field */}
@@ -55,7 +57,7 @@ function Login() {
                 setPassword(e.target.value);
               }}
               type="text"
-              className="bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
+              className="input input-bordered w-full mt-2"
             ></input>
           </div>
           <div className="pt-5"></div>
@@ -73,23 +75,21 @@ function Login() {
               }
               var data = await login(email, password);
               if (data.statusCode === 200) {
+                await getCart();
                 navigate("/home");
               }
             }}
-            className="bg-lightColor rounded-lg text-white font-semibold text-lg w-[100%] py-3 mb-4"
+            className="btn btn-primary w-full py-3 mb-4"
           >
             Login
           </button>
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
               // Save user to backend as well
-
               const data = jwtDecode(credentialResponse.credential);
               console.log(data);
 
               var user = await gSignUp(data.name, data.email);
-              // TODO : Login User
-
               appState.saveUserData(
                 {
                   _id: user._id,
@@ -97,8 +97,9 @@ function Login() {
                   email: data.email,
                   userType: "customer",
                 },
-                true
+                true,
               );
+              await getCart();
               navigate("/home");
             }}
             onError={() => {

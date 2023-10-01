@@ -81,7 +81,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <RouterProvider router={router} />
       <ToastContainer theme="dark" autoClose={1500} />
     </main>
-  </GoogleOAuthProvider>
+  </GoogleOAuthProvider>,
 );
 const storage = getStorage(app);
 export default storage;

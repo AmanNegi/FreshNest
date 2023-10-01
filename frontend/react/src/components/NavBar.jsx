@@ -12,10 +12,8 @@ import { Link } from "react-router-dom";
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
 import { FaBars } from "react-icons/fa";
-import { GrClose } from "react-icons/gr";
 
 function NavBar() {
-  const [drawerVisible, setdrawerVisible] = useState(false);
   const navigate = useNavigate();
 
   return (
@@ -30,10 +28,6 @@ function NavBar() {
           <img className="h-20 py-3 object-contain" src={logo} alt="" />
         </Link>
         <div className="flex flex-1"></div>
-
-        {/* <NavBarItem text="Home" route="/home" />
-        <NavBarItem text="About" route="/about" />
-        <NavBarItem text="Shop" route="/shop" /> */}
 
         {/* Desktop Icons */}
         <div className="hidden md:flex">
@@ -52,72 +46,48 @@ function NavBar() {
 
         <CartNotifier />
 
-        {/* ! Mobile Layout */}
-
-        <div
-          onClick={() => {
-            setdrawerVisible(!drawerVisible);
-          }}
-          className="visible md:hidden mr-2 h-[100%] mx-4 flex justify-end items-center"
-        >
-          {drawerVisible && <GrClose />}
-          {!drawerVisible && <FaBars />}
+        <div className="dropdown dropdown-end">
+          <label tabIndex={0} className="btn m-1">
+            <FaBars />
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content z-[1000] menu p-2 shadow-md bg-base-100 rounded-box w-52"
+          >
+            <NavBarItem text="Home" route="/home" />
+            <NavBarItem text="Shop" route="/shop" />
+            <NavBarItem text="About" route="/about" />
+            <li
+              onClick={() => {
+                appState.logOutUser();
+                navigate("/");
+              }}
+            >
+              <h1>Logout</h1>
+            </li>
+          </ul>
         </div>
       </motion.header>
-      {drawerVisible && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.5 }}
-          className="fixed top-[8vh] z-[1] visible md:hidden w-[100%] flex flex-col"
-        >
-          <MobileNavBarItem text="Home" route="/home" />
-          <MobileNavBarItem text="Shop" route="/shop" />
-          <MobileNavBarItem text="Search" route="/search" />
-          <MobileNavBarItem text="Profile" route="/profile" />
-          {appState.isCustomer() && (
-            <MobileNavBarItem text="Cart" route="/cart" />
-          )}
-          <MobileNavBarItem text="About" route="/about" />
-        </motion.div>
-      )}
     </>
   );
 }
 
-function MobileNavBarItem({ text = "NavItem", route = "/" }) {
+function NavBarItem({ text = "NavItem", route = "/" }) {
   const navigate = useNavigate();
   return (
-    <div
-      onClick={() => {
-        navigate(route);
-      }}
-      className="bg-green-100 py-3 px-2 border-b border-green-200"
-    >
-      <h1 className="text-green-800">{text}</h1>
-    </div>
-  );
-}
-
-function NavBarItem({ text = "NavItem", route = "/" }) {
-  var navigate = useNavigate();
-  return (
-    <div
-      onClick={() => navigate(route)}
-      className="hidden lg:flex md:flex items-center text-center h-[100%] px-5  hover:bg-green-100 hover:text-green-800 "
-    >
-      <h1 className="text-lg ">{text}</h1>
-    </div>
+    <li onClick={() => navigate(route)}>
+      <h1>{text}</h1>
+    </li>
   );
 }
 
 const CartNotifier = () => {
   const navigate = useNavigate();
-  let [cartCount, setCartCount] = useState(0);
+  const [cartCount, setCartCount] = useState(0);
   if (!appState.isCustomer()) return;
 
   useEffect(() => {
-    console.log("Adding Listener...");
+    console.log("NavBar.jsx: Adding Listener...");
     setCartCount(getCartCount());
 
     const listener = (count) => {
@@ -128,12 +98,16 @@ const CartNotifier = () => {
     cartEmitter.on("cartUpdate", listener);
 
     return () => {
+      console.log("NavBar.jsx: Removing Listener...");
       cartEmitter.off("cartUpdate", listener);
     };
-  });
+  }, []);
 
   return (
-    <div className="hidden md:flex relative" onClick={() => navigate("/cart")}>
+    <div
+      className="hidden md:flex mr-5 relative"
+      onClick={() => navigate("/cart")}
+    >
       <AiOutlineShoppingCart className="cursor-pointer text-xl ml-5" />
       {cartCount > 0 && (
         <span className="bg-red-600 text-white rounded-full w-[17px] h-[17px] text-center text-[12px] absolute right-[-10px] top-[-10px]">

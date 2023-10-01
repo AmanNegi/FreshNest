@@ -20,7 +20,7 @@ export default async function login(email, password) {
   return res.data;
 }
 
-export async function signUp(data){
+export async function signUp(data) {
   const { name, email, password, userType, phone } = data;
 
   var res = await axios.post(import.meta.env.VITE_API_URL + "/auth/signup", {

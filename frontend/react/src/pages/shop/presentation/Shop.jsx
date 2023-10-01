@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useCallback } from "react";
 
 import ShopItem from "../../../components/ShopItem";
 import NavBar from "../../../components/NavBar";
@@ -9,10 +9,12 @@ import appState from "../../../data/AppState";
 import getItems from "../application/shop";
 
 import { FaCaretDown } from "react-icons/fa";
+import Footer from "../../../components/Footer";
 
 function Shop() {
   var [list, setList] = useState([]);
   var [isLoading, setIsLoading] = useState(true);
+  var [filter, setFilter] = useState("Latest");
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -31,22 +33,23 @@ function Shop() {
   return (
     <>
       <NavBar />
-      <div className="mt-[8vh] px-10 pt-[4vh] pb-[3vh] flex flex-row ">
+      <div className="mt-[8vh] px-10 pt-[4vh] pb-[3vh] flex flex-col md:flex-row items-center">
         <h1 className="text-3xl font-semibold mr-auto">{getShopHeading()}</h1>
-
-        {list.length > 0 && <Filter updateFilter={updateFilter} />}
-        <Button path="/add" text="Add Item" additionalClasses="ml-2" />
+        <div className="flex flex-row items-center">
+          {list.length > 0 && (
+            <Filter filter={filter} updateFilter={updateFilter} />
+          )}
+          {appState.isFarmer() && <Button path="/add" text="Add Item" additionalClasses="ml-2" />}
+        </div>
       </div>
 
       {isLoading ? (
         <section className="w-full bg-white min-h-screen px-8 lg:px-10 mb-8">
           <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
-            {[1, 2, 3, 4, 5].map((e, i) => {
+            {[1, 2, 3, 4, 5].map((e) => {
               return <ShimmerShopItem key={e} id={e} />;
             })}
           </div>
-
-          {/* <ShimmerPostList postStyle="STYLE_FOUR" col={4} row={1} gap={30} />; */}
         </section>
       ) : (
         <section className="w-[100%] bg-white min-h-screen">
@@ -57,10 +60,12 @@ function Shop() {
           </div>
         </section>
       )}
+      <Footer />
     </>
   );
 
-  async function updateFilter(value) {
+  async function updateFilter(name, value) {
+    setFilter(name);
     setList([]);
     setList(await getItems(value));
   }
@@ -73,7 +78,7 @@ function getShopHeading() {
   return "Explore Products";
 }
 
-const Filter = ({ updateFilter }) => {
+const Filter = ({ filter, updateFilter }) => {
   const options = [
     { value: "0", label: "Latest" },
     { value: "1", label: "Oldest" },
@@ -83,26 +88,22 @@ const Filter = ({ updateFilter }) => {
     { value: "5", label: "Price: High to Low" },
   ];
   return (
-    <>
-      <div className="hidden md:flex w-[20vw] relative">
-        <FaCaretDown className="absolute right-4 top-3" />
-        <select
-          className="w-[20vw] border border-darkColor rounded-lg  py-2 px-2"
-          onChange={(v) => {
-            console.log("Changed to", v.target.value);
-            updateFilter(v.target.value);
-          }}
-        >
-          {options.map((e, i) => {
-            return (
+    <details className="dropdown dropdown-bottom dropdown-end">
+      <summary className="m-1 btn">
+        {filter} <FaCaretDown />
+      </summary>
+      <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
+        {options.map((e, i) => {
+          return (
+            <li key={i} onClick={() => updateFilter(e.label, e.value)}>
               <option className="border-none" key={i} value={e.value}>
                 {e.label}
               </option>
-            );
-          })}
-        </select>
-      </div>
-    </>
+            </li>
+          );
+        })}
+      </ul>
+    </details>
   );
 };
 

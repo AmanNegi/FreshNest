@@ -13,7 +13,8 @@ export default async function getCart() {
   var id = appState.userData._id;
   var res = await axios.get(import.meta.env.VITE_API_URL + `/cart/get/${id}`);
 
-  console.log(res);
+  console.log("cart.js: ", res);
+  emitCartUpdateEvent(res.data.data.items.length);
   saveCartCount(res.data.data.items.length);
 
   return res.data.data.items;

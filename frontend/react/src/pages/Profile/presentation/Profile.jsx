@@ -1,36 +1,98 @@
 import NavBar from "../../../components/NavBar";
-import { useNavigate } from "react-router-dom";
 import appState from "../../../data/AppState";
+import "./pattern.css";
+import male from "../../../assets/icons/male.svg";
 
-import { FiLogOut } from "react-icons/fi";
+import { FiSettings } from "react-icons/fi";
+import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import Footer from "../../../components/Footer";
+import UpdateModal from "./UpdateModal";
 
 function Profile() {
   var user = appState.getUserData();
   console.log(user);
   var navigate = useNavigate();
+
+  // TODO: Add pattern preferences to local user device
+  const [pattern, setPattern] = useState("pattern1");
+  const patterns = ["pattern1", "pattern2", "pattern3"];
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <>
       <NavBar />
-      <section className="h-screen mt-[8vh] flex flex-col justify-center items-center bg-accentColor bg-opacity-10">
-        {user._id !== undefined ? (
-          <>
-            <h1 className="text-3xl font-bold">{user.name}</h1>
-            <h1 className="text-slate-700">{user.email}</h1>
-            {user.phone &&  <h1>{`+91 ${user.phone}`}</h1>}
-            <p className="mt-5 bg-lightColor font-semibold tracking-  text-white px-5 py-2 rounded-md">{`Access Level: ${
-              user.userType ?? "".toUpperCase()
-            }`}</p>
-
-            <p
-              className="mt-5 bg-red-600 font-semibold tracking-  text-white px-5 py-2 rounded-md"
+      <div className={`mt-[8vh] h-[20vh] w-full ${pattern}`}></div>
+      <div className="absolute top-[20vh] left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-md">
+        <img className="h-[100px] w-[100px]" src={male} alt="" />
+      </div>
+      <UpdateModal user={user} />
+      <div className="flex justify-end right-10">
+        <div className="dropdown md:dropdown-left  ">
+          <label tabIndex={0} className="btn btn-circle btn-ghost btn-md m-4">
+            <FiSettings />
+          </label>
+          <ul
+            tabIndex={0}
+            className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52"
+          >
+            <li
               onClick={() => {
-                appState.logOutUser();
-                navigate("/");
+                //show modal and then refresh page
+                const modal = document.getElementById("my_modal_1");
+                const handleClose = () => {
+                  if (modal.returnValue === '1') {
+                    console.log("refreshing");
+                    location.reload();
+                    modal.removeEventListener("close", handleClose);
+                  }
+                };
+                modal.addEventListener("close", handleClose);
+                modal.showModal();
               }}
             >
-              <FiLogOut className="pr-2 inline text-xl" />
-              Logout
-            </p>
+              <a>Edit Details</a>
+            </li>
+            <li>
+              <a
+                onClick={() => {
+                  // Switch between patterns list items
+                  let index = patterns.indexOf(pattern);
+                  index = (index + 1) % patterns.length;
+                  setPattern(patterns[index]);
+                }}
+              >
+                Change Pattern
+              </a>
+            </li>
+            <li>
+              <a
+                onClick={() => {
+                  appState.logOutUser();
+                  navigate("/");
+                }}
+              >
+                Logout
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <section className="h-[60vh] flex flex-col items-center">
+        {user._id !== undefined ? (
+          <>
+            <div className="flex flex-row items-center gap-2">
+              <h1 className="text-3xl font-bold">{user.name}</h1>
+              <div className="badge badge-accent text-white p-3">
+                {user.userType == undefined ? "" : user.userType.toUpperCase()}
+              </div>
+            </div>
+            <h1 className="text-slate-700">{user.email}</h1>
+            {user.phone && <h1>{`+91 ${user.phone}`}</h1>}
           </>
         ) : (
           <>
@@ -46,6 +108,7 @@ function Profile() {
           </>
         )}
       </section>
+      <Footer />
     </>
   );
 }

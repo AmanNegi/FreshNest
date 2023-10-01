@@ -4,6 +4,11 @@ import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
 
 import storage from "../../../main";
 
+/**
+ *  Uploads a file to Firebase Storage
+ * @param {string} file
+ * @returns {Promise<string>} url
+ */
 async function handleUpload(file) {
   if (!file) {
     alert("Please choose a file first!");
@@ -27,7 +32,17 @@ async function handleUpload(file) {
   }
 }
 
-// Save data to backend
+/**
+ * Saves data to backend
+ * @param {Object} data
+ * @param {string} data.listedBy - The ID of the user who listed the item.
+ * @param {string} data.name - The name of the item.
+ * @param {string} data.description - The description of the item.
+ * @param {string} data.price - The price of the item.
+ * @param {string} data.file - The file of the item.
+ 
+ * @returns {Promise<boolean>} true if successful, false otherwise
+ */
 
 export async function addItem(data) {
   const { listedBy, name, description, price, file } = data;

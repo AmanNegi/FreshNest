@@ -3,7 +3,26 @@ import { saveCartCount } from "../pages/Cart/application/cart_event";
 const APP_STATE_KEY = "AgroMillets-AppState";
 
 class AppState {
-  userData = {};
+  /**
+   * @typedef {Object} User
+   * @property {string|undefined} _id - The ID of the user.
+   * @property {string|undefined} name - The name of the user.
+   * @property {string|undefined} email - The email address of the user.
+   * @property {string|undefined} phone - The phone number of the user.
+   * @property {string|undefined} userType - The type of user (e.g. "admin", "customer").
+   * @property {string|undefined} createdAt - The date and time when the user was created.
+   */
+
+  /**  @type {User} */
+  userData = {
+    createdAt: undefined,
+    email: undefined,
+    name: undefined,
+    phone: undefined,
+    userType: undefined,
+    _id: undefined,
+  };
+  
   isLoggedIn = false;
 
   __init__() {
@@ -34,7 +53,10 @@ class AppState {
 
   isUserLoggedIn() {
     // console.log("IS USER LOGGED IN : ", this.loggedIn, this.userData);
-    if (!this.isLoggedIn || !this.userData) return false;
+    if (!this.isLoggedIn || !this.userData._id) {
+      this.isLoggedIn = false;
+      return false;
+    }
     return true;
   }
 

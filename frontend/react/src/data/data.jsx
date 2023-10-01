@@ -1,21 +1,8 @@
-// Vegies
-import cabbage from "../assets/items/cabbage.png";
-import cabbage2 from "../assets/items/cabbage2.png";
-import brocolli from "../assets/items/brocolli.png";
-import tomato from "../assets/items/tomato.png";
-
 // Icons
 import { BiSolidAward, BiSolidCoinStack, BiStoreAlt } from "react-icons/bi";
 import { BsEyeFill, BsListCheck } from "react-icons/bs";
 import { FaHandsHelping } from "react-icons/fa";
 import { GiCurledLeaf } from "react-icons/gi";
-
-export const gridItems = [
-  { name: "Cabbage", image: cabbage },
-  { name: "Brocolli", image: brocolli },
-  { name: "Tomato", image: tomato },
-  { name: "Cabbage", image: cabbage2 },
-];
 
 export const data = [
   { name: "Vocal for Local", icon: <BiStoreAlt /> },

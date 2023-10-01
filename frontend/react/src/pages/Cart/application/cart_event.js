@@ -1,6 +1,5 @@
 import Emittery from "emittery";
 
-
 // Event Emitter related Logic
 
 const cartEmitter = new Emittery();
