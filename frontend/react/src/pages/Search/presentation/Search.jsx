@@ -27,7 +27,7 @@ function Search() {
     <>
       <NavBar title="Search" />
       <section className="mt-[8vh] ">
-        <div className="flex flex-row lg:mx-16 p-5">
+        <div className="flex flex-row lg:mx-16 p-5 items-center">
           <input
             onChange={(e) => {
               setQuery(e.target.value);
@@ -40,11 +40,11 @@ function Search() {
             autoFocus={true}
             type="text"
             placeholder="Enter your query"
-            className="bg-semiDarkColor bg-opacity-10 w-[100%] py-3  border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all mr-3 "
+            className="input input-bordered w-full  mr-3 py-3 px-2"
           ></input>
           <button
             onClick={() => searchForQuery()}
-            className="bg-accentColor text-white px-4  rounded-md"
+            className="btn btn-accent px-4"
           >
             Search
           </button>

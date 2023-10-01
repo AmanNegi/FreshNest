@@ -1,13 +1,26 @@
 import axios from "axios";
 import appState from "../../../data/AppState";
+import { toast } from "react-toastify";
 
-// http://localhost:3000/api/profile/updateUser
+/**
+ * Makes request to backend to update the user's profile
+ * @param {Object} body
+ * @param {string} body.name
+ * @param {string} body.email
+ * @param {string} body.phone
+ */
 export default async function updateUser(body) {
   var res = await axios.post(
     import.meta.env.VITE_API_URL + "/profile/updateUser",
-    body
+    { ...body, _id: appState.userData._id }
   );
 
   console.log(res);
-  appState.setUserData(res.data);
+  if (res.status !== 200) {
+    toast.error(
+      "An error occurred while updating your profile. Please try again later."
+    );
+  } else {
+    appState.setUserData(res.data.data);
+  }
 }

@@ -10,9 +10,11 @@ import appState from "../../../data/AppState";
 
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
+import getCart from "../../Cart/application/cart";
 
 function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [userType, setUserType] = useState("Select User Type");
 
   const [data, setData] = useState({
     name: "",
@@ -37,7 +39,7 @@ function SignUp() {
 
   return (
     <>
-      <section className="float-right relative h-screen w-screen lg:w-[40%] bg-white">
+      <section className="float-right relative h-screen w-screen lg:w-[40%]">
         {/* Top Left Icon and Text */}
         <div className="absolute right-3 top-3">
           <img className="h-[75px] object-contain  mr-1" src={icon} alt="" />
@@ -57,7 +59,7 @@ function SignUp() {
               name="name"
               onChange={handleFieldChange}
               type="text"
-              className="bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
+              className="input input-bordered w-full mt-2"
             ></input>
           </div>
           <div className="pt-2"></div>
@@ -68,28 +70,29 @@ function SignUp() {
               name="email"
               onChange={handleFieldChange}
               type="email"
-              className="bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
+              className="input input-bordered w-full mt-2"
             ></input>
           </div>
           <div className="pt-2"></div>
           {/* Password Field */}
           <div className="flex flex-col w-[100%] ">
             <label htmlFor="input">Password</label>
-            <div className="flex flex-row">
+            <div className="flex flex-row items-end">
               <input
                 name="password"
                 onChange={handleFieldChange}
                 type={passwordVisible ? "text" : "password"}
-                className="bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
+                className="input input-bordered w-full mt-2"
               ></input>
               <button
-                className="myButton ml-2"
+                // className="myButton ml-2"
+                className="ml-2 btn btn-primary"
                 onClick={togglePasswordVisibility}
               >
                 {passwordVisible ? <BiHide /> : <BiShow />}
               </button>
             </div>
-          </div>{" "}
+          </div>
           <div className="pt-2"></div>
           {/* Customer Type */}
           <div className="flex flex-col w-[100%]">
@@ -99,13 +102,13 @@ function SignUp() {
               name="userType"
               value={data.userType}
               onChange={handleFieldChange}
-              className="inputStyle"
+              className="select select-bordered mt-2 w-full"
             >
               <option value="">Select User Type</option>
               <option value="customer">Customer</option>
               <option value="farmer">Farmer</option>
             </select>
-          </div>{" "}
+          </div>
           <div className="pt-2"></div>
           {/* Phone Field */}
           <div className="flex flex-col w-[100%]">
@@ -114,9 +117,9 @@ function SignUp() {
               name="phone"
               onChange={handleFieldChange}
               type="phone"
-              className="bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all "
+              className="input input-bordered w-full mt-2"
             ></input>
-          </div>{" "}
+          </div>
           <div className="pt-4"></div>
           <div className="flex flex-row w-full items-center gap-3">
             <button
@@ -133,10 +136,12 @@ function SignUp() {
                 console.log(data);
                 const res = await signUp(data);
                 if (res.statusCode === 200) {
+                  await getCart();
                   navigate("/home");
                 }
               }}
-              className="bg-lightColor rounded-lg text-white font-semibold text-lg py-3 flex-grow "
+              className="btn btn-primary flex-grow py-3 "
+            // className="bg-lightColor rounded-lg text-white font-semibold text-lg py-3 flex-grow "
             >
               Sign Up
             </button>
@@ -156,8 +161,9 @@ function SignUp() {
                     email: data.email,
                     userType: "customer",
                   },
-                  true
+                  true,
                 );
+                await getCart();
                 navigate("/home");
               }}
               onError={() => {

@@ -8,7 +8,7 @@ const { default: mongoose } = require("mongoose");
 
 /**
  * Login as a user using {email} {password}
- * body: {email:"email",password:"password"}
+ * body: {email:"email", password:"password"}
  */
 
 router.post("/login", async (req, res) => {
@@ -97,7 +97,7 @@ router.post("/saveGLogin", async (req, res) => {
     name: req.body.name,
     password: email,
     userType: userType,
-    phone: "xxxxxxxxxx",
+    phone: "000 ",
   });
 
   await user.save();

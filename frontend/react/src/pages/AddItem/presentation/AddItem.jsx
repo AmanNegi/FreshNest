@@ -10,10 +10,14 @@ const AddItem = () => {
   const [data, setData] = useState({
     name: "",
     description: "",
-    file: null,
+    file: "",
     price: "",
   });
 
+  /**
+   * Update state on input change
+   * @param {React.ChangeEventHandler<HTMLInputElement>} e
+   */
   const handleInputChange = (e) => {
     setData({
       ...data,
@@ -21,6 +25,10 @@ const AddItem = () => {
     });
   };
 
+  /**
+   * Update state on image change
+   * @param {React.ChangeEventHandler<HTMLInputElement>} e
+   */
   const handleImageChange = (e) => {
     setData({
       ...data,
@@ -28,6 +36,10 @@ const AddItem = () => {
     });
   };
 
+  /**
+   * Adds item to the backend
+   * @param {React.FormEventHandler<HTMLFormElement>} e
+   */
   const handleSubmit = async (e) => {
     e.preventDefault();
     const res = await addItem({

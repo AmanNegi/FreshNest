@@ -14,12 +14,12 @@ function Footer() {
             </h2>
             <nav className="list-none mb-10">
               <li>
-                <a href="/" className="text-gray-600 hover:text-black">
+                <a href="/home" className="text-gray-600 hover:text-black">
                   Home
                 </a>
               </li>
               <li>
-                <a href="/shop" className="text-gray-600 hover:text-gray-800">
+                <a href="/" className="text-gray-600 hover:text-gray-800">
                   Shop
                 </a>
               </li>
@@ -35,7 +35,7 @@ function Footer() {
           </div>
           <div className="lg:w-1/3 md:w-1/2 w-full px-4">
             <h2 className="font-semibold text-xl title-font text-gray-900 tracking-widest  mb-3">
-              CATEGORIES
+              CATEGORIES 
             </h2>
             <nav className="list-none mb-10">
               <li>
@@ -54,7 +54,7 @@ function Footer() {
           </div>
           <div className="lg:w-1/3 md:w-1/2 w-full px-4">
             <h2 className="font-semibold text-xl title-font text-gray-900 tracking-widest  mb-3">
-              SOCIALS
+              SOCIALS 
             </h2>
             <nav className="list-none mb-10">
               <li>

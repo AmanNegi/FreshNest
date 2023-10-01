@@ -1,15 +1,17 @@
 import landing_bg from "../../../assets/landing_bg.jpg";
-
 import explore_image from "../../../assets/explore.png";
 
 import Button from "../../../components/Button";
-
 import Footer from "../../../components/Footer";
 import NavBar from "../../../components/NavBar";
-import { motion } from "framer-motion";
-import { gridItems, data, features } from "../../../data/data";
+
+import { data, features } from "../../../data/data";
+import { getFourItems } from "../../shop/application/shop";
+import { Item } from "../../shop/application/shop_model";
+
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useEffect } from "react";
+import { motion } from "framer-motion";
 
 function Home() {
   useEffect(() => {
@@ -18,7 +20,6 @@ function Home() {
 
   return (
     <>
-      <NavBar />
       <main className="mt-[8vh] w-[100%] overflow-hidden snap snap-y snap-mandatory">
         <TopSection />
         <OurMottoSection />
@@ -66,7 +67,8 @@ function Home() {
             </div>
           </div>
         </section>
-        <OurGallerySection /> <ExploreProducts />
+        <OurGallerySection />
+        <ExploreProducts />
         <section
           className="bg-cover bg-right bg-fixed relative"
           style={{
@@ -169,7 +171,20 @@ function OurMottoSection() {
 }
 
 function ExploreProducts() {
+  /**
+   * @type {[Array<Item>, (e:Array<Item>)=>void]}
+   */
+  const [products, setProducts] = useState([]);
+
   const navigate = useNavigate();
+
+  useEffect(() => {
+    getFourItems().then((e) => {
+      setProducts(e);
+      console.log("Set List to ", e);
+    });
+  }, []);
+
   return (
     <section>
       <div>
@@ -190,7 +205,7 @@ function ExploreProducts() {
             viewport={{ once: true }}
             className="w-[100%] md:w-[60%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5"
           >
-            {gridItems.map((e, i) => {
+            {products.map((e, i) => {
               return (
                 <div
                   key={i}
@@ -198,24 +213,24 @@ function ExploreProducts() {
                 >
                   <div className="group h-[75%] w-[75%] relative">
                     <img
-                      key={e.image}
-                      className="bg-slate-200 h-[100%] w-[100%] object-contain px-2 py-5 group-hover:opacity-20"
-                      src={e.image}
+                      key={e.images[0]}
+                      className="bg-slate-200 h-[100%] w-[100%] object-contain p-2 group-hover:opacity-20"
+                      src={e.images[0]}
                       alt=""
                     />
 
                     <div className="bg-black m-2 bg-opacity-10 hidden group-hover:flex justify-center items-center absolute inset-0 rounded-md ">
                       <button
-                        onClick={() => navigate("/shop")}
+                        onClick={() => navigate(`/item/${e._id}`)}
                         className="bg-green-500 text-white px-5 py-[2vh] rounded-md"
                       >
-                        ADD TO CART
+                        VIEW DETAILS
                       </button>
                     </div>
                   </div>
                   <div className="flex-1"></div>
                   <h1 className="text-lg">{e.name}</h1>
-                  <h2 className="font-bold">₹ 80.0</h2>
+                  <h2 className="font-bold">₹ {e.price}</h2>
                 </div>
               );
             })}
