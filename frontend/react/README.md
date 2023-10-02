@@ -11,20 +11,34 @@ git clone https://github.com/[your-username]/freshnest.git
 
 Replace [your-username] with your GitHub username.<br>
 
-3. Install Node.js if you haven't already. You can download the latest version of Node.js from the official website: https://nodejs.org/en/download/<br>
+3. Install Node.js [v18.4.0](https://nodejs.org/dist/v18.4.0/).<br>
 4. Navigate to the project directory by running the following command in your terminal: <br>
 
 ```
 cd /frontend/react/
 ```
 
-5.  Install the project dependencies by running the following command:
+5. Add an `.env` file in your `/frontend/react/` folder and add the below line:
+
+   - To use local development server (preferred)
+
+    ```
+     VITE_API_URL="http://localhost:3000/api"
+    ```
+
+   - To use remove development server
+
+    ```
+    VITE_API_URL="https://agromillets.adaptable.app/api"
+    ```
+
+6. Install the project dependencies by running the following command:
 
 ```
 npm install
 ```
 
-6.  Start the development server by running the following command:
+7. Start the development server by running the following command:
 
 ```
 npm run dev
