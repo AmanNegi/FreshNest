@@ -59,7 +59,7 @@ function Search() {
         ) : (
           <div className="h-[50vh] flex flex-col justify-center items-center">
             <p className="text-5xl mb-2">😵</p>
-            <h1>Enter a valid query</h1>
+            <h2>Enter a valid query</h2>
           </div>
         )}
       </section>

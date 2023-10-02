@@ -63,7 +63,7 @@ function NavBar() {
                 navigate("/");
               }}
             >
-              <h1>Logout</h1>
+              <h6>Logout</h6>
             </li>
           </ul>
         </div>
@@ -76,7 +76,7 @@ function NavBarItem({ text = "NavItem", route = "/" }) {
   const navigate = useNavigate();
   return (
     <li onClick={() => navigate(route)}>
-      <h1>{text}</h1>
+      <h6>{text}</h6>
     </li>
   );
 }

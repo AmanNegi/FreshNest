@@ -25,7 +25,7 @@ function CartPage() {
       <NavBar />
       {isLoading && (
         <section className="md:min-h-screen mt-[8vh] flex flex-col">
-          <h1 className="text-5xl font-bold mt-5 pl-5 md:pl-10">Your Cart</h1>
+          <h1 className="mt-5 pl-5 md:pl-10">Your Cart</h1>
           <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 p-8 lg:p-10 ">
             {[1, 2, 3, 4, 5].map((e) => {
               return <ShimmerShopItem key={e} id={e} />;
@@ -37,11 +37,11 @@ function CartPage() {
 
       {!isLoading && (
         <section className="min-h-screen mt-[8vh] flex flex-col">
-          <h1 className="text-5xl font-bold mt-5 pl-5 md:pl-10">Your Cart</h1>
+          <h1 className="mt-5 pl-5 md:pl-10">Your Cart</h1>
           {cartItems.length === 0 && (
             <div className="h-[75vh] w-[100%] flex flex-col gap-10 justify-center items-center">
               <h1 className="text-8xl">🍉</h1>
-              <p> No Items in cart  </p>
+              <h2> No Items in cart  </h2>
             </div>
           )} <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 p-8 lg:p-10 ">
 

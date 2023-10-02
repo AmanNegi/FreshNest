@@ -74,6 +74,6 @@ export async function removeFromCart(itemId) {
     toast.error(res.data.message);
   }
 
-  console.log(res);
+  console.log("cart.js | removeFromCart()", res);
   return 1;
 }

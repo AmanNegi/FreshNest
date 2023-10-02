@@ -62,14 +62,14 @@ function LoadedPage({ item }) {
               </h1>
             </div>
 
-            <div className="flex flex-row gap-4 mb-2">
+            <div className="flex flex-row gap-4 mb-2 items-center">
               <Rating
                 initialRating={4.0}
                 readonly={true}
                 fullSymbol={<AiFillStar className="text-amber-400" />}
                 emptySymbol={<AiOutlineStar className="text-gray-300" />}
               />
-              <h1 className="text-slate-500">4.5 out of 5</h1>
+              <h6 className="text-slate-500">4.5 out of 5</h6>
             </div>
             <p className="text-lg">{item.description}</p>
           </div>
@@ -114,8 +114,8 @@ function LoadedPage({ item }) {
                 <p className="">{comment.name[0]}</p>
               </div>
               <div className="flex flex-col pl-2">
-                <h1 className="text-xl">{comment.content}</h1>
-                <p className="text-slate-400">{comment.name}</p>
+                <h3 className="text-xl">{comment.content}</h3>
+                <p className="">{comment.name}</p>
               </div>
             </div>
           ))}

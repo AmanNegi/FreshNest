@@ -33,17 +33,22 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
   if (!loading && !item) {
     return (
       <div
-        id={_id}
-        className="bg-green-100 text-green-700 text-bold text-2xl flex flex-col justify-center items-center text-center p-10 rounded-lg"
+        id={itemId}
+        className="bg-red-100 text-bold text-2xl flex flex-col justify-center items-center text-center p-10 rounded-lg"
       >
         <h1>Item has been removed by admin</h1>
-        <div className="h-2"></div>
-        <Button
-          onClick={async () => {
+        <div className="h-4"></div>
+        <button
+          className="btn btn-error"
+          onClick={async (e) => {
+            e.stopPropagation();
             await removeFromCart(itemId);
+            window.location.reload();
           }}
-          text="Remove Item"
-        />
+        >
+          Remove From Cart
+        </button>
+
       </div>
     );
   }
