@@ -11,6 +11,7 @@ class AppState {
    * @property {string|undefined} phone - The phone number of the user.
    * @property {string|undefined} userType - The type of user (e.g. "admin", "customer").
    * @property {string|undefined} createdAt - The date and time when the user was created.
+   * @property {string|undefined} pattern - The user background pattern is stored here.
    */
 
   /**  @type {User} */
@@ -21,6 +22,7 @@ class AppState {
     phone: undefined,
     userType: undefined,
     _id: undefined,
+    pattern : undefined
   };
   
   isLoggedIn = false;
