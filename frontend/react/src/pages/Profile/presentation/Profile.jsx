@@ -25,7 +25,7 @@ function Profile() {
   return (
     <>
       <NavBar />
-      <div className={`mt-[8vh] h-[20vh] w-full ${pattern}`}></div>
+      <div className={`mt-[8vh] h-[20vh] w-full ${user?.pattern? user?.pattern: pattern}`}></div>
       <div className="absolute top-[20vh] left-1/2 -translate-x-1/2 bg-white rounded-full p-3 shadow-md">
         <img className="h-[100px] w-[100px]" src={male} alt="" />
       </div>
@@ -63,6 +63,8 @@ function Profile() {
                   let index = patterns.indexOf(pattern);
                   index = (index + 1) % patterns.length;
                   setPattern(patterns[index]);
+                  user.pattern =patterns[index];
+                  appState.setUserData(user)
                 }}
               >
                 Change Pattern
