@@ -21,6 +21,7 @@ function ItemDetail() {
       setItem(item);
     });
 
+
     return () => {
       // Cleanup
     };
@@ -39,91 +40,85 @@ function LoadedPage({ item }) {
   var navigate = useNavigate();
 
   return (
-    <>
-      <section className="mt-[8vh] min-h-[52vh] w-[100%] p-6 lg:p-12 ">
-        <div className="flex flex-col lg:flex-row">
-          <ImageView
-            _id={item._id}
-            url={item.images[0]}
-            shimmerClass={"min-h-[50vh] lg:w-[40vw]"}
+<>
+  <section className="w-[100%] p-6">
+    <div className="flex flex-col md:flex-row items-center "> {/* Added items-center for vertical alignment */}
+      <ImageView
+        _id={item._id}
+        url={item.images[0]}
+        shimmerClass={"min-h-[50vh] lg:w-[40vw]"}
             imageClass={
-              "h-40 object-contain min-h-[50vh] max-h-[70vh] h-[100%] w-[100%] lg:w-[40vw] bg-white border-slate-300 rounded-md border-2 p-4 border-dashed"
+              "h-40  object-contain min-h-[50vh] max-h-[70vh] h-[100%] w-[100%] lg:w-[40vw] bg-white border-slate-300 rounded-md border-2 p-4 border-dashed mt-60px"
             }
+      />
+      <div className="flex flex-col pl-1 mt-5">
+        <h1 className="text-5xl font-bold">{item.name}</h1>
+        <div className="flex flex-row items-center"> {/* Added items-center for vertical alignment */}
+          <h1 className="text-3xl font-light text-gray-300 line-through">
+            {"$ " + (parseFloat(item.price) + 208)}
+          </h1>
+          <h1 className="text-4xl font-bold text-accentColor ml-3"> {/* Added margin for spacing */}
+            {"$ " + item.price}
+          </h1>
+        </div>
+        <div className="flex flex-row gap-4 mb-2 items-center"> {/* Added items-center for vertical alignment */}
+          <Rating
+            initialRating={4.0}
+            readonly={true}
+            fullSymbol={<AiFillStar className="text-amber-400" />}
+            emptySymbol={<AiOutlineStar className="text-gray-300" />}
           />
-          <div className="flex flex-col pl-8 mt-5 lg:mt-0">
-            <h1 className="pb-2 text-5xl font-bold">{item.name}</h1>
-            <div className="flex flex-row items-end">
-              <h1 className="pb-5 mr-3 text-3xl font-light text-gray-300 line-through">
-                {"₹ " + (parseFloat(item.price) + 20)}
-              </h1>
+          <h1 className="text-slate-500">4.5 out of 5</h1>
+        </div>
+        <p className="text-lg">{item.description}</p>
+      </div>
+    </div>
+  </section>
+  {/* Comments Section */}
+  <h1 className="text-3xl font-bold ml-6 mt-5">User Reviews</h1> {/* Added margin for spacing */}
+  <div className="flex flex-col ml-6 md:flex-row mt-3"> {/* Added margin for spacing */}
+    <input
+      onChange={(e) => {
+        setComment(e.target.value);
+      }}
+      type="text"
+      placeholder="Enter your review"
+      className="flex-1 px-2 py-3 border-2 border-white outline-none bg-semiDarkColor bg-opacity-10 md:mr-3 focus:border-darkColor focus:rounded-lg focus:outline-none responsive-input"
+    />
+    <button
+      className="px-5 mt-3 text-white rounded-md md:mt-0 bg-accentColor responsive-button"
+      onClick={async () => {
+        var res = await addComment({ comment: comment, itemID: item._id });
+        if (res) {
+          window.location.reload();
+        } else {
+          navigate("/");
+        }
+      }}
+    >
+      Comment
+    </button>
+  </div>
 
-              <h1 className="pb-5 text-4xl font-bold text-accentColor">
-                {"₹ " + item.price}
-              </h1>
-            </div>
-
-            <div className="flex flex-row gap-4 mb-2 items-center">
-              <Rating
-                initialRating={4.0}
-                readonly={true}
-                fullSymbol={<AiFillStar className="text-amber-400" />}
-                emptySymbol={<AiOutlineStar className="text-gray-300" />}
-              />
-              <h6 className="text-slate-500">4.5 out of 5</h6>
-            </div>
-            <p className="text-lg">{item.description}</p>
+  {item.comments.length > 0 ? (
+    <section className="px-5 mt-3"> {/* Added margin for spacing */}
+      {item.comments.map((comment) => (
+        <div key={comment._id} className="flex flex-row pt-4 pb-2 border-b border-slate-200">
+          <div className="h-[25px] w-[25px] text-white p-4 rounded-full bg-lightColor flex justify-center items-center">
+            <p className="">{comment.name[0]}</p>
+          </div>
+          <div className="flex flex-col pl-2">
+            <h1 className="text-xl">{comment.content}</h1>
+            <p className="text-slate-400">{comment.name}</p>
           </div>
         </div>
-      </section>
-      {/* Comments Section */}
+      ))}
+    </section>
+  ) : (
+    <div className="h-5"></div>
+  )}
+</>
 
-      <h1 className="pl-12 text-3xl font-bold ">User Reviews</h1>
-      <div className="flex flex-col md:flex-row mt-5   h-[8vh] mx-5 md:mx-12">
-        <input
-          onChange={(e) => {
-            setComment(e.target.value);
-          }}
-          type="text"
-          placeholder="Enter your review"
-          className="input input-bordered w-full mt-2 md:mr-5 px-2 py-5"
-        ></input>
-        <button
-          className="px-5 mt-5 text-white rounded-md md:mt-0 bg-accentColor"
-          onClick={async () => {
-            var res = await addComment({ comment: comment, itemID: item._id });
-            if (res) {
-              window.location.reload();
-            } else {
-              navigate("/");
-            }
-          }}
-        >
-          Comment
-        </button>
-      </div>
-
-      {item.comments.length > 0 ? (
-        <section className="px-5 mb-5 md:px-12 md:mb-12">
-          {item.comments.map((comment) => (
-            // <p key={comment._id}>{comment.content}</p>
-            <div
-              key={comment._id}
-              className="flex flex-row pt-4 pb-2 border-b border-slate-200"
-            >
-              <div className="h-[25px] w-[25px] text-white p-4 rounded-full bg-lightColor flex justify-center items-center">
-                <p className="">{comment.name[0]}</p>
-              </div>
-              <div className="flex flex-col pl-2">
-                <h3 className="text-xl">{comment.content}</h3>
-                <p className="">{comment.name}</p>
-              </div>
-            </div>
-          ))}
-        </section>
-      ) : (
-        <div className="h-5"></div>
-      )}
-    </>
   );
 }
 
