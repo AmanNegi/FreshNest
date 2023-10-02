@@ -91,8 +91,8 @@ function Profile() {
                 {user.userType == undefined ? "" : user.userType.toUpperCase()}
               </div>
             </div>
-            <h1 className="text-slate-700">{user.email}</h1>
-            {user.phone && <h1>{`+91 ${user.phone}`}</h1>}
+            <h6 className="text-slate-700">{user.email}</h6>
+            {user.phone && <h6>{`+91 ${user.phone}`}</h6>}
           </>
         ) : (
           <>

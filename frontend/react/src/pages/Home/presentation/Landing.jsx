@@ -111,14 +111,14 @@ function TopSection() {
           <br />
           Local Products
         </motion.h1>
-        <motion.h1
+        <motion.h3
           initial={{ x: -250, opacity: 0 }}
           animate={{ x: 0, opacity: 1 }}
           transition={{ duration: 1, delay: 0.25 }}
           className="text-md text-white mt-5"
         >
           Support Local Farmers and Get Fresh, High-Quality Products
-        </motion.h1>
+        </motion.h3>
 
         <motion.div
           initial={{ x: -250, opacity: 0 }}
@@ -190,7 +190,7 @@ function ExploreProducts() {
       <div>
         <div className=" flex flex-col  md:flex-row lg:flex-row justify-center my-10 mx:10 md:mx-28">
           <motion.img
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 1 }}
             initial={{ y: 100 }}
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
@@ -214,15 +214,15 @@ function ExploreProducts() {
                   <div className="group h-[75%] w-[75%] relative">
                     <img
                       key={e.images[0]}
-                      className="bg-slate-200 h-[100%] w-[100%] object-contain p-2 group-hover:opacity-20"
+                      className="bg-slate-200 h-[100%] w-[100%] object-contain p-2 group-hover:opacity-20 transition-all"
                       src={e.images[0]}
                       alt=""
                     />
 
-                    <div className="bg-black m-2 bg-opacity-10 hidden group-hover:flex justify-center items-center absolute inset-0 rounded-md ">
+                    <div className="bg-black m-2 bg-opacity-10 hidden group-hover:flex transition-all justify-center items-center absolute inset-0 rounded-md ">
                       <button
                         onClick={() => navigate(`/item/${e._id}`)}
-                        className="bg-green-500 text-white px-5 py-[2vh] rounded-md"
+                        className="bg-green-500 text-white px-5 py-[2vh] rounded-md transition-all"
                       >
                         VIEW DETAILS
                       </button>

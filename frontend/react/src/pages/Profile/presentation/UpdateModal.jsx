@@ -113,7 +113,6 @@ const UpdateModal = ({ user }) => {
       modal.returnValue = 0;
     }
     modal.close();
-    // modal.removeEventListener("close", handleClose);
   }
 };
 
