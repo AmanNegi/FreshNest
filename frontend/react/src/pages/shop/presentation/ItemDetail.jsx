@@ -54,11 +54,11 @@ function LoadedPage({ item }) {
             <h1 className="pb-2 text-5xl font-bold">{item.name}</h1>
             <div className="flex flex-row items-end">
               <h1 className="pb-5 mr-3 text-3xl font-light text-gray-300 line-through">
-                {"$ " + (parseFloat(item.price) + 20)}
+                {"₹ " + (parseFloat(item.price) + 20)}
               </h1>
 
               <h1 className="pb-5 text-4xl font-bold text-accentColor">
-                {"$ " + item.price}
+                {"₹ " + item.price}
               </h1>
             </div>
 
