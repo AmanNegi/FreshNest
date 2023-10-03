@@ -16,16 +16,18 @@
 
 1. Install Node.js and `npm` on your development machine by following the instructions on the Node.js website.
 2. Clone the project repository from GitHub.
-3. Open the project in your preferred IDE or code editor.
+3. Open the `frontend` folder in your preferred IDE or code editor.
 4. Install the required dependencies by running the **`npm install`** command in your terminal.
-5. Make changes to the code as needed, ensuring that you follow the project's coding standards and best practices.
-6. Next we will create a `.env` file, which contains the following key-value pairs:
+5. Next we will create a `.env` file, which contains the following key-value pairs:
    ```env
    VITE_GOOGLE_CLIENT_ID="" # GoogleClientID if you want to work on auth feature
-   VITE_API_URL="http://localhost:3000/api" # your backend address here
+   VITE_API_URL="https://agromillets.adaptable.app/api" # your backend address here
    ```
-8. Test your changes using the project's existing test suite or by writing new tests.
-9. Submit a pull request to the project repository, detailing the changes you have made and any relevant information.
+6. Run the project by running `npm run dev` in your terminal. The app should start in `localhost:5173`.
+7. Use `email: customer@gmail.com` and `password: password` to log into the app.
+8. Make changes to the code as needed, ensuring that you follow the project's coding standards and best practices.
+9. Test your changes using the project's existing test suite or by writing new tests.
+10. Submit a pull request to the project repository, detailing the changes you have made and any relevant information.
 
 ---
 
