@@ -78,17 +78,17 @@ function LoadedPage({ item }) {
       {/* Comments Section */}
 
       <h1 className="pl-12 text-3xl font-bold ">User Reviews</h1>
-      <div className="flex flex-col md:flex-row mt-5   h-[8vh] mx-5 md:mx-12">
+      <div className="flex flex-col md:flex-row justify-center items-center h-[14vh] mx-5 md:mx-12">
         <input
           onChange={(e) => {
             setComment(e.target.value);
           }}
           type="text"
           placeholder="Enter your review"
-          className="input input-bordered w-full mt-2 md:mr-5 px-2 py-5"
+          className="input input-bordered w-full md:mr-5 px-2 py-5"
         ></input>
         <button
-          className="px-5 mt-5 text-white rounded-md md:mt-0 bg-accentColor"
+          className="px-5 h-[7vh] w-full md:w-auto mt-2 md:mt-0 text-white rounded-md bg-accentColor"
           onClick={async () => {
             var res = await addComment({ comment: comment, itemID: item._id });
             if (res) {
