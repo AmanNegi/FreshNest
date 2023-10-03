@@ -1,11 +1,10 @@
 # Backend For FreshNest
-Prerequisites: 
-- Node.js [v18.4.0](https://nodejs.org/dist/v18.4.0/)
+<h2>Prerequisites:</h2>
+- Node.js [v18.14.0](https://nodejs.org/dist/v18.14.0/)
 - [MongoDB](https://www.mongodb.com/try/download/community)
 - npm (included with Node.js)
 
-To run a local development server, follow these steps:
-
+<h2>Steps:</h2>
 1. Fork the project repository by clicking the "Fork" button at the top-right of this page.<br>
 2. Clone the forked repository to your local machine by running the following command in your terminal:<br>
 
@@ -36,7 +35,7 @@ npm install
 6. Start the development server by running the following command:
 
 ```
-npm start
+npm run dev
 ```
 This will launch the application in your default web browser.
 

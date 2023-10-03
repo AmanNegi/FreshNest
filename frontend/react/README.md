@@ -1,10 +1,9 @@
 ## Getting Started
-Prerequisites: 
-- Node.js [v18.4.0](https://nodejs.org/dist/v18.4.0/)
+<h2>Prerequisites:</h2>
+- Node.js [v18.14.0](https://nodejs.org/dist/v18.14.0/)
 - npm (included with Node.js)
 
-To get started with Fresh Nest, follow these steps:
-
+<h2>Steps:</h2>
 1. Fork the project repository by clicking the "Fork" button at the top-right of this page.<br>
 2. Clone the forked repository to your local machine by running the following command in your terminal:<br>
 

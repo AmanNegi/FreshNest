@@ -2,6 +2,7 @@
 
 **Mobile (Flutter)**
 
+<h2>Steps:</h2>
 1. Install Flutter on your development machine by following the instructions on the Flutter website.
 2. Clone the project repository from GitHub.
 3. Open the project in your preferred IDE or code editor.
