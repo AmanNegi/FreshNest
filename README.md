@@ -1,8 +1,13 @@
 <img src="./images/freshnest_banner.png"  />
 <img src="./images/github_banner.png">
 
-## 🌱 About FreshNest
-Welcome to FreshNest, an online marketplace that connects local vegetable sellers and farmers directly with customers who are seeking fresh and nutritious produce. We believe in fostering a direct connection between producers and consumers, empowering local communities and promoting sustainable farming practices.
+# FreshNest
+  
+[![Website](https://img.shields.io/badge/FreshNest-Website-brightgreen)](https://fresh-nest.netlify.app/)
+[![APK](https://img.shields.io/badge/FreshNest-APK-orange)](https://github.com/AmanNegi/FreshNest/releases/tag/v0.0.3)
+
+
+Welcome to FreshNest, an online marketplace that connects local vegetable sellers and farmers directly with customers who are seeking fresh and nutritious produce. We believe in fostering a direct connection between producers and consumers, empowering local communities, and promoting sustainable farming practices.
 
 With FreshNest, you can explore a wide range of locally grown vegetables, sourced directly from farmers in your area. By eliminating intermediaries, we ensure that you receive the freshest and highest-quality produce while supporting local farmers and their livelihoods.
 
@@ -12,11 +17,6 @@ With FreshNest, you can explore a wide range of locally grown vegetables, source
 - **Wide Variety**: Discover a diverse selection of vegetables from different farms, enabling you to explore new flavors, try unique heirloom varieties, and add excitement to your culinary creations.
 - **Transparency and Traceability**: We believe in transparency and provide detailed information about the farmers, their cultivation methods, and the region where the vegetables are grown. This enables you to make informed choices and connect with the source of your food.
 - **Convenient and Reliable**: FreshNest offers a seamless ordering experience with secure payment options and reliable delivery services. Sit back, relax, and let us bring the goodness of fresh vegetables to your doorstep.
-
-## 🚀 Live Preview 
-+ **Website**: [__Freshnest.com__](https://fresh-nest.netlify.app/)
-+ **App**: [__APK__](https://github.com/AmanNegi/freshnest/releases/tag/v0.0.2)
-
 
 ## 🛠️ Tech Stack
 
