@@ -14,7 +14,7 @@ With FreshNest, you can explore a wide range of locally grown vegetables, source
 - **Convenient and Reliable**: FreshNest offers a seamless ordering experience with secure payment options and reliable delivery services. Sit back, relax, and let us bring the goodness of fresh vegetables to your doorstep.
 
 ## 🚀 Live Preview 
-+ **Website**: [__Freshnest.com__](https://freshnest.netlify.app/)
++ **Website**: [__Freshnest.com__](https://fresh-nest.netlify.app/)
 + **App**: [__APK__](https://github.com/AmanNegi/freshnest/releases/tag/v0.0.2)
 
 
