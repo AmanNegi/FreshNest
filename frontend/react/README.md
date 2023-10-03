@@ -1,7 +1,7 @@
 ## Getting Started
 <h2>Prerequisites:</h2>
-- Node.js [v18.14.0](https://nodejs.org/dist/v18.14.0/)
-- npm (included with Node.js)
+- Node.js <a href="https://nodejs.org/dist/v18.14.0/">v18.14.0</a><br>
+- npm (included with Node.js)<br>
 
 <h2>Steps:</h2>
 1. Fork the project repository by clicking the "Fork" button at the top-right of this page.<br>
