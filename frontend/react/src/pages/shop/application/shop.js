@@ -88,22 +88,22 @@ function sortList(list, filter) {
 
 /**
  * Get all items from the database.
- * @returns {Promise<Item>} - The list of all items.
+ * @returns {Promise<Item|undefined>} - The list of all items.
  */
 export async function getAllItems() {
-  var res = await axios.get(import.meta.env.VITE_API_URL + "/list/getAll");
+  const res = await axios.get(import.meta.env.VITE_API_URL + "/list/getAll");
 
   return res.data.data;
 }
 
 /**
  * Get all items listed by the current farmer from the database.
- * @returns {Promise<Item>} - The list of items listed by the current farmer.
+ * @returns {Promise<Item|undefined>} - The list of items listed by the current farmer.
  */
 export async function getAllFarmerItems() {
-  var id = appState.getUserData()._id;
+  const id = appState.getUserData()._id;
 
-  var res = await axios.get(
+  const res = await axios.get(
     `${import.meta.env.VITE_API_URL}/list/getAll/${id}`
   );
 
@@ -117,7 +117,7 @@ export async function getAllFarmerItems() {
  */
 export async function getItem(id) {
   try {
-    var res = await axios.get(
+    const res = await axios.get(
       import.meta.env.VITE_API_URL + "/list/getItem/" + id
     );
     return res.data.data;
@@ -138,13 +138,15 @@ export async function addComment(comment) {
     toast.error("You must be logged in to add a comment");
     return 0;
   }
-  var res = await axios.post(import.meta.env.VITE_API_URL + "/list/comment", {
+  const res = await axios.post(import.meta.env.VITE_API_URL + "/list/comment", {
     commentBy: appState.getUserData()._id,
     itemID: comment.itemID,
     name: appState.getUserData().name,
     content: comment.comment,
     commentAt: Date.now(),
   });
+
+  console.log(res);
 
   return 1;
 }
@@ -162,7 +164,7 @@ export async function deleteItem(itemId) {
     toast.error("You must be an admin to delete an item");
     return 0;
   }
-  var res = await axios.post(
+  const res = await axios.post(
     import.meta.env.VITE_API_URL + "/admin/deleteItem",
     {
       adminId: appState.getUserData()._id,

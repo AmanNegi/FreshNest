@@ -1,24 +1,27 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import Login from "./pages/Auth/presentation/Login";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import Home from "./pages/Home/presentation/Home";
+
+import { ToastContainer } from "react-toastify";
+import { GoogleOAuthProvider } from "@react-oauth/google";
+import { initializeApp } from "firebase/app";
+import { getStorage } from "firebase/storage";
+
+import Login from "./pages/Auth/presentation/Login";
+import Landing from "./pages/Landing/presentation/Landing";
 import Shop from "./pages/shop/presentation/Shop";
 import About from "./pages/About/presentation/about";
 import ItemDetail from "./pages/shop/presentation/ItemDetail";
-
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
 import Search from "./pages/Search/presentation/Search";
 import Profile from "./pages/Profile/presentation/Profile";
 import CartPage from "./pages/Cart/presentation/Cart";
-import appState from "./data/AppState";
-import { GoogleOAuthProvider } from "@react-oauth/google";
 import AddItem from "./pages/AddItem/presentation/AddItem";
 import SignUp from "./pages/Auth/presentation/SignUp";
-import { initializeApp } from "firebase/app";
-import { getStorage } from "firebase/storage";
+
+import appState from "./data/AppState";
+
+import "./index.css";
+import "react-toastify/dist/ReactToastify.css";
 
 const router = createBrowserRouter([
   {
@@ -31,7 +34,7 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    element: <Home />,
+    element: <Landing />,
   },
   {
     path: "/about",
@@ -83,5 +86,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </main>
   </GoogleOAuthProvider>,
 );
+
 const storage = getStorage(app);
 export default storage;

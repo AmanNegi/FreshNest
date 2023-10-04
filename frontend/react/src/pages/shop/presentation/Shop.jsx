@@ -1,4 +1,4 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 
 import ShopItem from "../../../components/ShopItem";
 import NavBar from "../../../components/NavBar";
@@ -10,8 +10,12 @@ import getItems from "../application/shop";
 
 import { FaCaretDown } from "react-icons/fa";
 import Footer from "../../../components/Footer";
+import { Item } from "../application/shop_model";
 
 function Shop() {
+  /**
+   * @type {[Item[], function]}
+   */
   var [list, setList] = useState([]);
   var [isLoading, setIsLoading] = useState(true);
   var [filter, setFilter] = useState("Latest");
@@ -25,9 +29,7 @@ function Shop() {
       console.log("Set List to ", e);
     });
 
-    return () => {
-      // Clean up here
-    };
+    return () => {};
   }, []);
 
   return (
@@ -39,7 +41,9 @@ function Shop() {
           {list.length > 0 && (
             <Filter filter={filter} updateFilter={updateFilter} />
           )}
-          {appState.isFarmer() && <Button path="/add" text="Add Item" additionalClasses="ml-2" />}
+          {appState.isFarmer() && (
+            <Button path="/add" text="Add Item" additionalClasses="ml-2" />
+          )}
         </div>
       </div>
 

@@ -17,22 +17,18 @@ select {
   @apply bg-green-500 hover:bg-opacity-80 text-sm md:text-lg lg:text-lg rounded-md py-3 px-4 text-white;
 }
 
-/* .inputStyle {
-  @apply bg-semiDarkColor text-sm bg-opacity-10 w-[100%] py-3 mt-1 border-2 outline-none border-white focus:border-darkColor focus:rounded-lg focus:outline-none px-2 transition-all;
-} */
-
 h1 {
-  @apply text-3xl font-bold;
+  @apply text-xl md:text-3xl font-bold;
 }
 
 h2 {
-  @apply text-xl font-semibold;
+  @apply text-lg md:text-xl font-semibold;
 }
 
 h3 {
-  @apply text-xl font-normal;
+  @apply text-base md:text-xl font-normal;
 }
 
 h6 {
-  @apply text-base   font-normal;
+  @apply text-base font-normal;
 }

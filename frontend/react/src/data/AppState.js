@@ -22,14 +22,14 @@ class AppState {
     phone: undefined,
     userType: undefined,
     _id: undefined,
-    pattern : undefined
+    pattern: undefined,
   };
-  
+
   isLoggedIn = false;
 
   __init__() {
     console.log("In __init__ AppState.js...");
-    var data = JSON.parse(localStorage.getItem(APP_STATE_KEY)) ?? {};
+    const data = JSON.parse(localStorage.getItem(APP_STATE_KEY)) ?? {};
     console.log("Local AppState Data: ", data);
     this.userData = data.userData ?? {};
     this.isLoggedIn = data.isLoggedIn ?? false;
@@ -62,6 +62,10 @@ class AppState {
     return true;
   }
 
+  /**
+   * Get the user data.
+   * @returns {User}
+   */
   getUserData() {
     return { ...this.userData };
   }
