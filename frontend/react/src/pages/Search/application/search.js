@@ -1,10 +1,14 @@
 import axios from "axios";
 import { toast } from "react-toastify";
+import { Item } from "../../shop/application/shop_model";
 
-// http://localhost:3000/api/search/{yourQueryHere}
-
+/**
+ * Search for items in the database.
+ * @param {string} query 
+ * @returns {Promise<Item[]>}
+ */
 export default async function search(query) {
-  var res = await axios.get(import.meta.env.VITE_API_URL + `/search/${query}`);
+  const res = await axios.get(import.meta.env.VITE_API_URL + `/search/${query}`);
   console.log(res);
   if (res.data.statusCode === 200) {
     return res.data.data;

@@ -1,11 +1,17 @@
 import { useEffect, useState } from "react";
+
 import NavBar from "../../../components/NavBar";
 import ShopItem from "../../../components/ShopItem";
-import getCart from "../application/cart";
 import Footer from "../../../components/Footer";
 import ShimmerShopItem from "../../../components/ShimmerShopItem";
+import { CartItem } from "../../../modals/cart";
+
+import getCart from "../application/cart";
 
 function CartPage() {
+  /**
+   * @type {[CartItem[], function]}
+   */
   const [cartItems, setCartItems] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 

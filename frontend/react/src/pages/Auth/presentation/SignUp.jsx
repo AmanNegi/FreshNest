@@ -7,14 +7,14 @@ import { BiHide, BiShow } from "react-icons/bi";
 
 import { signUp, gSignUp } from "../application/auth";
 import appState from "../../../data/AppState";
+import getCart from "../../Cart/application/cart";
 
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
-import getCart from "../../Cart/application/cart";
 
 function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
-  const [userType, setUserType] = useState("Select User Type");
+  var navigate = useNavigate();
 
   const [data, setData] = useState({
     name: "",
@@ -28,7 +28,6 @@ function SignUp() {
     setPasswordVisible(!passwordVisible);
   };
 
-  var navigate = useNavigate();
 
   useEffect(() => {
     if (appState.isUserLoggedIn()) {
@@ -141,7 +140,6 @@ function SignUp() {
                 }
               }}
               className="btn btn-primary flex-grow py-3 "
-            // className="bg-lightColor rounded-lg text-white font-semibold text-lg py-3 flex-grow "
             >
               Sign Up
             </button>

@@ -4,10 +4,14 @@ import NavBar from "../../../components/NavBar";
 import search from "../application/search";
 import { toast } from "react-toastify";
 import ShopItem from "../../../components/ShopItem";
+import { Item } from "../../shop/application/shop_model";
 
 function Search() {
   const [loading, setLoading] = useState(false);
-  const [items, setItems] = useState(null);
+  /**
+   * @type {[Item[], function]}
+   */
+  const [items, setItems] = useState([]);
   const [query, setQuery] = useState("");
 
   const searchForQuery = async () => {

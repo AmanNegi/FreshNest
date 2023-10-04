@@ -10,7 +10,7 @@ import { toast } from "react-toastify";
  * @param {string} body.phone
  */
 export default async function updateUser(body) {
-  var res = await axios.post(
+  const res = await axios.post(
     import.meta.env.VITE_API_URL + "/profile/updateUser",
     { ...body, _id: appState.userData._id }
   );

@@ -8,9 +8,14 @@ import ItemDetailShimmer from "./DetailShimmer";
 import ImageView from "../../../components/ImageView";
 
 import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { Item } from "../application/shop_model";
 
 function ItemDetail() {
   const { id } = useParams();
+
+  /**
+   * @type {[Item, function]}
+   */
   const [item, setItem] = useState({});
   const [loading, setLoading] = useState(true);
 
@@ -18,11 +23,12 @@ function ItemDetail() {
     setLoading(true);
     getItem(id).then((item) => {
       setLoading(false);
-      setItem(item);
+      if (item) {
+        setItem(item);
+      }
     });
 
     return () => {
-      // Cleanup
     };
   }, []);
 
@@ -35,6 +41,7 @@ function ItemDetail() {
 }
 
 function LoadedPage({ item }) {
+
   const [comment, setComment] = useState("");
   var navigate = useNavigate();
 
@@ -105,7 +112,6 @@ function LoadedPage({ item }) {
       {item.comments.length > 0 ? (
         <section className="px-5 mb-5 md:px-12 md:mb-12">
           {item.comments.map((comment) => (
-            // <p key={comment._id}>{comment.content}</p>
             <div
               key={comment._id}
               className="flex flex-row pt-4 pb-2 border-b border-slate-200"

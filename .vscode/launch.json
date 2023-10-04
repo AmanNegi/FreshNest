@@ -22,7 +22,8 @@
       "type": "dart",
       "request": "launch",
       "name": "Dart: Launch Flutter",
-      "program": "${workspaceFolder}/frontend/flutter/lib/main.dart"
+      "program": "${workspaceFolder}/frontend/flutter/lib/main.dart",
+      "preLaunchTask": "flutter pub get"
     },
     {
       "type": "node-terminal",

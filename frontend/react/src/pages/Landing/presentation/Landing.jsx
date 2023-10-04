@@ -20,6 +20,8 @@ function Home() {
 
   return (
     <>
+
+      <NavBar />
       <main className="mt-[8vh] w-[100%] overflow-hidden snap snap-y snap-mandatory">
         <TopSection />
         <OurMottoSection />
