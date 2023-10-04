@@ -1,15 +1,8 @@
 import React, { useState } from "react";
-import { User } from "./types";
 import { toast } from "react-toastify";
 import _ from "lodash";
 import updateUser from "../application/profile";
 
-/**
- * Represents a modal for updating a user.
- * @param {Object} props - The component props.
- * @param {User} props.user - The user object to update.
- * @return {*} The rendered component.
- */
 const UpdateModal = ({ user }) => {
   const [data, setData] = useState({
     name: user.name,

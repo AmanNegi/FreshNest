@@ -20,7 +20,7 @@ export default async function login(email, password) {
     toast.error(res.data.message);
   }
   appState.saveUserData(res.data.data, true);
-  return res.data.data;
+  return res.data;
 }
 
 /**
@@ -52,7 +52,7 @@ export async function signUp(data) {
     toast.error(res.data.message);
   }
   appState.saveUserData(res.data.data, true);
-  return res.data.data;
+  return res.data;
 }
 
 /**
@@ -70,5 +70,5 @@ export async function gSignUp(name, email) {
   );
 
   console.log(res);
-  return res.data.data;
+  return res.data;
 }
