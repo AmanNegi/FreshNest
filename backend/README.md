@@ -1,10 +1,12 @@
 # Backend For FreshNest
-<h2>Prerequisites:</h2>
+<h2>Prerequisites: 📋</h2>
+
 - Node.js <a href="https://nodejs.org/dist/v18.14.0/">v18.14.0</a><br>
 - <a href="https://www.mongodb.com/try/download/community">MongoDB</a><br>
 - npm (included with Node.js)<br>
 
-<h2>Steps:</h2>
+<h2>Steps: 🚶‍♂️🚀</h2>
+
 1. Fork the project repository by clicking the "Fork" button at the top-right of this page.<br>
 2. Clone the forked repository to your local machine by running the following command in your terminal:<br>
 
@@ -26,7 +28,7 @@ cd /backend/
 npm install
 ```
 
-5. Add an `.env` file in your `/backend` folder and add the below line:
+5. Add a `.env` file in your `/backend` folder and add the below line:
 
    ```env
    DATABASE_URL="mongodb://127.0.0.1:27017/fresh-nest" # your MongoDB address with port and collection name
