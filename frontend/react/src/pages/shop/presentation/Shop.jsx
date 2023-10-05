@@ -7,6 +7,7 @@ import ShimmerShopItem from "../../../components/ShimmerShopItem";
 
 import appState from "../../../data/AppState";
 import getItems from "../application/shop";
+import { sortList } from "../application/shop";
 
 import { FaCaretDown } from "react-icons/fa";
 import Footer from "../../../components/Footer";
@@ -29,7 +30,7 @@ function Shop() {
       console.log("Set List to ", e);
     });
 
-    return () => {};
+    return () => { };
   }, []);
 
   return (
@@ -68,10 +69,9 @@ function Shop() {
     </>
   );
 
-  async function updateFilter(name, value) {
+  function updateFilter(name, value) {
     setFilter(name);
-    setList([]);
-    setList(await getItems(value));
+    setList(prevList => sortList(prevList, value))
   }
 }
 
