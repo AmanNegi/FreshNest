@@ -4,16 +4,48 @@ import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 
+
 import appState from "../../../data/AppState";
 import getCart from "../../Cart/application/cart";
 import login, { gSignUp } from "../application/auth";
 
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
+import ButtonLoader from "../../../components/ButtonLoader";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+   const [loading, setLoading] = useState(false);
+   
+   // handle sign in function (🚀)
+  const handleLogin = async () => {
+    if (email.length === 0) {
+      toast.error("Enter your email to login 😥");
+      return;
+    }
+
+    if (password.length === 0) {
+      toast.error("Enter your password to login 😥");
+      return;
+    }
+
+    // Set loading to true when login starts(🤟)
+    setLoading(true);
+
+    try {
+      var data = await login(email, password);
+      if (data.statusCode === 200) {
+        await getCart();
+        navigate("/home");
+      }
+    } catch (error) {
+      // Handle errors here
+    } finally {
+      // Set loading to false when login completes (whether success or failure)
+      setLoading(false);
+    }
+  };
   var navigate = useNavigate();
   
   useEffect(() => {
@@ -23,6 +55,7 @@ function Login() {
       toast("Logged in as " + appState.getUserData().name);
     }
   }, []);
+
 
   return (
     <>
@@ -65,7 +98,7 @@ function Login() {
           </div>
           <div className="pt-5"></div>
           {/* Button */}
-          <button
+          {/* <button
             onClick={async () => {
               if (email.length === 0) {
                 toast.error("Enter your email to login");
@@ -84,7 +117,17 @@ function Login() {
             }}
             className="btn btn-primary w-full py-3 mb-4"
           >
+          
             Login
+          </button> */}
+          <button
+            onClick={handleLogin}
+            className={`btn btn-primary w-full py-3 mb-4 ${
+              loading ? "opacity-50 cursor-not-allowed" : ""
+            }`}
+            disabled={loading}
+          >
+            {loading ? <ButtonLoader  /> : "Login"}
           </button>
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
@@ -100,7 +143,7 @@ function Login() {
                   email: data.email,
                   userType: "customer",
                 },
-                true,
+                true
               );
               await getCart();
               navigate("/home");
