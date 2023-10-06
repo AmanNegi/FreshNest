@@ -15,7 +15,7 @@ function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   var navigate = useNavigate();
-  
+
   useEffect(() => {
     if (appState.isUserLoggedIn()) {
       console.log(appState);
@@ -92,7 +92,11 @@ function Login() {
               const data = jwtDecode(credentialResponse.credential);
               console.log(data);
 
-              var user = await gSignUp(data.name, data.email);
+              var { data: user, statusCode } = await gSignUp(data.name, data.email);
+              if (statusCode !== 200) {
+                toast.error("Error while logging in");
+                return;
+              }
               appState.saveUserData(
                 {
                   _id: user._id,

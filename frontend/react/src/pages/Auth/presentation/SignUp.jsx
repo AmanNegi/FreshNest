@@ -145,13 +145,15 @@ function SignUp() {
             </button>
             <GoogleLogin
               onSuccess={async (credentialResponse) => {
-                // Save user to backend as well
-
                 const data = jwtDecode(credentialResponse.credential);
                 console.log(data);
 
-                var user = await gSignUp(data.name, data.email);
+                const { data: user, statusCode } = await gSignUp(data.name, data.email);
 
+                if (statusCode !== 200) {
+                  toast.error("Error while signing in");
+                  return;
+                }
                 appState.saveUserData(
                   {
                     _id: user._id,
