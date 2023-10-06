@@ -1,0 +1,31 @@
+name: Greetings
+
+on: [pull_request_target, issues]
+
+jobs:
+  greeting:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write
+      pull-requests: write
+    steps:
+    - uses: actions/first-interaction@v1
+      with:
+        repo-token: ${{ secrets.GITHUB_TOKEN }}
+        issue-message: |
+              Thanks for opening a new issue! 🎉
+              
+              Welcome to our community. 
+              
+              While we are working on getting back to you, you can check out some resources to get started with FreshNest:
+              
+              - [Code of Conduct](https://github.com/AmanNegi/FreshNest/blob/main/CODE_OF_CONDUCT.md)
+              - [Contributors Guide](https://github.com/AmanNegi/FreshNest/blob/main/docs/CONTRIBUTING.md)
+        pr-message: |
+               Thanks for opening a new PR! 🎉
+              
+               Welcome to our community. 
+               
+               While we are working on getting back to you, you can check out some resources to get started with FreshNest:
+               - [Code of Conduct](https://github.com/AmanNegi/FreshNest/blob/main/CODE_OF_CONDUCT.md)
+               - [Contributors Guide](https://github.com/AmanNegi/FreshNest/blob/main/docs/CONTRIBUTING.md)
