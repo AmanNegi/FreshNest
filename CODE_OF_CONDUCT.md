@@ -1,8 +1,9 @@
 # Contributor Covenant Code of Conduct
 
-AgroMillets is committed to providing a safe, respectful and inclusive environment for all its contributors, collaborators, and users. We expect all members of our community to abide by the following code of conduct:
+FreshNest is committed to providing a safe, respectful and inclusive environment for all its contributors, collaborators, and users. We expect all members of our community to abide by the following code of conduct:
 
 ## Respect
+
 We respect everyone’s identities, culture, and work. We expect all members of our community to:
 
 - Treat each other with kindness, courtesy, and respect
@@ -11,15 +12,17 @@ We respect everyone’s identities, culture, and work. We expect all members of 
 - Avoid demeaning, discriminatory, or harassing behavior
 
 ## Harassment
-AgroMillets does not tolerate any form of harassment or discrimination, including but not limited to:
+
+FreshNest does not tolerate any form of harassment or discrimination, including but not limited to:
 
 - Offensive, derogatory or belittling comments
 - Hate speech, including discriminatory language or slurs based on someone’s identity
 - Bullying, intimidation or threatening behavior
 - Any form of sexual harassment or assault
-If you witness or experience any behavior that makes you feel unsafe, unwelcome, or uncomfortable, please report it to the maintainer or owner.
+  If you witness or experience any behavior that makes you feel unsafe, unwelcome, or uncomfortable, please report it to the maintainer or owner.
 
 ## Conflict Resolution
+
 Disagreements and conflicts can arise in any community. We encourage all members of our community to:
 
 - Work together to understand each other's perspectives
@@ -28,10 +31,12 @@ Disagreements and conflicts can arise in any community. We encourage all members
 - Avoid **"agreement by attrition"** or **"agreement by compromise"** that doesn't address everyone's concerns
 
 ## Questions
+
 We welcome questions and encourage our community to help each other. If you don't know something, don't be afraid to ask. Once you find the answer, document it in the first place you looked.
 
 ## Enforcement
-AgroMillets is committed to upholding this code of conduct. We expect everyone to adhere to these guidelines. We reserve the right to take appropriate action, including but not limited to:
+
+FreshNest is committed to upholding this code of conduct. We expect everyone to adhere to these guidelines. We reserve the right to take appropriate action, including but not limited to:
 
 - Warning the offender and reminding them of our code of conduct
 - Asking the offender to leave the project or event immediately
@@ -73,4 +78,3 @@ posting via an official social media account, or acting as an appointed
 representative at an online or offline event.
 
 **By participating in our community, you agree to abide by this code of conduct.**
-
