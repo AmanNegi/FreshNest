@@ -39,7 +39,7 @@ export async function getFourItems() {
  * @param {string} filter - The filter to apply to the list.
  * @returns {Array<Item>} - The sorted list of items.
  */
-function sortList(list, filter) {
+export function sortList(list, filter) {
   switch (filter) {
     case "0": {
       list.sort((a, b) => {
