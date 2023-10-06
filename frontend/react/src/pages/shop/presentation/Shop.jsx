@@ -60,7 +60,7 @@ function Shop() {
         <section className="w-[100%] bg-white min-h-screen">
           <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
             {list.map((e, i) => {
-              return <ShopItem key={i} itemId={e._id} isCart={false} />;
+              return <ShopItem key={e._id} itemId={e._id} isCart={false} />;
             })}
           </div>
         </section>
