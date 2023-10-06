@@ -31,8 +31,8 @@ With FreshNest, you can explore a wide range of locally grown vegetables, source
 Check the [`CONTRIBUTING.md`](./docs/CONTRIBUTING.md) for information regarding contributions.
 
 ## 👨‍💻 Contributors
-<a href="https://github.com/AmanNegi/AgroMillets/graphs/contributors">
-  <img src="https://contrib.rocks/image?repo=AmanNegi/AgroMillets" />
+<a href="https://github.com/AmanNegi/FreshNest/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=AmanNegi/FreshNest" />
 </a>
 
 
