@@ -9,9 +9,9 @@ import { Item } from "../../shop/application/shop_model";
 function Search() {
   const [loading, setLoading] = useState(false);
   /**
-   * @type {[Item[], function]}
+   * @type {[Item[]|null, function]}
    */
-  const [items, setItems] = useState([]);
+  const [items, setItems] = useState(null);
   const [query, setQuery] = useState("");
 
   const searchForQuery = async () => {
