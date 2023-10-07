@@ -1,6 +1,4 @@
-const winston = require("winston");
 const mongoose = require("mongoose");
-const config = require("config");
 
 module.exports = async function () {
   var dbUrl = process.env.DATABASE_URL;
