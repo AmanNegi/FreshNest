@@ -41,16 +41,20 @@ cd /frontend/react/
 ```
 npm install
 ```
+6. Install `vite` globally, because we use `vite` in our build scripts:
+```
+npm install -g vite
+```
 
-6. Start the development server by running the following command:
+7. Start the development server by running the following command:
 
 ```
 npm run dev
 ```
 
-7. The application should be running on `localhost:5173`.
+8. The application should be running on `localhost:5173`.
 
-8. If you are using the remote development server, use email: `customer@gmail.com` and password: `password` to log into the application. For the local host development server, you can sign up and create your local credentials.
+9. If you are using the remote development server, use email: `customer@gmail.com` and password: `password` to log into the application. For the local host development server, you can sign up and create your local credentials.
 
 9. Create a new branch, and make changes to the code as needed, ensuring that you follow the project's coding standards and best practices.
 
