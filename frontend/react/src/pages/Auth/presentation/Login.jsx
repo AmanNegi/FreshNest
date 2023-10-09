@@ -16,23 +16,21 @@ import ButtonLoader from "../../../components/ButtonLoader";
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-   const [loading, setLoading] = useState(false);
-   
-   // handle sign in function (🚀)
+  const [loading, setLoading] = useState(false);
+
+  // handle sign in function (🚀)
+
   const handleLogin = async () => {
     if (email.length === 0) {
       toast.error("Enter your email to login 😥");
       return;
     }
-
     if (password.length === 0) {
       toast.error("Enter your password to login 😥");
       return;
     }
-
     // Set loading to true when login starts(🤟)
     setLoading(true);
-
     try {
       var data = await login(email, password);
       if (data.statusCode === 200) {
@@ -97,29 +95,6 @@ function Login() {
             ></input>
           </div>
           <div className="pt-5"></div>
-          {/* Button */}
-          {/* <button
-            onClick={async () => {
-              if (email.length === 0) {
-                toast.error("Enter your email to login");
-                return;
-              }
-
-              if (password.length === 0) {
-                toast.error("Enter your password to login");
-                return;
-              }
-              var data = await login(email, password);
-              if (data.statusCode === 200) {
-                await getCart();
-                navigate("/home");
-              }
-            }}
-            className="btn btn-primary w-full py-3 mb-4"
-          >
-          
-            Login
-          </button> */}
           <button
             onClick={handleLogin}
             className={`btn btn-primary w-full py-3 mb-4 ${
