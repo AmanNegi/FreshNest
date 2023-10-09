@@ -5,10 +5,13 @@ const { Cart, validateCart } = require("../models/cart");
 const _ = require("lodash");
 const { mongoose } = require("mongoose");
 
-//TODO: Add cart functions
-
+/**
+ * Get cart for a user
+ * @param {Object} req - The request object.
+ * @param {string} req.params.userId - The user's ID.
+ */
 router.get("/get/:userId", async function (req, res) {
-  var userId = req.params.userId;
+  const userId = req.params.userId;
   console.log("Get Cart for user: " + userId);
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
@@ -30,8 +33,15 @@ router.get("/get/:userId", async function (req, res) {
   }
 });
 
+/**
+ * Add item to cart
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.userId - The user's ID.
+ * @param {string} req.body.item - The item to add.
+ * @param {number} req.body.count - The count of the item.
+ */
 router.post("/add", async (req, res) => {
-  // Body = {userId, item, count}
   var data = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(data.userId)) {
@@ -76,8 +86,13 @@ router.post("/add", async (req, res) => {
   return res.send(getSuccessResponse("Saved Item to Cart", cart));
 });
 
-// Remove item from cart
-// Body: {userId, itemId}
+/**
+ * Remove item from cart
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.userId - The user's ID.
+ * @param {string} req.body.itemId - The item's ID.
+ */
 router.post("/remove", async (req, res) => {
   var { userId, itemId } = req.body;
 
@@ -98,7 +113,7 @@ router.post("/remove", async (req, res) => {
   }
 
   const len = cart.items.length;
-  
+
   // If itemId doesn't match, add it back to list
   cart.items = cart.items.filter((e) => e.item.toString() !== itemId);
 

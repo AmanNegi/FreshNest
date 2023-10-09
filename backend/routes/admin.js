@@ -6,9 +6,7 @@ const _ = require("lodash");
 const { default: mongoose } = require("mongoose");
 const { MilletItem } = require("../models/millet_item");
 
-//TODO: Add Admin functions
-
-// Add a function to check if user is admin
+// TODO: Add a function to check if user is admin
 router.get("/isAdmin/:userId", async function (req, res) {});
 
 // Delete an Item

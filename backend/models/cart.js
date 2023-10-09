@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const JoiObjectId = require("joi-objectid")(Joi);
-const { milletItemSchema } = require("./millet_item.js");
 
 const cartItemSchema = new mongoose.Schema({
   count: {
