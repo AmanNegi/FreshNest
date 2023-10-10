@@ -20,7 +20,6 @@ function Home() {
 
   return (
     <>
-
       <NavBar />
       <main className="mt-[8vh] w-[100%] overflow-hidden snap snap-y snap-mandatory">
         <TopSection />
@@ -191,15 +190,22 @@ function ExploreProducts() {
     <section>
       <div>
         <div className=" flex flex-col  md:flex-row lg:flex-row justify-center my-10 mx:10 md:mx-28">
-          <motion.img
+          <motion.div
             transition={{ duration: 1 }}
             initial={{ y: 100 }}
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
-            className="w-[100%] mb-8 md:mb-0  md:w-[40%] object-cover"
-            src={explore_image}
-            alt=""
-          />
+            className="relative w-[100%] mb-8 md:mb-0 object-cover text-center"
+          >
+            <img className="w-full h-full" src={explore_image} alt="" />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <p className="text-white font-light tracking-wider text-xl md:text-lg">
+                Explore our
+              </p>
+              <p className="text-white font-bold text-7xl">Products</p>
+            </div>
+          </motion.div>
+
           <motion.div
             transition={{ duration: 0.5 }}
             initial={{ x: 100, opacity: 0 }}
