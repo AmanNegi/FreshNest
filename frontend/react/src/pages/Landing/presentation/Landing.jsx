@@ -20,12 +20,11 @@ function Home() {
 
   return (
     <>
-
       <NavBar />
       <main className="mt-[8vh] w-[100%] overflow-hidden snap snap-y snap-mandatory">
         <TopSection />
         <OurMottoSection />
-        <section className="mx-8 md:mx-28 ">
+        <section className="mx-8 px-4 ">
           <div className=" flex flex-col md:flex-row  ">
             <motion.div
               initial={{ x: -300, opacity: 0 }}
@@ -189,39 +188,50 @@ function ExploreProducts() {
 
   return (
     <section>
-      <div>
-        <div className=" flex flex-col  md:flex-row lg:flex-row justify-center my-10 mx:10 md:mx-28">
-          <motion.img
+      <div className="flex gap-5 flex-col w-full md:flex-row justify-center my-10">
+        <div className="w-full md:w-2/5">
+          <motion.div
             transition={{ duration: 1 }}
             initial={{ y: 100 }}
             whileInView={{ y: 0 }}
             viewport={{ once: true }}
-            className="w-[100%] mb-8 md:mb-0  md:w-[40%] object-cover"
-            src={explore_image}
-            alt=""
-          />
+            className="relative object-cover text-center h-[100%]" // Adjust the height here
+          >
+            <img
+              className="object-cover object-center h-full w-full"
+              src={explore_image}
+              alt=""
+            />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
+              <p className="text-white font-light tracking-wider text-xl md:text-lg">
+                EXPLORE OUR
+              </p>
+              <p className="text-white font-bold text-7xl">Products</p>
+            </div>
+          </motion.div>
+        </div>
+        <div className="w-full md:w-1/2">
           <motion.div
             transition={{ duration: 0.5 }}
             initial={{ x: 100, opacity: 0 }}
             whileInView={{ x: 0, opacity: 1 }}
             viewport={{ once: true }}
-            className="w-[100%] md:w-[60%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5"
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-5 h-full"
           >
             {products.map((e, i) => {
               return (
                 <div
                   key={i}
-                  className="flex h-[35vh] flex-col items-center justify-center"
+                  className="flex flex-col items-center justify-center h-full"
                 >
-                  <div className="group h-[75%] w-[75%] relative">
+                  <div className="group w-10/12 md:full relative h-full">
                     <img
                       key={e.images[0]}
-                      className="bg-slate-200 h-[100%] w-[100%] object-contain p-2 group-hover:opacity-20 transition-all"
+                      className="bg-slate-200 h-full w-full object-cover object-center pz-2 group-hover:opacity-20 transition-all"
                       src={e.images[0]}
                       alt=""
                     />
-
-                    <div className="bg-black m-2 bg-opacity-10 hidden group-hover:flex transition-all justify-center items-center absolute inset-0 rounded-md ">
+                    <div className="bg-black bg-opacity-10 hidden group-hover:flex transition-all justify-center items-center absolute inset-0 rounded-md">
                       <button
                         onClick={() => navigate(`/item/${e._id}`)}
                         className="bg-green-500 text-white px-5 py-[2vh] rounded-md transition-all"
