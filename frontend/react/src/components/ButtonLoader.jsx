@@ -3,7 +3,7 @@ import React from 'react'
 function ButtonLoader() {
   return (
     <>
-      <span className="loading loading-spinner text-warning"></span>
+      <span className="bg-primary loading loading-spinner text-white"></span>
     </>
   );
 }
