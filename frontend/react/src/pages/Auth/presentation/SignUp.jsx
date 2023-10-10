@@ -11,9 +11,11 @@ import getCart from "../../Cart/application/cart";
 
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
+import ButtonLoader from "../../../components/ButtonLoader";
 
 function SignUp() {
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const [loading, setLoading] = useState(false);
   var navigate = useNavigate();
 
   const [data, setData] = useState({
@@ -28,13 +30,42 @@ function SignUp() {
     setPasswordVisible(!passwordVisible);
   };
 
-
   useEffect(() => {
     if (appState.isUserLoggedIn()) {
       navigate("/shop");
       toast("Logged in as " + appState.getUserData().name);
     }
   }, []);
+
+  // sign up function (🚀)
+
+  const handleSignUp = async () => {
+    if (data.email.length === 0) {
+      toast.error("Enter your email to sign up 😥");
+      return;
+    }
+
+    if (data.password.length === 0) {
+      toast.error("Enter your password to sign up 😥");
+      return;
+    }
+    // Set loading to true when sign-up starts
+    setLoading(true);
+
+    try {
+      const res = await signUp(data);
+      if (res.statusCode === 200) {
+        await getCart();
+        navigate("/home");
+      }
+    } catch (error) {
+      // Handle errors here
+      toast.error("Sign-up failed. Please try again. 😥");
+    } finally {
+      // Set loading to false when sign-up completes (whether success or failure 🔉)
+      setLoading(false);
+    }
+  };
 
   return (
     <>
@@ -122,26 +153,13 @@ function SignUp() {
           <div className="pt-4"></div>
           <div className="flex flex-row w-full items-center gap-3">
             <button
-              onClick={async () => {
-                if (data.email.length === 0) {
-                  toast.error("Enter your email to signup");
-                  return;
-                }
-
-                if (data.password.length === 0) {
-                  toast.error("Enter your password to signup");
-                  return;
-                }
-                console.log(data);
-                const res = await signUp(data);
-                if (res.statusCode === 200) {
-                  await getCart();
-                  navigate("/home");
-                }
-              }}
-              className="btn btn-primary flex-grow py-3 "
+              onClick={handleSignUp}
+              className={`btn btn-primary flex-grow py-3 ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
+              disabled={loading}
             >
-              Sign Up
+              {loading ? <ButtonLoader /> : "Sign Up"}
             </button>
             <GoogleLogin
               onSuccess={async (credentialResponse) => {
@@ -161,7 +179,7 @@ function SignUp() {
                     email: data.email,
                     userType: "customer",
                   },
-                  true,
+                  true
                 );
                 await getCart();
                 navigate("/home");
