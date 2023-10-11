@@ -22,22 +22,20 @@ router.post("/login", async (req, res) => {
     // Validate the login request(🚦)
     const { error } = validateLogin(req.body);
     if (error) {
-      return res.status(400).send(getErrorResponse("Invalid request data"));
+      return send(getErrorResponse("Invalid request data"));
     }
 
     // Find the user by email(🚦)
     const user = await User.findOne({ email: req.body.email });
 
     if (!user) {
-      return res
-        .status(404)
-        .send(getErrorResponse("No user found with this email"));
+      return res.send(getErrorResponse("No user found with this email"));
     }
 
     // Verify the password(🚦)
     const validPassword = req.body.password === user.password;
     if (!validPassword) {
-      return res.status(401).send(getErrorResponse("Invalid password"));
+      return res.send(getErrorResponse("Invalid password"));
     }
 
     // Login success, send user data(🚀)
@@ -46,7 +44,7 @@ router.post("/login", async (req, res) => {
   } catch (err) {
     // Handle other errors(🚨)
     console.error("Error in login route:", err);
-    return res.status(500).send(getErrorResponse("Internal server error"));
+    return res.send(getErrorResponse("Internal server error"));
   }
 });
 
@@ -64,7 +62,7 @@ router.post("/login", async (req, res) => {
 router.post("/signup", async (req, res) => {
   console.log("Request Body: ", req.body);
   const { error } = validateSignUp(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  if (error) return send(getErrorResponse("Invalid request data"));
 
   let user = await User.findOne({ email: req.body.email });
   if (user)
