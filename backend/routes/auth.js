@@ -13,25 +13,43 @@ const { default: mongoose } = require("mongoose");
  * @param {string} req.body.email - The user's email.
  * @param {string} req.body.password - The user's password.
  */
+
+
 router.post("/login", async (req, res) => {
-  console.log("Request Body: ", req.body);
-  const { error } = validateLogin(req.body);
-  if (error) return res.status(400).send(error.details[0].message);
+  try {
+    console.log("Request Body: ", req.body);
 
-  let user = await User.findOne({ email: req.body.email });
-  if (!user)
-    return res.send(getErrorResponse("No User Exists with this email"));
+    // Validate the login request(🚦)
+    const { error } = validateLogin(req.body);
+    if (error) {
+      return res.status(400).send(getErrorResponse("Invalid request data"));
+    }
 
-  const validPassword = req.body.password === user.password;
-  if (!validPassword) return res.send(getErrorResponse("Invalid Password"));
+    // Find the user by email(🚦)
+    const user = await User.findOne({ email: req.body.email });
 
-  return res.send(
-    getSuccessResponse(
-      "Login Success",
-      _.omit(user.toObject(), ["password", "__v"])
-    )
-  );
+    if (!user) {
+      return res
+        .status(404)
+        .send(getErrorResponse("No user found with this email"));
+    }
+
+    // Verify the password(🚦)
+    const validPassword = req.body.password === user.password;
+    if (!validPassword) {
+      return res.status(401).send(getErrorResponse("Invalid password"));
+    }
+
+    // Login success, send user data(🚀)
+    const userData = _.omit(user.toObject(), ["password", "__v"]);
+    return res.status(200).send(getSuccessResponse("Login success", userData));
+  } catch (err) {
+    // Handle other errors(🚨)
+    console.error("Error in login route:", err);
+    return res.status(500).send(getErrorResponse("Internal server error"));
+  }
 });
+
 
 /**
  * Handles user signup.
