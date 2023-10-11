@@ -44,11 +44,11 @@ router.get("/getAll/:farmerID", async (req, res) => {
  * Add a millet item
  * @param {Object} req - The request object.
  * @param {Object} req.body - The request body.
- * @param {string} req.body.listedBy - The ID of the user who listed the item.
+ * @param {Date} req.body.listedBy - The ID of the user who listed the item.
  * @param {string} req.body.title - The title of the item.
  * @param {string} req.body.description - The description of the item.
  * @param {number} req.body.price - The price of the item.
- * @param {string} req.body.image - The image URL of the item.
+ * @param {Array<string>} req.body.image - The array with image URL of the item.
  */
 router.post("/addItem", async (req, res) => {
   console.log(req.body);
