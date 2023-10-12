@@ -21,13 +21,38 @@ function Login() {
   // handle sign in function (🚀)
   const handleLogin = async () => {
     if (email.length === 0) {
-      toast.error("Enter your email to login 😥");
+      toast.error("Enter your email to login");
       return;
     }
+    else if(email.length > 0){
+      // console.log(email)
+      const regex_pattern =      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
-    if (password.length === 0) {
-      toast.error("Enter your password to login 😥");
-      return;
+      if (regex_pattern.test(email)) {
+          toast.success('The email address is valid');
+      }
+      else {
+          toast.error('The email address is not valid');
+      }
+    }
+
+    if (password.length > 0) {
+      let strongPassword = new RegExp('(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.{8,})')
+      // const pass_check =     (?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,});
+      if (password.length>6){
+        if(strongPassword.test(password)){
+          toast.success("Password is strong");
+        }
+        else{
+          toast.error("password is not correct");
+        }
+      }
+      else{
+        toast.error("password length is too short");
+      }
+    }
+    else{
+      toast.error("enter a password")
     }
 
     // Set loading to true when login starts(🤟)
