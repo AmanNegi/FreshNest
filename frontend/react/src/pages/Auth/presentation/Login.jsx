@@ -29,7 +29,7 @@ function Login() {
       const regex_pattern =      /^(([^<>()[\]\\.,;:\s@\"]+(\.[^<>()[\]\\.,;:\s@\"]+)*)|(\".+\"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
 
       if (regex_pattern.test(email)) {
-          toast.success('The email address is valid');
+          null;
       }
       else {
           toast.error('The email address is not valid');
@@ -41,18 +41,18 @@ function Login() {
       // const pass_check =     (?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[^A-Za-z0-9])(?=.{8,});
       if (password.length>6){
         if(strongPassword.test(password)){
-          toast.success("Password is strong");
+          null;
         }
         else{
-          toast.error("password is not correct");
+          toast.error("Password is not Correct");
         }
       }
       else{
-        toast.error("password length is too short");
+        toast.error("Password Length is too short");
       }
     }
     else{
-      toast.error("enter a password")
+      toast.error("Enter a Password")
     }
 
     // Set loading to true when login starts(🤟)
