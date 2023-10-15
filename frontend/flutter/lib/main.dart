@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fresh_nest/splash.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
@@ -46,7 +47,8 @@ class App extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      home: getHomePage(),
+      //getHomePage() was here before 
+      home: Splash(),
     );
   }
 
