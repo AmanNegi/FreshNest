@@ -10,12 +10,10 @@ import 'package:fresh_nest/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
-import 'firebase_options.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
   );
   await EasyLocalization.ensureInitialized();
   await appCache.getDataFromDevice();
