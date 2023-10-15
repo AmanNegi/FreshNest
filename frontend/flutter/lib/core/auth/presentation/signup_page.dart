@@ -9,6 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 
+import '../../../splash_screen.dart';
+
 class SignUpPage extends ConsumerStatefulWidget {
   const SignUpPage({super.key});
 

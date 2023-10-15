@@ -6,6 +6,7 @@ import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
 import "package:flutter/material.dart";
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:fresh_nest/splash_screen.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 import 'colors.dart';
@@ -46,26 +47,11 @@ class App extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      home: getHomePage(),
+      home: const Splashscreen(),
     );
   }
 
-  getHomePage() {
-    if (!appState.value.isLoggedIn) {
-      return const LoginPage();
-    }
-    return const RolePage();
-  }
+
 }
 
 // Only takes part during startup
-class RolePage extends StatelessWidget {
-  const RolePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return appState.value.user!.userType == "admin"
-        ? const AdminPage()
-        : const HomePage();
-  }
-}

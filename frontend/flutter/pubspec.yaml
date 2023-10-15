@@ -29,6 +29,7 @@ dependencies:
   shared_preferences: ^2.1.0
   timeago: ^3.3.0
   uuid: ^3.0.7
+  video_player: ^2.7.2
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
