@@ -31,7 +31,8 @@ class _SplashscreenState extends State<Splashscreen> {
 
     _playVideo();
   }
-  getHomePage() {
+
+  Widget getHomePage() {
     if (!appState.value.isLoggedIn) {
       return const LoginPage();
     }
@@ -42,13 +43,13 @@ class _SplashscreenState extends State<Splashscreen> {
     // playing video
     _controller.play();
 
-    //add delay till video is complite
+    //add delay till video is complete
     await Future.delayed(const Duration(seconds: 3));
 
     // navigating to home screen
 
-    Navigator.of(context).pushReplacement(MaterialPageRoute(
-        builder: (BuildContext context)=> getHomePage()));
+    Navigator.of(context).pushReplacement(
+        MaterialPageRoute(builder: (BuildContext context) => getHomePage()));
   }
 
   @override
@@ -64,11 +65,11 @@ class _SplashscreenState extends State<Splashscreen> {
       body: Center(
         child: _controller.value.isInitialized
             ? AspectRatio(
-          aspectRatio: _controller.value.aspectRatio,
-          child: VideoPlayer(
-            _controller,
-          ),
-        )
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(
+                  _controller,
+                ),
+              )
             : Container(),
       ),
     );
@@ -76,7 +77,7 @@ class _SplashscreenState extends State<Splashscreen> {
 }
 
 class RolePage extends StatelessWidget {
-  const RolePage({super.key});
+  const RolePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
