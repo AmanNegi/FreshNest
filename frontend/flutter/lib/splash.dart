@@ -37,16 +37,17 @@ class _SplashState extends State<Splash> {
             ),
           ),
         ),
-        Align(
+        const Align(
           alignment: Alignment.bottomCenter,
           child: Padding(
-            padding: const EdgeInsets.only(bottom: 50.0),
+            padding: EdgeInsets.only(bottom: 200.0),
             child: Text(
               "Your cozy corner \nfor farm fresh \n delights!",
               textAlign: TextAlign.center,
               style: TextStyle(
-                fontSize: 17.0,
+                fontSize: 20.0,
                 color: Color.fromARGB(255,0,180,71),
+                fontFamily: 'Sriracha',
               ),
             ),
           ),

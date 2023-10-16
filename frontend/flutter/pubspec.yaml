@@ -45,7 +45,13 @@ flutter_launcher_icons:
 flutter:
   uses-material-design: true
 
+  fonts:
+    - family: Sriracha
+      fonts:
+      - asset: assets/fonts/Sriracha-Regular.ttf
   assets:
     - assets/translations/.
     - assets/.
     - assets/
+  
+
