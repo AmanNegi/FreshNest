@@ -46,7 +46,8 @@ class _SplashState extends State<Splash> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20.0,
-                color: Color.fromARGB(255,0,180,71),
+                //rgba(4,141,66,255)
+                color: Color.fromARGB(255,4,141,66),
                 fontFamily: 'Sriracha',
               ),
             ),
