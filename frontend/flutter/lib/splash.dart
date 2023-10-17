@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'main.dart';
+import 'colors.dart';
 
 class Splash extends StatefulWidget {
   const Splash({ Key? key }) : super(key: key);
@@ -18,7 +19,7 @@ class _SplashState extends State<Splash> {
 
 
   _naviagteToHome()async{
-    await Future.delayed(Duration(milliseconds: 1700), () {});
+    await Future.delayed(const Duration(milliseconds: 1700), () {});
     Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>App().getHomePage()));
   }
 
@@ -46,8 +47,7 @@ class _SplashState extends State<Splash> {
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 20.0,
-                //rgba(4,141,66,255)
-                color: Color.fromARGB(255,4,141,66),
+                color: lightColor,
                 fontFamily: 'Sriracha',
               ),
             ),

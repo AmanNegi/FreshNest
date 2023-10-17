@@ -48,7 +48,7 @@ class App extends StatelessWidget {
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
       //getHomePage() was here before 
-      home: Splash(),
+      home: const Splash(),
     );
   }
 
