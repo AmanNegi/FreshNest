@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'main.dart';
+import 'package:fresh_nest/core/admin/presentation/admin_page.dart';
+import 'package:fresh_nest/core/auth/presentation/login_page.dart';
+import 'package:fresh_nest/core/home/presentation/home_page.dart';
+import 'package:fresh_nest/data/cache/app_cache.dart';
+
 import 'colors.dart';
 
 class Splash extends StatefulWidget {
@@ -20,7 +24,15 @@ class _SplashState extends State<Splash> {
 
   _naviagteToHome()async{
     await Future.delayed(const Duration(milliseconds: 1700), () {});
-    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>App().getHomePage()));
+    // ignore: use_build_context_synchronously
+    Navigator.pushReplacement(context, MaterialPageRoute(builder: (context)=>getHomePage()));
+  }
+
+  getHomePage() {
+    if (!appState.value.isLoggedIn) {
+      return const LoginPage();
+    }
+    return const RolePage();
   }
 
   @override
@@ -56,5 +68,19 @@ class _SplashState extends State<Splash> {
       ],
     ),
   );
+  }
+
+}
+
+
+// Only takes part during startup
+class RolePage extends StatelessWidget {
+  const RolePage({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return appState.value.user!.userType == "admin"
+        ? const AdminPage()
+        : const HomePage();
   }
 }

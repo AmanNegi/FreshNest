@@ -1,6 +1,3 @@
-import 'package:fresh_nest/core/admin/presentation/admin_page.dart';
-import 'package:fresh_nest/core/auth/presentation/login_page.dart';
-import 'package:fresh_nest/core/home/presentation/home_page.dart';
 import 'package:fresh_nest/data/cache/app_cache.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -47,27 +44,8 @@ class App extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      //getHomePage() was here before 
       home: const Splash(),
     );
   }
 
-  getHomePage() {
-    if (!appState.value.isLoggedIn) {
-      return const LoginPage();
-    }
-    return const RolePage();
-  }
-}
-
-// Only takes part during startup
-class RolePage extends StatelessWidget {
-  const RolePage({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return appState.value.user!.userType == "admin"
-        ? const AdminPage()
-        : const HomePage();
-  }
 }
