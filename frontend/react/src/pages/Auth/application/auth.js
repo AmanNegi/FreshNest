@@ -65,7 +65,7 @@ export async function gSignUp(name, email) {
     import.meta.env.VITE_API_URL + "/auth/saveGLogin",
     {
       name: name,
-      email: email,
+      email: email.toLowerCase(),
     }
   );
 
