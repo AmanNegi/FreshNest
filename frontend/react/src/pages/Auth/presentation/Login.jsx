@@ -77,7 +77,7 @@ function Login() {
             <label htmlFor="input">Email</label>
             <input
               onChange={(e) => {
-                setEmail(e.target.value);
+                setEmail(e.target.value.toLowerCase());
               }}
               type="email"
               placeholder=""

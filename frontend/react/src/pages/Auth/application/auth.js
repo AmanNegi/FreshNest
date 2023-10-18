@@ -39,7 +39,7 @@ export async function signUp(data) {
 
   const res = await axios.post(import.meta.env.VITE_API_URL + "/auth/signup", {
     name: name,
-    email: email,
+    email: email.toLowerCase(),
     password: password,
     userType: userType,
     phone: phone,
@@ -65,7 +65,7 @@ export async function gSignUp(name, email) {
     import.meta.env.VITE_API_URL + "/auth/saveGLogin",
     {
       name: name,
-      email: email,
+      email: email.toLowerCase(),
     }
   );
 
