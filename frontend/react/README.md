@@ -114,11 +114,10 @@ http://localhost:5173/api/auth/callback/google
 
 > Create your own credientials, and add the appropriate environment variables.
     
-4. Add the following lines to your `.env` file, replacing `YOUR_CLIENT_ID` and `YOUR_CLIENT_SECRET` with the client ID and client secret you obtained from the Google Developer Console:
+4. Add the following lines to your `.env` file, replacing `YOUR_CLIENT_ID` with the client ID you obtained from the Google Developer Console:
     
 ```
 VITE_GLOGIN_CLIENT_ID="YOUR_CLIENT_ID"
-VITE_GLOGIN_CLIENT_SECRET="YOUR_CLIENT_SECRET"
 ```
 5. Save the `.env` file.
 
