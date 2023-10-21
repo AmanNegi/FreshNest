@@ -117,7 +117,7 @@ http://localhost:5173/api/auth/callback/google
 4. Add the following lines to your `.env` file, replacing `YOUR_CLIENT_ID` with the client ID you obtained from the Google Developer Console:
     
 ```
-VITE_GLOGIN_CLIENT_ID="YOUR_CLIENT_ID"
+VITE_GOOGLE_CLIENT_ID="YOUR_CLIENT_ID"
 ```
 5. Save the `.env` file.
 
