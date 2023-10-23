@@ -25,7 +25,7 @@ class ItemFullView extends StatelessWidget {
       body: Center(
         child: Image.network(
           src,
-          height: 0.3 * getHeight(context),
+          height: 0.5 * getHeight(context),
           fit: BoxFit.contain,
           width: double.infinity,
         ),
