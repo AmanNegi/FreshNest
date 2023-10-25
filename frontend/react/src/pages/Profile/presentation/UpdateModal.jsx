@@ -34,7 +34,7 @@ const UpdateModal = ({ user }) => {
             className="input input-bordered mt-2"
           ></input>
         </div>
-        <div className="flex flex-col ">
+        <div className="flex flex-col mt-2 ">
           <label htmlFor="input">Phone</label>
           <input
             name="phone"
