@@ -20,3 +20,7 @@ cd /frontend/flutter/
 5. Make changes to the code as needed, ensuring that you follow the project's coding standards and best practices.
 6. Test your changes using the project's existing test suite or by writing new tests.
 7. Submit a pull request to the project repository, detailing the changes you have made and any relevant information.
+
+
+## Setup google-services.json
+
