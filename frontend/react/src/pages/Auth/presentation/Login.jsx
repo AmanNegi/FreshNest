@@ -66,7 +66,7 @@ function Login() {
         </div>
 
         {/* Center Item  */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-8 max-w-lg mx-auto">
           <h1 className="text-2xl font-black">Welcome to FreshNest</h1>
           <p className="font-extralight">Please enter your details</p>
           <div className="pt-10"></div>
