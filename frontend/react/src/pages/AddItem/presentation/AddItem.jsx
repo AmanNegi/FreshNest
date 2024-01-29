@@ -62,7 +62,7 @@ const AddItem = () => {
         <form className="flex flex-col items-start" onSubmit={handleSubmit}>
           <label htmlFor="name">Product Name</label>
           <input
-            className="inputStyle"
+            className="input input-bordered w-full mt-2"
             type="text"
             id="name"
             name="name"
@@ -72,7 +72,7 @@ const AddItem = () => {
           <div className="h-4"></div>
           <label htmlFor="description">Product Description</label>
           <input
-            className="inputStyle"
+            className="input input-bordered w-full mt-2"
             type="text"
             id="description"
             name="description"
@@ -83,7 +83,7 @@ const AddItem = () => {
           <div className="h-4"></div>
           <label htmlFor="price">Price</label>
           <input
-            className="inputStyle"
+            className="input input-bordered w-full mt-2"
             type="number"
             id="price"
             name="price"
@@ -95,10 +95,11 @@ const AddItem = () => {
           <label htmlFor="image">Product Image</label>
           <div className="h-2"></div>
           <input
-            type="file"
-            id="image"
             name="image"
+            id="image"
             onChange={handleImageChange}
+            type="file"
+            className="file-input file-input-bordered w-full max-w-xs"
           />
           <button className="myButton mt-10">Add Item</button>
         </form>

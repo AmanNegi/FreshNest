@@ -131,7 +131,7 @@ router.post("/getAll", async (req, res) => {
     return res.status(404).send(getErrorResponse("Invalid Admin ID"));
   }
 
-  let user = await User.findOne({ _id: req.body.adminId });
+  const user = await User.findOne({ _id: req.body.adminId });
   // Check if user exists
   if (!user)
     return res.send(getErrorResponse("No User Exists with this email"));
@@ -142,7 +142,7 @@ router.post("/getAll", async (req, res) => {
   }
 
   // User is admin, fetch all users and return
-  var users = await User.find({}).select("-__v -password");
+  const users = await User.find({}).select("-__v -password");
 
   return res.send(getSuccessResponse("Success", users));
 });
@@ -153,7 +153,7 @@ router.post("/getAll", async (req, res) => {
  * @param {string} req.body.email - The user's email.
  */
 router.post("/exists", async (req, res) => {
-  var email = req.body.email;
+  const email = req.body.email;
   if (!email) return res.send(getErrorResponse("Enter a valid email"));
 
   const user = await User.findOne({ email: email });

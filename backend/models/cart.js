@@ -32,9 +32,14 @@ const cartSchema = new mongoose.Schema({
 const Cart = mongoose.model("Cart", cartSchema);
 
 function validateCart(item) {
+  const itemSchema = Joi.object().keys({
+    count: Joi.number().default(1),
+    item: JoiObjectId().required(),
+  });
+
   const schema = Joi.object().keys({
     userId: JoiObjectId().required(),
-    items: Joi.array(),
+    items: Joi.array().items(itemSchema),
   });
   return schema.validate(item);
 }

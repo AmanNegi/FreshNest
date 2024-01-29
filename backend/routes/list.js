@@ -6,7 +6,7 @@ const { Comment, validateComment } = require("../models/comment");
 const mongoose = require("mongoose");
 
 /**
- * Get recent millet items
+ * Get 5 recent millet items
  */
 router.get("/getRecent", async (req, res) => {
   const items = await MilletItem.find().sort({ dateField: -1 }).limit(5);
@@ -28,13 +28,12 @@ router.get("/getAll", async (req, res) => {
  * @param {string} req.params.farmerID - The farmer's ID.
  */
 router.get("/getAll/:farmerID", async (req, res) => {
-  var farmerID = req.params.farmerID;
+  const farmerID = req.params.farmerID;
   if (!mongoose.Types.ObjectId.isValid(farmerID)) {
     return res.status(404).send(getErrorResponse("Invalid User ID"));
   }
 
   let items = await MilletItem.find({});
-
   items = items.filter((item) => item.listedBy.toString() === farmerID);
 
   return res.send(getSuccessResponse("Success", items));
@@ -51,14 +50,13 @@ router.get("/getAll/:farmerID", async (req, res) => {
  * @param {Array<string>} req.body.image - The array with image URL of the item.
  */
 router.post("/addItem", async (req, res) => {
-  console.log(req.body);
   const { error } = validateMilletItem(req.body);
   if (error) return res.send(getErrorResponse(error.details[0].message));
 
   if (!mongoose.Types.ObjectId.isValid(req.body.listedBy)) {
     return res.status(404).send(getErrorResponse("Invalid User ID"));
   }
-  let item = new MilletItem(req.body);
+  const item = new MilletItem(req.body);
   await item.save();
 
   return res.send(getSuccessResponse("Added Item", item));
@@ -70,11 +68,10 @@ router.post("/addItem", async (req, res) => {
  * @param {string} req.params.id - The ID of the item.
  */
 router.get("/getItem/:id", async (req, res) => {
-  console.log(req.params.id);
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.status(404).send(getErrorResponse("Invalid Product ID"));
   }
-  let item = await MilletItem.findOne({ _id: req.params.id });
+  const item = await MilletItem.findOne({ _id: req.params.id });
   if (!item) {
     return res.status(404).send(getErrorResponse("No Product Found"));
   }
@@ -94,7 +91,7 @@ router.post("/comment", async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(itemID)) {
     return res.status(404).send(getErrorResponse("Invalid Item ID"));
   }
-  let item = await MilletItem.findOne({ _id: itemID });
+  const item = await MilletItem.findOne({ _id: itemID });
 
   if (!mongoose.Types.ObjectId.isValid(commentBy)) {
     return res.status(404).send(getErrorResponse("Invalid User ID"));
@@ -103,7 +100,7 @@ router.post("/comment", async (req, res) => {
   const { error } = validateComment(req.body);
   if (error) return res.send(getErrorResponse(error.details[0].message));
 
-  let comment = new Comment(req.body);
+  const comment = new Comment(req.body);
   item.comments.push(comment);
   await item.save();
 
@@ -121,7 +118,7 @@ router.post("/getComments", async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(itemID)) {
     return res.status(404).send(getErrorResponse("Invalid Item ID"));
   }
-  let item = await MilletItem.findOne({ _id: itemID });
+  const item = await MilletItem.findOne({ _id: itemID });
   return res.send(getSuccessResponse("Success!", item.comments));
 });
 
