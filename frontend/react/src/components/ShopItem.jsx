@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import appState from "../data/AppState";
 import { addToCart, removeFromCart } from "../pages/Cart/application/cart";
 import { deleteItem, getItem } from "../pages/shop/application/shop";
-import Button from "./Button";
 
 import { BsFillTrash3Fill, BsCartFill } from "react-icons/bs";
 import {

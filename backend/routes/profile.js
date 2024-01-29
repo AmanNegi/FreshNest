@@ -14,30 +14,30 @@ const { default: mongoose } = require("mongoose");
  * @param {string} req.body.name - The user's name.
  * @param {string} req.body.phone - The user's phone number.
  * @param {string} req.body._id - The user's ID.
- * @returns {Object} The updated user object. 
+ * @returns {Object} The updated user object.
  */
 router.post("/updateUser", async function (req, res) {
-  var data = req.body;
-  console.log(`Update User `, data);
+  const { email, name, phone, _id } = req.body;
 
-  const { error } = validateProfileData(data);
+  const { error } = validateProfileData(req.body);
   if (error) return res.status(400).send(error.details[0].message);
 
-  if (!mongoose.Types.ObjectId.isValid(data._id)) {
+  if (!mongoose.Types.ObjectId.isValid(_id)) {
     return res.status(404).send(getErrorResponse("Invalid User ID"));
   }
 
   try {
-    var user = await User.findOne({ _id: data._id });
-    console.log(user);
+    const user = await User.findOne({ _id: _id });
 
     if (!user) {
       return res.status(404).send(getErrorResponse("User not found"));
     }
-    user.name = data.name;
-    user.email = data.email;
-    user.phone = data.phone;
+
+    user.name = name;
+    user.email = email;
+    user.phone = phone;
     await user.save();
+
     return res.send(
       getSuccessResponse(
         "Success",
@@ -45,7 +45,6 @@ router.post("/updateUser", async function (req, res) {
       )
     );
   } catch (e) {
-    console.log(e);
     return res.send(
       getErrorResponse(
         `An error occured while searching for the user. ${e.message}`

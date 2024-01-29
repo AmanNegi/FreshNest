@@ -9,10 +9,17 @@ const { MilletItem } = require("../models/millet_item");
 // TODO: Add a function to check if user is admin
 router.get("/isAdmin/:userId", async function (req, res) {});
 
-// Delete an Item
-// Body: {itemId: ObjectId, adminId: ObjectId}
+/**
+ * Delete a millet item by ID
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.itemId - The ID of the item to delete.
+ * @param {string} req.body.adminId - The ID of the admin performing the delete operation.
+ * @param {Object} res - The response object.
+ * @returns {Object} The response object.
+ */
 router.post("/deleteItem", async (req, res) => {
-  var { itemId, adminId } = req.body;
+  const { itemId, adminId } = req.body;
 
   // Check and validate itemId
   if (!mongoose.Types.ObjectId.isValid(itemId)) {
@@ -23,14 +30,14 @@ router.post("/deleteItem", async (req, res) => {
     return res.status(404).send(getErrorResponse("Invalid Admin ID"));
   }
 
-  var user = await User.findOne({ _id: adminId });
+  const user = await User.findOne({ _id: adminId });
   console.log(user);
   if (user.userType !== "admin") {
     return res.status(404).send(getErrorResponse("You are not an Admin!"));
   }
 
   // When mongoose deletes an item it returns it as well
-  var deletedItem = await MilletItem.findByIdAndDelete(itemId);
+  const deletedItem = await MilletItem.findByIdAndDelete(itemId);
 
   if (!deletedItem) {
     return res

@@ -19,7 +19,7 @@ router.get("/get/:userId", async function (req, res) {
   }
 
   try {
-    var cart = await Cart.findOne({ userId: userId });
+    const cart = await Cart.findOne({ userId: userId });
     if (!cart) {
       // There's no cart for this user created yet
       // Create an empty cart in that case
@@ -42,34 +42,33 @@ router.get("/get/:userId", async function (req, res) {
  * @param {number} req.body.count - The count of the item.
  */
 router.post("/add", async (req, res) => {
-  var data = req.body;
+  const { userId, item, count } = req.body;
 
-  if (!mongoose.Types.ObjectId.isValid(data.userId)) {
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.send(getErrorResponse("Invalid User ID"));
   }
 
-  var cart = await Cart.findOne({ userId: data.userId });
+  const cart = await Cart.findOne({ userId: userId });
 
   if (!cart) {
     // There's no cart for this user created yet
-    var newCart = new Cart({
-      userId: data.userId,
-      items: [{ item: data.item, count: data.count }],
+    const newCart = new Cart({
+      userId: userId,
+      items: [{ item: item, count: count }],
     });
     await newCart.save();
     return res.send(getSuccessResponse("Saved Item to Cart", newCart));
   }
-  console.log(cart);
 
+  // There's a cart for this user already
   // Check if a product with same id pre-exists
+  const value = cart.items.filter((e) => e.item == item);
 
-  var value = cart.items.filter((e) => e.item == data.item);
-  console.log("Value OF MAP: ", value);
   if (value && value.length == 1) {
     // If it does simply add the count
     cart.items = cart.items.map((e) => {
-      if (e.item == data.item) {
-        e.count = e.count + data.count;
+      if (e.item == item) {
+        e.count = e.count + count;
         console.log("New Count: ", e.count);
       }
       return e;
@@ -77,8 +76,8 @@ router.post("/add", async (req, res) => {
 
     console.log("Item Prexists, increment quantity");
   } else {
-    // else save the item
-    cart.items = [{ item: data.item, count: data.count }, ...cart.items];
+    // Else add the item to the cart
+    cart.items = [{ item: item, count: count }, ...cart.items];
   }
 
   await cart.save();
@@ -94,7 +93,7 @@ router.post("/add", async (req, res) => {
  * @param {string} req.body.itemId - The item's ID.
  */
 router.post("/remove", async (req, res) => {
-  var { userId, itemId } = req.body;
+  const { userId, itemId } = req.body;
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(404).send(getErrorResponse("Invalid Cart Item ID"));
@@ -104,7 +103,7 @@ router.post("/remove", async (req, res) => {
     return res.status(404).send(getErrorResponse("Invalid Item ID"));
   }
 
-  var cart = await Cart.findOne({ userId: userId });
+  const cart = await Cart.findOne({ userId: userId });
 
   if (!cart) {
     return res
@@ -113,8 +112,6 @@ router.post("/remove", async (req, res) => {
   }
 
   const len = cart.items.length;
-
-  // If itemId doesn't match, add it back to list
   cart.items = cart.items.filter((e) => e.item.toString() !== itemId);
 
   if (cart.items.length === len) {

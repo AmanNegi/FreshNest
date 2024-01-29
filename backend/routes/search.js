@@ -9,20 +9,18 @@ const { MilletItem } = require("../models/millet_item");
  * @param {string} req.params.query - The search query.
  */
 router.get("/:query", async function (req, res) {
-  var query = req.params.query;
+  const query = req.params.query;
   console.log(`Searching For ${query}...`);
 
   try {
-    var items = await MilletItem.find({
+    const items = await MilletItem.find({
       name: {
         $regex: query,
         $options: "i",
       },
     });
-    console.log(items);
     return res.send(getSuccessResponse("Success", items));
   } catch (e) {
-    console.log(e);
     return res.send(
       getErrorResponse(`An error occured while searching. ${e.message}`)
     );
