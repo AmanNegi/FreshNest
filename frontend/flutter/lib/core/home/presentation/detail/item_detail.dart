@@ -4,6 +4,7 @@ import 'package:fresh_nest/core/cart/application/cart_provider.dart';
 import 'package:fresh_nest/core/home/application/comment_manager.dart';
 import 'package:fresh_nest/core/home/application/comment_provider.dart';
 import 'package:fresh_nest/core/home/application/home_manager.dart';
+import 'package:fresh_nest/core/home/presentation/detail/item_fullview.dart';
 import 'package:fresh_nest/data/cache/app_cache.dart';
 import 'package:fresh_nest/globals.dart';
 import 'package:fresh_nest/models/cart_item.dart';
@@ -93,11 +94,16 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
               ),
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10.0),
-                child: Image.network(
-                  item.images[0],
-                  height: 0.3 * getHeight(context),
-                  fit: BoxFit.cover,
-                  width: double.infinity,
+                child: GestureDetector(
+                  onTap: () {
+                    goToPage(context, ItemFullView(src: item.images[0]));
+                  },
+                  child: Image.network(
+                    item.images[0],
+                    height: 0.3 * getHeight(context),
+                    fit: BoxFit.cover,
+                    width: double.infinity,
+                  ),
                 ),
               ),
             ),
@@ -186,8 +192,8 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
                           ],
                         ),
                       ),
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Spacer(),
                           Icon(
                             Icons.delete,

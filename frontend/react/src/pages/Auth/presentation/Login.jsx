@@ -4,16 +4,48 @@ import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 import jwtDecode from "jwt-decode";
 
+
 import appState from "../../../data/AppState";
 import getCart from "../../Cart/application/cart";
 import login, { gSignUp } from "../application/auth";
 
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
+import ButtonLoader from "../../../components/ButtonLoader";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+
+  // handle sign in function (🚀)
+  const handleLogin = async () => {
+    if (email.length === 0) {
+      toast.error("Enter your email to login 😥");
+      return;
+    }
+
+    if (password.length === 0) {
+      toast.error("Enter your password to login 😥");
+      return;
+    }
+
+    // Set loading to true when login starts(🤟)
+    setLoading(true);
+
+    try {
+      var data = await login(email, password);
+      if (data.statusCode === 200) {
+        await getCart();
+        navigate("/home");
+      }
+    } catch (error) {
+      // Handle errors here
+    } finally {
+      // Set loading to false when login completes (whether success or failure)
+      setLoading(false);
+    }
+  };
   var navigate = useNavigate();
 
   useEffect(() => {
@@ -24,6 +56,7 @@ function Login() {
     }
   }, []);
 
+
   return (
     <>
       <section className="float-right relative h-screen w-screen lg:w-[40%]">
@@ -33,7 +66,7 @@ function Login() {
         </div>
 
         {/* Center Item  */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-8 max-w-lg mx-auto">
           <h1 className="text-2xl font-black">Welcome to FreshNest</h1>
           <p className="font-extralight">Please enter your details</p>
           <div className="pt-10"></div>
@@ -44,7 +77,7 @@ function Login() {
             <label htmlFor="input">Email</label>
             <input
               onChange={(e) => {
-                setEmail(e.target.value);
+                setEmail(e.target.value.toLowerCase());
               }}
               type="email"
               placeholder=""
@@ -66,25 +99,12 @@ function Login() {
           <div className="pt-5"></div>
           {/* Button */}
           <button
-            onClick={async () => {
-              if (email.length === 0) {
-                toast.error("Enter your email to login");
-                return;
-              }
-
-              if (password.length === 0) {
-                toast.error("Enter your password to login");
-                return;
-              }
-              var data = await login(email, password);
-              if (data.statusCode === 200) {
-                await getCart();
-                navigate("/home");
-              }
-            }}
-            className="btn btn-primary w-full py-3 mb-4"
+            onClick={handleLogin}
+            className={`btn btn-primary w-full py-3 mb-4 ${loading ? " cursor-not-allowed" : ""
+              }`}
+            disabled={loading}
           >
-            Login
+            {loading ? <ButtonLoader /> : "Login"}
           </button>
           <GoogleLogin
             onSuccess={async (credentialResponse) => {
@@ -104,7 +124,7 @@ function Login() {
                   email: data.email,
                   userType: "customer",
                 },
-                true,
+                true
               );
               await getCart();
               navigate("/home");
