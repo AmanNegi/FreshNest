@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Joi = require("joi");
 const JoiObjectId = require("joi-objectid")(Joi);
-const { milletItemSchema } = require("./millet_item.js");
 
 const cartItemSchema = new mongoose.Schema({
   count: {
@@ -33,9 +32,14 @@ const cartSchema = new mongoose.Schema({
 const Cart = mongoose.model("Cart", cartSchema);
 
 function validateCart(item) {
+  const itemSchema = Joi.object().keys({
+    count: Joi.number().default(1),
+    item: JoiObjectId().required(),
+  });
+
   const schema = Joi.object().keys({
     userId: JoiObjectId().required(),
-    items: Joi.array(),
+    items: Joi.array().items(itemSchema),
   });
   return schema.validate(item);
 }

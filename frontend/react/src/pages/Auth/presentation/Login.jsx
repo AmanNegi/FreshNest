@@ -19,7 +19,6 @@ function Login() {
   const [loading, setLoading] = useState(false);
 
   // handle sign in function (🚀)
-
   const handleLogin = async () => {
     if (email.length === 0) {
       toast.error("Enter your email to login 😥");
@@ -64,7 +63,7 @@ function Login() {
         </div>
 
         {/* Center Item  */}
-        <div className="absolute inset-0 flex flex-col items-center justify-center px-8">
+        <div className="absolute inset-0 flex flex-col items-center justify-center px-8 max-w-lg mx-auto">
           <h1 className="text-2xl font-black">Welcome to FreshNest</h1>
           <p className="font-extralight">Please enter your details</p>
           <div className="pt-10"></div>
@@ -75,7 +74,7 @@ function Login() {
             <label htmlFor="input">Email</label>
             <input
               onChange={(e) => {
-                setEmail(e.target.value);
+                setEmail(e.target.value.toLowerCase());
               }}
               type="email"
               placeholder=""
@@ -97,12 +96,11 @@ function Login() {
           <div className="pt-5"></div>
           <button
             onClick={handleLogin}
-            className={`btn btn-primary w-full py-3 mb-4 ${
-              loading ? "opacity-50 cursor-not-allowed" : ""
-            }`}
+            className={`btn btn-primary w-full py-3 mb-4 ${loading ? " cursor-not-allowed" : ""
+              }`}
             disabled={loading}
           >
-            {loading ? <ButtonLoader  /> : "Login"}
+            {loading ? <ButtonLoader /> : "Login"}
           </button>
           <GoogleLogin
             onSuccess={async (credentialResponse) => {

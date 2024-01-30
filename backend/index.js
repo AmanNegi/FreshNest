@@ -1,6 +1,7 @@
 const express = require("express");
-var bodyParser = require("body-parser");
+const bodyParser = require("body-parser");
 const cors = require("cors");
+const logger = require("./utils/logger");
 require("dotenv").config();
 
 const app = express();
@@ -15,12 +16,16 @@ app.use(
 
 app.use(express.json());
 app.use(bodyParser.json());
-
 app.use(
   bodyParser.urlencoded({
     extended: true,
   })
 );
+
+app.use((req, res, next) => {
+  logger.info(`${req.method} ${req.url}`);
+  next();
+});
 
 require("./startup/routes")(app);
 require("./startup/db")();

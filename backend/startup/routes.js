@@ -1,4 +1,3 @@
-const express = require("express");
 const auth = require("../routes/auth");
 const list = require("../routes/list");
 const search = require("../routes/search");
@@ -18,5 +17,4 @@ module.exports = function (app) {
   app.use("/api/profile", profile);
   app.use("/api/cart", cart);
   app.use("/api/admin", admin);
-  //   app.use(error);
 };

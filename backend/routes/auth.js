@@ -7,10 +7,12 @@ const _ = require("lodash");
 const { default: mongoose } = require("mongoose");
 
 /**
- * Login as a user using {email} {password}
- * body: {email:"email", password:"password"}
+ * Handles user login.
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.email - The user's email.
+ * @param {string} req.body.password - The user's password.
  */
-
 router.post("/login", async (req, res) => {
   console.log("Request Body: ", req.body);
   const { error } = validateLogin(req.body);
@@ -32,10 +34,15 @@ router.post("/login", async (req, res) => {
 });
 
 /**
- * Sign up a new user
- * BODY: { name, email, password, userType, phone}
+ * Handles user signup.
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.email - The user's email.
+ * @param {string} req.body.name - The user's name.
+ * @param {string} req.body.password - The user's password.
+ * @param {string} req.body.userType - The user's type.
+ * @param {string} req.body.phone - The user's phone number.
  */
-
 router.post("/signup", async (req, res) => {
   console.log("Request Body: ", req.body);
   const { error } = validateSignUp(req.body);
@@ -70,9 +77,11 @@ router.post("/signup", async (req, res) => {
 
 /**
  * Save credentials for a user (Google Login)
- * { email, name}
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.email - The user's email.
+ * @param {string} req.body.name - The user's name.
  */
-
 router.post("/saveGLogin", async (req, res) => {
   console.log("Request Body: ", req.body);
   const { error } = validateGLogin(req.body);
@@ -111,9 +120,9 @@ router.post("/saveGLogin", async (req, res) => {
 
 /**
  * Get All Users (For Admin Panel)
- * {adminId: Objectid}
+ * @param {Object} req - The request object.
+ * @param {string} req.body.adminId - The admin's ID.
  */
-
 router.post("/getAll", async (req, res) => {
   console.log("Request Body: ", req.body);
 
@@ -122,7 +131,7 @@ router.post("/getAll", async (req, res) => {
     return res.status(404).send(getErrorResponse("Invalid Admin ID"));
   }
 
-  let user = await User.findOne({ _id: req.body.adminId });
+  const user = await User.findOne({ _id: req.body.adminId });
   // Check if user exists
   if (!user)
     return res.send(getErrorResponse("No User Exists with this email"));
@@ -133,14 +142,18 @@ router.post("/getAll", async (req, res) => {
   }
 
   // User is admin, fetch all users and return
-
-  var users = await User.find({}).select("-__v -password");
+  const users = await User.find({}).select("-__v -password");
 
   return res.send(getSuccessResponse("Success", users));
 });
 
+/**
+ * Check if user exists
+ * @param {Object} req - The request object.
+ * @param {string} req.body.email - The user's email.
+ */
 router.post("/exists", async (req, res) => {
-  var email = req.body.email;
+  const email = req.body.email;
   if (!email) return res.send(getErrorResponse("Enter a valid email"));
 
   const user = await User.findOne({ email: email });

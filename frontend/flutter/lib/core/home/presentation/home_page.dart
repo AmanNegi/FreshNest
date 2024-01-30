@@ -49,13 +49,21 @@ class _HomePageState extends ConsumerState<HomePage> {
             )
         ],
       ),
-      body: ListView(
-        children: [
-          _getHeading(),
+      body: RefreshIndicator(
+        onRefresh: () async {
+          _getHeading();
           AgroGridView(
-            list: ref.watch(homeProvider).getItems(),
-          ),
-        ],
+              list: ref.watch(homeProvider).getItems());
+
+        },
+        child: ListView(
+          children: [
+            _getHeading(),
+            AgroGridView(
+              list: ref.watch(homeProvider).getItems(),
+            ),
+          ],
+        ),
       ),
     );
   }
