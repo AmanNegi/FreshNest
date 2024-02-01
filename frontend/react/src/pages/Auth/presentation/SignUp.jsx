@@ -1,22 +1,21 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { GoogleLogin } from "@react-oauth/google";
-import jwtDecode from "jwt-decode";
 import { BiHide, BiShow } from "react-icons/bi";
 
-import { signUp, gSignUp } from "../application/auth";
+import { signUp } from "../application/auth";
 import appState from "../../../data/AppState";
 import getCart from "../../Cart/application/cart";
+import ButtonLoader from "../../../components/ButtonLoader";
+import GLoginButton from "./components/GLoginButton";
 
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
-import ButtonLoader from "../../../components/ButtonLoader";
+import PasswordField from "./components/PasswordField";
 
 function SignUp() {
-  const [passwordVisible, setPasswordVisible] = useState(false);
   const [loading, setLoading] = useState(false);
-  var navigate = useNavigate();
+  const navigate = useNavigate();
 
   const [data, setData] = useState({
     name: "",
@@ -26,18 +25,12 @@ function SignUp() {
     phone: "",
   });
 
-  const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
-
   useEffect(() => {
     if (appState.isUserLoggedIn()) {
       navigate("/shop");
       toast("Logged in as " + appState.getUserData().name);
     }
   }, []);
-
-  // sign up function (🚀)
 
   const handleSignUp = async () => {
     if (data.email.length === 0) {
@@ -49,20 +42,17 @@ function SignUp() {
       toast.error("Enter your password to sign up 😥");
       return;
     }
-    // Set loading to true when sign-up starts
-    setLoading(true);
 
     try {
+      setLoading(true);
       const res = await signUp(data);
       if (res.statusCode === 200) {
         await getCart();
         navigate("/home");
       }
     } catch (error) {
-      // Handle errors here
       toast.error("Sign-up failed. Please try again. 😥");
     } finally {
-      // Set loading to false when sign-up completes (whether success or failure 🔉)
       setLoading(false);
     }
   };
@@ -105,24 +95,7 @@ function SignUp() {
           </div>
           <div className="pt-2"></div>
           {/* Password Field */}
-          <div className="flex flex-col w-[100%] ">
-            <label htmlFor="input">Password</label>
-            <div className="flex flex-row items-end">
-              <input
-                name="password"
-                onChange={handleFieldChange}
-                type={passwordVisible ? "text" : "password"}
-                className="input input-bordered w-full mt-2"
-              ></input>
-              <button
-                // className="myButton ml-2"
-                className="ml-2 btn btn-primary"
-                onClick={togglePasswordVisibility}
-              >
-                {passwordVisible ? <BiHide /> : <BiShow />}
-              </button>
-            </div>
-          </div>
+          <PasswordField handleFieldChange={handleFieldChange} />
           <div className="pt-2"></div>
           {/* Customer Type */}
           <div className="flex flex-col w-[100%]">
@@ -154,40 +127,13 @@ function SignUp() {
           <div className="flex flex-row w-full items-center gap-3">
             <button
               onClick={handleSignUp}
-              className={`btn btn-primary flex-grow py-3 ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
-              }`}
+              className={`btn btn-primary flex-grow py-3 ${loading ? "opacity-50 cursor-not-allowed" : ""
+                }`}
               disabled={loading}
             >
               {loading ? <ButtonLoader /> : "Sign Up"}
             </button>
-            <GoogleLogin
-              onSuccess={async (credentialResponse) => {
-                const data = jwtDecode(credentialResponse.credential);
-                console.log(data);
-
-                const { data: user, statusCode } = await gSignUp(data.name, data.email);
-
-                if (statusCode !== 200) {
-                  toast.error("Error while signing in");
-                  return;
-                }
-                appState.saveUserData(
-                  {
-                    _id: user._id,
-                    name: data.name,
-                    email: data.email,
-                    userType: "customer",
-                  },
-                  true
-                );
-                await getCart();
-                navigate("/home");
-              }}
-              onError={() => {
-                console.log("Login Failed");
-              }}
-            />
+            <GLoginButton />
           </div>
           <div className="mt-10">
             <p>

@@ -14,9 +14,10 @@ import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 function Home() {
-  useEffect(() => {
+  useEffect( () => {
     window.scrollTo(0, 0);
   }, []);
+
 
   return (
     <>
@@ -68,7 +69,6 @@ function Home() {
             </div>
           </div>
         </section>
-        <OurGallerySection />
         <ExploreProducts />
         <section
           className="bg-cover bg-right bg-fixed relative"
@@ -252,31 +252,5 @@ function ExploreProducts() {
     </section>
   );
 }
-
-function OurGallerySection() {
-  return (
-    <section className="border-t-[1px] border-green-200 border-dashed text-gray-800 mt-10">
-      <div className="container px-5 py-10 mx-auto">
-        <div className="flex flex-col text-center w-full mb-2">
-          <h1 className="text-3xl lg:text-4xl font-bold ">Our Gallery</h1>
-        </div>
-        <div className="flex flex-wrap ">
-          {[1, 2, 3, 4, 5, 6].map((e, i) => {
-            return (
-              <div key={i} className="lg:w-1/3 sm:w-1/2 p-4">
-                <motion.img
-                  whileHover={{ scale: 1.05, className: "shadow-lg" }}
-                  alt="gallery"
-                  className=" w-full h-full object-cover object-center"
-                  src={`./gallery/${e}.jpg`}
-                />
-              </div>
-            );
-          })}
-        </div>
-      </div>
-    </section>
-  );
-}
-
+ 
 export default Home;
