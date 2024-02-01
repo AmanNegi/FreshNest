@@ -34,6 +34,10 @@ const userSchema = new mongoose.Schema({
       return new Date();
     },
   },
+  images: {
+    type: [String],
+    default: [],
+  },
 });
 
 const User = mongoose.model("User", userSchema);

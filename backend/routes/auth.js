@@ -167,6 +167,31 @@ router.post("/exists", async (req, res) => {
   );
 });
 
+router.post("/addImage/:id", async (req, res) => {
+  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+    return res.send(getErrorResponse("Invalid User ID"));
+  }
+
+  const user = await User.findOne({ _id: req.params.id });
+  if (!user) return res.send(getErrorResponse("User not found"));
+
+  // { image: "https://your-image-url.png"}
+  const image = req.body.image;
+  if (!image) return res.send(getErrorResponse("No image found"));
+
+  user.images.push(image);
+  await user.save();
+
+  return res.send(getSuccessResponse("Image added successfully", user));
+});
+
+router.get("/:id", async (req, res) => {
+  const user = await User.findOne({ _id: req.params.id });
+  if (!user) return res.send(getErrorResponse("User not found"));
+
+  return res.send(getSuccessResponse("User found", user));
+});
+
 function validateLogin(req) {
   const schema = Joi.object().keys({
     email: Joi.string().required().email(),

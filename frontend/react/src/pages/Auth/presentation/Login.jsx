@@ -1,24 +1,24 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
-import jwtDecode from "jwt-decode";
-
 
 import appState from "../../../data/AppState";
 import getCart from "../../Cart/application/cart";
-import login, { gSignUp } from "../application/auth";
+import login from "../application/auth";
+import ButtonLoader from "../../../components/ButtonLoader";
+import GLoginButton from "./components/GLoginButton";
 
 import farm from "../../../assets/farm.jpg";
 import icon from "../../../assets/logo.png";
-import ButtonLoader from "../../../components/ButtonLoader";
+import PasswordField from "./components/PasswordField";
 
 function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
-  // handle sign in function (🚀)
+  const navigate = useNavigate();
+
   const handleLogin = async () => {
     if (email.length === 0) {
       toast.error("Enter your email to login 😥");
@@ -30,23 +30,21 @@ function Login() {
       return;
     }
 
-    // Set loading to true when login starts(🤟)
     setLoading(true);
 
     try {
-      var data = await login(email, password);
+      const data = await login(email, password);
       if (data.statusCode === 200) {
         await getCart();
         navigate("/home");
       }
     } catch (error) {
-      // Handle errors here
+      setLoading(false);
+      toast.error("Error while logging in");
     } finally {
-      // Set loading to false when login completes (whether success or failure)
       setLoading(false);
     }
   };
-  var navigate = useNavigate();
 
   useEffect(() => {
     if (appState.isUserLoggedIn()) {
@@ -55,7 +53,6 @@ function Login() {
       toast("Logged in as " + appState.getUserData().name);
     }
   }, []);
-
 
   return (
     <>
@@ -86,16 +83,9 @@ function Login() {
           </div>
           <div className="pt-2"></div>
           {/* Password Field */}
-          <div className="flex flex-col w-[100%] ">
-            <label htmlFor="input">Password</label>
-            <input
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
-              type="text"
-              className="input input-bordered w-full mt-2"
-            ></input>
-          </div>
+          <PasswordField
+            handleFieldChange={(e) => setPassword(e.target.value)}
+          />
           <div className="pt-5"></div>
           {/* Button */}
           <button
@@ -106,33 +96,7 @@ function Login() {
           >
             {loading ? <ButtonLoader /> : "Login"}
           </button>
-          <GoogleLogin
-            onSuccess={async (credentialResponse) => {
-              // Save user to backend as well
-              const data = jwtDecode(credentialResponse.credential);
-              console.log(data);
-
-              var { data: user, statusCode } = await gSignUp(data.name, data.email);
-              if (statusCode !== 200) {
-                toast.error("Error while logging in");
-                return;
-              }
-              appState.saveUserData(
-                {
-                  _id: user._id,
-                  name: data.name,
-                  email: data.email,
-                  userType: "customer",
-                },
-                true
-              );
-              await getCart();
-              navigate("/home");
-            }}
-            onError={() => {
-              console.log("Login Failed");
-            }}
-          />
+          <GLoginButton />
           <div className="mt-10">
             <p>
               {"Don't have an account? "}

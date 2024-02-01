@@ -1,11 +1,11 @@
-import React from 'react'
+import React from 'react';
 
-function ButtonLoader() {
+function ButtonLoader({className = ''}) {
   return (
     <>
-      <span className="bg-primary loading loading-spinner text-white"></span>
+      <span className={'bg-primary loading loading-dots text-white ' + className}></span>
     </>
   );
 }
 
-export default ButtonLoader
+export default ButtonLoader;

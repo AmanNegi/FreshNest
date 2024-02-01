@@ -5,8 +5,11 @@ import NavBar from "../../../components/NavBar";
 import { addItem } from "../application/functions";
 import appState from "../../../data/AppState";
 
+import { toast } from "react-toastify";
+
 const AddItem = () => {
-  var navigate = useNavigate();
+  const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
   const [data, setData] = useState({
     name: "",
     description: "",
@@ -42,6 +45,26 @@ const AddItem = () => {
    */
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // validate input
+    if (data.name.length === 0) {
+      toast.error("Enter a name for the product");
+      return;
+    }
+    if (data.description.length === 0) {
+      toast.error("Enter a description for the product");
+      return;
+    }
+    if (data.price.length === 0) {
+      toast.error("Enter a price for the product");
+      return;
+    }
+    if (data.file.length === 0) {
+      toast.error("Upload a picture for the product");
+      return;
+    }
+
+    setIsLoading(true);
     const res = await addItem({
       listedBy: appState.userData._id,
       name: data.name,
@@ -49,6 +72,7 @@ const AddItem = () => {
       price: data.price,
       file: data.file,
     });
+    setIsLoading(false);
 
     if (res) {
       navigate("/shop");
@@ -56,9 +80,10 @@ const AddItem = () => {
   };
 
   return (
-    <main>
+    <main className={isLoading ? "pointer-events-none" : ""}>
       <NavBar />
-      <section className="h-[100vh] w-full mt-[8vh] p-20">
+      <section className="h-[100vh] w-full mt-[8vh] py-14 px-40">
+        <h1 className="mb-4">Add Item</h1>
         <form className="flex flex-col items-start" onSubmit={handleSubmit}>
           <label htmlFor="name">Product Name</label>
           <input
@@ -101,7 +126,9 @@ const AddItem = () => {
             type="file"
             className="file-input file-input-bordered w-full max-w-xs"
           />
-          <button className="myButton mt-10">Add Item</button>
+          <button className="myButton mt-10 ">
+            {isLoading ? <span className="mx-10 loading loading-dots text-white" /> : "Add Item"}
+          </button>
         </form>
       </section>
     </main>

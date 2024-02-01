@@ -1,20 +1,24 @@
 import { toast } from "react-toastify";
 import axios from "axios";
 import { ref, uploadBytesResumable, getDownloadURL } from "firebase/storage";
+import { v4 as uuidv4 } from "uuid";
 
 import storage from "../../../main";
 
 /**
  *  Uploads a file to Firebase Storage
  * @param {string} file
- * @returns {Promise<string>} url
+ * @returns {Promise<string?>} url
  */
-async function handleUpload(file) {
+export async function handleUpload(file) {
   if (!file) {
     alert("Please choose a file first!");
   }
 
-  const storageRef = ref(storage, `/files/${file.name}`);
+  const _id = uuidv4();
+  const extension = file.name.split(".").pop();
+
+  const storageRef = ref(storage, `/files/${_id + extension}`);
   const uploadTask = uploadBytesResumable(storageRef, file);
 
   try {
@@ -29,6 +33,7 @@ async function handleUpload(file) {
     return url;
   } catch (error) {
     console.error(error);
+    return null;
   }
 }
 

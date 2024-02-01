@@ -110,7 +110,7 @@ const CartNotifier = () => {
     >
       <AiOutlineShoppingCart className="cursor-pointer text-xl ml-5" />
       {cartCount > 0 && (
-        <span className="bg-red-600 text-white rounded-full w-[17px] h-[17px] text-center text-[12px] absolute right-[-10px] top-[-10px]">
+        <span className="animate-ping bg-red-600 text-white rounded-full w-[17px] h-[17px] text-center text-[12px] absolute right-[-10px] top-[-10px]">
           <div className="text-center">{cartCount}</div>
         </span>
       )}
