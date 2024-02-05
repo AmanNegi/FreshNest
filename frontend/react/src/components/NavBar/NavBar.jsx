@@ -1,17 +1,19 @@
 import { useNavigate } from "react-router-dom";
-import logo from "../assets/logo.png";
 import { motion } from "framer-motion";
 import { useEffect, useState } from "react";
-import appState from "../data/AppState";
-import cartEmitter, {
-  getCartCount,
-} from "../pages/Cart/application/cart_event";
 import { Link } from "react-router-dom";
 
-// ICONS
+import appState from "../../data/AppState";
+import cartEmitter, {
+  getCartCount,
+} from "../../pages/Cart/application/cart_event";
+
+import logo from "../../assets/logo.png";
+
 import { BsSearch } from "react-icons/bs";
 import { AiOutlineUser, AiOutlineShoppingCart } from "react-icons/ai";
 import { FaBars } from "react-icons/fa";
+import { AiOutlineShop } from "react-icons/ai";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -38,6 +40,13 @@ function NavBar() {
         </div>
 
         <div className="hidden md:flex">
+          <AiOutlineShop
+            onClick={() => navigate("/shop")}
+            className="cursor-pointer mx-5 text-xl"
+          />
+        </div>
+
+        <div className="hidden md:flex">
           <AiOutlineUser
             onClick={() => navigate("/profile")}
             className="cursor-pointer mx-5 text-xl"
@@ -52,7 +61,7 @@ function NavBar() {
           </label>
           <ul
             tabIndex={0}
-            className="dropdown-content z-[1000] menu p-2 shadow-md bg-base-100 rounded-box w-52"
+            className="dropdown-content z-[1] menu p-2 shadow-md bg-base-100 rounded-box w-52"
           >
             <NavBarItem text="Home" route="/home" />
             <NavBarItem text="Shop" route="/shop" />
@@ -60,7 +69,7 @@ function NavBar() {
             <li
               onClick={() => {
                 appState.logOutUser();
-                navigate("/");
+                navigate("/auth");
               }}
             >
               <h6>Logout</h6>
@@ -110,7 +119,7 @@ const CartNotifier = () => {
     >
       <AiOutlineShoppingCart className="cursor-pointer text-xl ml-5" />
       {cartCount > 0 && (
-        <span className="animate-ping bg-red-600 text-white rounded-full w-[17px] h-[17px] text-center text-[12px] absolute right-[-10px] top-[-10px]">
+        <span className="animate-bounce bg-red-600 text-white rounded-full w-[17px] h-[17px] text-center text-[12px] absolute right-[-10px] top-[-10px]">
           <div className="text-center">{cartCount}</div>
         </span>
       )}

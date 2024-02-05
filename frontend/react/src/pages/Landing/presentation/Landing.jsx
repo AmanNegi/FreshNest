@@ -1,27 +1,23 @@
-import landing_bg from "../../../assets/landing_bg.jpg";
-import explore_image from "../../../assets/explore.png";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import { motion } from "framer-motion";
 
 import Button from "../../../components/Button";
-import Footer from "../../../components/Footer";
-import NavBar from "../../../components/NavBar";
 
 import { data, features } from "../../../data/data";
 import { getFourItems } from "../../shop/application/shop";
 import { Item } from "../../shop/application/shop_model";
 
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import landing_bg from "../../../assets/landing_bg.jpg";
+import explore_image from "../../../assets/explore.png";
 
 function Home() {
-  useEffect( () => {
+  useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
 
-
   return (
     <>
-      <NavBar />
       <main className="mt-[8vh] w-[100%] overflow-hidden snap snap-y snap-mandatory">
         <TopSection />
         <OurMottoSection />
@@ -87,7 +83,6 @@ function Home() {
             <Button text="Shop Now" path="/shop" />
           </div>
         </section>
-        <Footer />
       </main>
     </>
   );
@@ -252,5 +247,5 @@ function ExploreProducts() {
     </section>
   );
 }
- 
+
 export default Home;

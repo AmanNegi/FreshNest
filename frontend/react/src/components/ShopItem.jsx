@@ -5,6 +5,11 @@ import { useNavigate } from "react-router-dom";
 import appState from "../data/AppState";
 import { addToCart, removeFromCart } from "../pages/Cart/application/cart";
 import { deleteItem, getItem } from "../pages/shop/application/shop";
+import TimeAgo from "react-timeago";
+import enStrings from "react-timeago/lib/language-strings/en";
+import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
+
+const formatter = buildFormatter(enStrings);
 
 import { BsFillTrash3Fill, BsCartFill } from "react-icons/bs";
 import {
@@ -15,14 +20,30 @@ import {
 } from "react-icons/ai";
 import ImageView from "./ImageView";
 
-function ShopItem({ itemId, itemCount = 1, isCart = false }) {
-  var [count, setCount] = useState(itemCount);
-  var [item, setItem] = useState(undefined);
+/**
+ *
+ * @param {Object} props
+ * @param {string} props.itemId
+ * @param {number} props.itemCount
+ * @param {boolean} props.isCart
+ * @param {function(Item): void} props.onDelete
+ * @returns
+ */
+function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
+  /** @type {[number, function]}*/
+  const [count, setCount] = useState(itemCount);
+
+  /** @type {[Item, function]}*/
+  const [item, setItem] = useState(undefined);
+
+  /** @type {[boolean , function]} */
   const [loading, setLoading] = useState(true);
+
   const navigate = useNavigate();
 
   useEffect(() => {
     getItem(itemId).then((data) => {
+      console.log("ItemData: ", data);
       setItem(data);
       setLoading(false);
     });
@@ -42,12 +63,11 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
           onClick={async (e) => {
             e.stopPropagation();
             await removeFromCart(itemId);
-            window.location.reload();
+            if (onDelete) onDelete();
           }}
         >
           Remove From Cart
         </button>
-
       </div>
     );
   }
@@ -64,7 +84,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.25, duration: 0.25 }}
           viewport={{ once: true }}
-          className="border cursor-pointer border-slate-300 relative transition duration-500 rounded-lg hover:shadow-m d bg-white "
+          className="border cursor-pointer border-slate-300 relative transition duration-500 rounded-lg hover:shadow-md bg-white "
         >
           <div className="h-40 w-[100%] relative">
             <ImageView
@@ -73,15 +93,20 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
               shimmerClass={"max-h-40"}
               imageClass={"h-40"}
             />
+            {!isCart && (
+              <div className="absolute top-0 right-0 text-white shadow-lg bg-accentColor  text-sm rounded-bl-md rounded-tr-md px-4 py-2">
+                <TimeAgo date={item.listedAt} formatter={formatter} />
+              </div>
+            )}
 
             {isCart && (
               <div
                 onClick={async (e) => {
                   e.stopPropagation();
-                  await removeFromCart(itemId);
+                  removeFromCart(itemId);
                   window.location.reload();
                 }}
-                className="absolute top-2 right-2 ml-2 lg:ml-4 w-[40px] h-[40px] bg-red-400 flex justify-center items-center rounded-md"
+                className="absolute top-2 right-2 ml-2 lg:ml-4 w-[40px] h-[40px] flex justify-center items-center rounded-md bg-red-400"
               >
                 <BsFillTrash3Fill className="text-white" />
               </div>
@@ -150,17 +175,21 @@ function ShopItem({ itemId, itemCount = 1, isCart = false }) {
                 </button>
               )}
 
-              {!isCart && appState.isAdmin() && (
-                <button
-                  onClick={async (e) => {
-                    e.stopPropagation();
-                    await deleteItem(itemId);
-                  }}
-                  className="btn btn-error"
-                >
-                  <BsFillTrash3Fill className="text-white" />
-                </button>
-              )}
+              {!isCart &&
+                (appState.isAdmin() || appState.isOwner(item.listedBy)) && (
+                  <button
+                    onClick={async (e) => {
+                      e.stopPropagation();
+                      await deleteItem(itemId, item.listedBy);
+                      if (onDelete) {
+                        onDelete(item);
+                      }
+                    }}
+                    className="btn btn-error"
+                  >
+                    <BsFillTrash3Fill className="text-white" />
+                  </button>
+                )}
             </div>
           </div>
           <div className="h-[1vh]"></div>

@@ -2,7 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { addComment, getItem } from "../application/shop";
 import { useEffect, useState } from "react";
 
-import NavBar from "../../../components/NavBar";
 import Rating from "react-rating";
 import ItemDetailShimmer from "./DetailShimmer";
 import ImageView from "../../../components/ImageView";
@@ -28,20 +27,13 @@ function ItemDetail() {
       }
     });
 
-    return () => {
-    };
+    return () => {};
   }, []);
 
-  return (
-    <>
-      <NavBar />
-      {loading ? <ItemDetailShimmer /> : <LoadedPage item={item} />}
-    </>
-  );
+  return <>{loading ? <ItemDetailShimmer /> : <LoadedPage item={item} />}</>;
 }
 
 function LoadedPage({ item }) {
-
   const [comment, setComment] = useState("");
   var navigate = useNavigate();
 
@@ -54,7 +46,7 @@ function LoadedPage({ item }) {
             url={item.images[0]}
             shimmerClass={"min-h-[50vh] lg:w-[40vw]"}
             imageClass={
-              "h-40 object-contain min-h-[50vh] max-h-[70vh] h-[100%] w-[100%] lg:w-[40vw] bg-white border-slate-300 rounded-md border-2 p-4 border-dashed"
+              "h-40 object-cover min-h-[50vh] max-h-[70vh] h-[100%] w-[100%] lg:w-[40vw] bg-white border-slate-300 rounded-md border-2 p-4 border-dashed"
             }
           />
           <div className="flex flex-col pl-8 mt-5 lg:mt-0">
@@ -101,7 +93,7 @@ function LoadedPage({ item }) {
             if (res) {
               window.location.reload();
             } else {
-              navigate("/");
+              navigate("/auth");
             }
           }}
         >

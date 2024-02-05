@@ -2,7 +2,7 @@ import axios from "axios";
 import { toast } from "react-toastify";
 
 import appState from "../../../data/AppState";
-import { CartItem } from "../../../modals/cart";
+import { CartItem } from "../../../types/cart";
 import { emitCartUpdateEvent, saveCartCount } from "./cart_event";
 
 /**
@@ -33,7 +33,7 @@ export default async function getCart() {
  * Add an item to the cart.
  * @param {string} itemId
  * @param {number} count
- * @returns {number} A status code indicating success or failure.
+ * @returns {Promise<number>} A status code indicating success or failure.
  */
 export async function addToCart(itemId, count) {
   if (!appState.isUserLoggedIn()) {
@@ -64,7 +64,7 @@ export async function addToCart(itemId, count) {
 /**
  * Remove an item from the cart.
  * @param {string} itemId
- * @returns {number} A status code indicating success or failure.
+ * @returns {Promise<number>} A status code indicating success or failure.
  */
 export async function removeFromCart(itemId) {
   if (!appState.isUserLoggedIn()) {

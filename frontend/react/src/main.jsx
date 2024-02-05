@@ -30,7 +30,7 @@ const app = initializeApp({
 ReactDOM.createRoot(document.getElementById("root")).render(
   <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
     <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%] overflow-hidden">
-      <Suspense fallback={<Loading/>}>
+      <Suspense fallback={<Loading />}>
         <RouterProvider router={routes} />
       </Suspense>
       <ToastContainer theme="dark" autoClose={1500} />

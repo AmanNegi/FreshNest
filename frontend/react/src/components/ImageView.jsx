@@ -12,11 +12,10 @@ const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
           <ShimmerThumbnail rounded height={400} />
         </div>
       </div>
-
       <div className="overflow-clip">
         <img
           className={
-            `w-[100%] rounded-t-lg object-cover hover:scale-110 transition-all ease-in-out duration-500 ${imageClass} ` +
+            `w-[100%] rounded-t-md object-cover transition-all ease-in-out duration-500 ${imageClass} ` +
             (isLoading ? "hidden" : "block")
           }
           src={url}

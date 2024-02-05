@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import Loading from "../../../components/Loading";
-import NavBar from "../../../components/NavBar";
 import search from "../application/search";
 import { toast } from "react-toastify";
 import ShopItem from "../../../components/ShopItem";
@@ -29,8 +28,7 @@ function Search() {
 
   return (
     <>
-      <NavBar title="Search" />
-      <section className="mt-[8vh] ">
+      <section className="mt-[8vh] min-h-[100vh]">
         <div className="flex flex-row lg:mx-16 p-5 items-center">
           <input
             onChange={(e) => {

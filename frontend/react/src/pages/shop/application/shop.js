@@ -43,13 +43,14 @@ export function sortList(list, filter) {
   switch (filter) {
     case "0": {
       list.sort((a, b) => {
-        return a.listedAt > b.listedAt ? 1 : -1;
+        return a.listedAt < b.listedAt ? 1 : -1;
       });
       break;
     }
+
     case "1": {
       list.sort((a, b) => {
-        return a.listedAt < b.listedAt ? 1 : -1;
+        return a.listedAt > b.listedAt ? 1 : -1;
       });
       break;
     }
@@ -154,14 +155,16 @@ export async function addComment(comment) {
 /**
  * Delete an item from the database.
  * @param {string} itemId - The ID of the item to delete.
+ * @param {string} listedBy - The ID of the user who listed the item.
  * @returns {Promise<number>}  A status code indicating success or failure.
  */
-export async function deleteItem(itemId) {
-  if (
-    !appState.isUserLoggedIn() ||
-    appState.getUserData().userType != "admin"
-  ) {
-    toast.error("You must be an admin to delete an item");
+export async function deleteItem(itemId, listedBy) {
+  if (!appState.isOwner(listedBy)) {
+    if (appState.getUserData().userType != "admin") {
+      toast.error("You must be an admin to delete an item");
+      return 0;
+    }
+    toast.error("You are not the owner of the item");
     return 0;
   }
   const res = await axios.post(

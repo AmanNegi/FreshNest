@@ -26,6 +26,7 @@
     "react-router-dom": "^6.9.0",
     "react-scripts": "^5.0.1",
     "react-shimmer-effects-18": "^1.0.4",
+    "react-timeago": "^7.2.0",
     "react-toastify": "^9.1.2",
     "uuid": "^9.0.1"
   },

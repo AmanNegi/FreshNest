@@ -82,8 +82,13 @@ class AppState {
   isFarmer() {
     return this.userData.userType === "farmer";
   }
+  
   isCustomer() {
     return this.userData.userType === "customer";
+  }
+
+  isOwner(id) {
+    return this.userData._id === id;
   }
 
   setUserData(data) {
