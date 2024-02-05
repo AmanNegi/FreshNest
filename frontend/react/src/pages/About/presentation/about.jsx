@@ -1,9 +1,6 @@
 import { motion } from "framer-motion";
 import { useEffect } from "react";
 
-import NavBar from "../../../components/NavBar";
-import Footer from "../../../components/Footer";
-
 import about_img from "../../../assets/about_img.jpg";
 import about_img_2 from "../../../assets/about_img_2.jpg";
 import about_img_3 from "../../../assets/about_img_3.jpg";
@@ -20,8 +17,6 @@ function About() {
   }, []);
   return (
     <>
-      <NavBar />
-
       <main className="mt-[8vh]">
         <section className=" flex flex-col-reverse md:flex-row ">
           <div className="flex flex-col w-[100%] md:w-[50%] justify-center px-5 md:px-20 md:py-20">
@@ -82,8 +77,6 @@ function About() {
           </div>
         </div>
       </section>
-
-      <Footer />
     </>
   );
 }

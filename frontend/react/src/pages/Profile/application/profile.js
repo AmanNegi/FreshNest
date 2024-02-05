@@ -49,6 +49,12 @@ export async function addFarmImage(image) {
  * @returns {Promise<string[]>} The user's profile
  */
 export async function getFarmerImages() {
+
+  if(!appState.isUserLoggedIn()) {
+    toast.error("You must be logged in to view your profile");
+    return [];
+  }
+
   const res = await axios.get(
     import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`
   );

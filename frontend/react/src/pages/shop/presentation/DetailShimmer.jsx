@@ -1,4 +1,3 @@
-import NavBar from "../../../components/NavBar";
 import {
   ShimmerThumbnail,
   ShimmerTitle,
@@ -6,15 +5,6 @@ import {
 } from "react-shimmer-effects-18";
 
 function ItemDetailShimmer() {
-  return (
-    <>
-      <NavBar />
-      <ShimmerPage />
-    </>
-  );
-}
-
-function ShimmerPage({ item }) {
   return (
     <>
       <section className="mt-[8vh] min-h-[52vh] w-[100%] p-6 lg:p-12 ">
