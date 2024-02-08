@@ -69,7 +69,7 @@ export async function addItem(data) {
           type: "Point",
           coordinates: [latitude, longitude],
         },
-      }
+      },
     );
 
     console.log(res);

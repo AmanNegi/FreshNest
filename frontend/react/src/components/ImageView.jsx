@@ -15,7 +15,7 @@ const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
       <div className="overflow-clip">
         <img
           className={
-            `w-[100%] rounded-t-md object-cover transition-all ease-in-out duration-500 ${imageClass} ` +
+            `w-[100%] rounded-t-md object-contain transition-all ease-in-out duration-500 ${imageClass} ` +
             (isLoading ? "hidden" : "block")
           }
           src={url}

@@ -13,13 +13,13 @@ import { handleUpload } from "../../AddItem/application/functions";
 export default async function updateUser(body) {
   const res = await axios.post(
     import.meta.env.VITE_API_URL + "/profile/updateUser",
-    { ...body, _id: appState.getUserData()._id }
+    { ...body, _id: appState.getUserData()._id },
   );
 
   console.log(res);
   if (res.status !== 200) {
     toast.error(
-      "An error occurred while updating your profile. Please try again later."
+      "An error occurred while updating your profile. Please try again later.",
     );
   } else {
     appState.setUserData(res.data.data);
@@ -38,7 +38,7 @@ export async function addFarmImage(image) {
   const url =
     import.meta.env.VITE_API_URL +
     `/auth/addImage/${appState.getUserData()._id}`;
-    
+
   // To make the process fast we don't wait for the response
   axios.post(url, { image: imageUrl });
   return imageUrl;
@@ -49,14 +49,13 @@ export async function addFarmImage(image) {
  * @returns {Promise<string[]>} The user's profile
  */
 export async function getFarmerImages() {
-
-  if(!appState.isUserLoggedIn()) {
+  if (!appState.isUserLoggedIn()) {
     toast.error("You must be logged in to view your profile");
     return [];
   }
 
   const res = await axios.get(
-    import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`
+    import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`,
   );
 
   console.log(res);

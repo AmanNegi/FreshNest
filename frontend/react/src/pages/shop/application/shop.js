@@ -8,7 +8,7 @@ import { Item } from "./shop_model";
  * @param {string} filter - The filter to apply to the list.
  * @returns {Promise<Item>} - The sorted list of items.
  */
-export default async function getItems(filter) {
+export default async function getItems(filter = "0") {
   let list;
 
   if (appState.isFarmer()) {
@@ -105,7 +105,7 @@ export async function getAllFarmerItems() {
   const id = appState.getUserData()._id;
 
   const res = await axios.get(
-    `${import.meta.env.VITE_API_URL}/list/getAll/${id}`
+    `${import.meta.env.VITE_API_URL}/list/getAll/${id}`,
   );
 
   return res.data.data;
@@ -114,16 +114,16 @@ export async function getAllFarmerItems() {
 /**
  * Get an item from the database by ID.
  * @param {string} id - The ID of the item to get.
- * @returns {Promise<Item|undefined>} - The item with the specified ID.
+ * @returns {Promise<Item|Error|undefined>} - The item with the specified ID.
  */
 export async function getItem(id) {
   try {
     const res = await axios.get(
-      import.meta.env.VITE_API_URL + "/list/getItem/" + id
+      import.meta.env.VITE_API_URL + "/list/getItem/" + id,
     );
     return res.data.data;
   } catch (e) {
-    return undefined;
+    throw e;
   }
 }
 
@@ -132,24 +132,32 @@ export async function getItem(id) {
  * @param {Object} comment - The comment to add.
  * @param {string} comment.itemID - The ID of the item to add the comment to.
  * @param {string} comment.comment - The content of the comment.
- * @returns {Promise<number>} A status code indicating success or failure.
+ * @returns {Promise<Object>} A status code indicating success or failure.
  */
 export async function addComment(comment) {
   if (!appState.isUserLoggedIn()) {
     toast.error("You must be logged in to add a comment");
-    return 0;
+    return null;
   }
-  const res = await axios.post(import.meta.env.VITE_API_URL + "/list/comment", {
-    commentBy: appState.getUserData()._id,
-    itemID: comment.itemID,
-    name: appState.getUserData().name,
-    content: comment.comment,
-    commentAt: Date.now(),
-  });
+  try {
+    const res = await axios.post(
+      import.meta.env.VITE_API_URL + "/list/comment",
+      {
+        commentBy: appState.getUserData()._id,
+        itemID: comment.itemID,
+        name: appState.getUserData().name,
+        content: comment.comment,
+        commentAt: Date.now(),
+      },
+    );
 
-  console.log(res);
+    toast.success("Comment added successfully!");
+    console.log(res);
 
-  return 1;
+    return res.data.data;
+  } catch (e) {
+    throw e;
+  }
 }
 
 /**
@@ -172,7 +180,7 @@ export async function deleteItem(itemId, listedBy) {
     {
       adminId: appState.getUserData()._id,
       itemId: itemId,
-    }
+    },
   );
 
   if (res.data.statusCode == 200) {

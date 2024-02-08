@@ -90,8 +90,9 @@ function Login() {
           {/* Button */}
           <button
             onClick={handleLogin}
-            className={`btn btn-primary w-full py-3 mb-4 ${loading ? " cursor-not-allowed" : ""
-              }`}
+            className={`btn btn-primary w-full py-3 mb-4 ${
+              loading ? " cursor-not-allowed" : ""
+            }`}
             disabled={loading}
           >
             {loading ? <ButtonLoader /> : "Login"}

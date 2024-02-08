@@ -66,7 +66,7 @@ export async function gSignUp(name, email) {
     {
       name: name,
       email: email.toLowerCase(),
-    }
+    },
   );
 
   console.log(res);

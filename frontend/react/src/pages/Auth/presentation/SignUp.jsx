@@ -127,8 +127,9 @@ function SignUp() {
           <div className="flex flex-row w-full items-center gap-3">
             <button
               onClick={handleSignUp}
-              className={`btn btn-primary flex-grow py-3 ${loading ? "opacity-50 cursor-not-allowed" : ""
-                }`}
+              className={`btn btn-primary flex-grow py-3 ${
+                loading ? "opacity-50 cursor-not-allowed" : ""
+              }`}
               disabled={loading}
             >
               {loading ? <ButtonLoader /> : "Sign Up"}

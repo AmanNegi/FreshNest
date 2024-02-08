@@ -8,7 +8,12 @@ module.exports = {
         darkColor: "#0d2818",
         semiDarkColor: "#0d2818",
         lightColor: "#058c42",
-        accentColor: "#16db65",
+        accentColor: "#2FBF71",
+        // accentColor: "#65A43E",
+        // accentColor: "#16db65",
+        labelColor: "#7190D8",
+        lightBorderColor: "#D9D9D9",
+        errorColor: "#E34035",
       },
       fontFamily: {
         montserrat: ["Montserrat", "sans-serif"],
@@ -20,7 +25,9 @@ module.exports = {
     themes: [
       {
         mytheme: {
-          accent: "#16db65",
+          accent: "#2FBF71",
+          // accent: "#65A43E",
+          // accent: "#16db65",
           primary: "#058c42",
           secondary: "#f6d860",
           neutral: "#3d4451",

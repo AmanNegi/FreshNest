@@ -4,10 +4,11 @@ import { toast } from "react-toastify";
 import appState from "../../../data/AppState";
 import { CartItem } from "../../../types/cart";
 import { emitCartUpdateEvent, saveCartCount } from "./cart_event";
+import { debounce } from "lodash";
 
 /**
  * Get a list of cart items from the database.
- * @returns {Promise<Array<CartItem>>} - The list of items in the cart.
+ * @returns {Promise<Array<CartItem>|Error>} - The list of items in the cart.
  */
 export default async function getCart() {
   if (!appState.isUserLoggedIn()) {
@@ -59,6 +60,28 @@ export async function addToCart(itemId, count) {
 
   console.log(res);
   return 1;
+}
+
+export async function updateCartCount(itemId, count) {
+  console.log("updateCartCount  ", itemId, count);
+  if (!appState.isUserLoggedIn()) {
+    toast.error("You must be logged in to update cart");
+    return 0;
+  }
+
+  const res = await axios.post(import.meta.env.VITE_API_URL + "/cart/update", {
+    userId: appState.userData._id,
+    itemId: itemId,
+    count: count,
+  });
+
+  if (res.data.statusCode == 200) {
+    console.log("Updated Cart Successfully");
+  } else {
+    toast.error(res.data.message);
+  }
+
+  return res.data.data;
 }
 
 /**

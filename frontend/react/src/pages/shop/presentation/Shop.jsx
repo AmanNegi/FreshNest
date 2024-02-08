@@ -1,96 +1,109 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
 
 import ShopItem from "../../../components/ShopItem";
-import Button from "../../../components/Button";
+import NavigationButton from "../../../components/Button";
 import ShimmerShopItem from "../../../components/ShimmerShopItem";
-import { Item } from "../application/shop_model";
 
 import appState from "../../../data/AppState";
 import getItems from "../application/shop";
 import { sortList } from "../application/shop";
 
 import { FaCaretDown } from "react-icons/fa";
+import QueryError from "../../../components/QueryError";
 
 function Shop() {
-  /**
-   * @type {[Item[], function]}
-   */
-  const [list, setList] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  const navigate = useNavigate();
   const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  /** @type {number} */
-  var urlFilter = 0;
+  const queryClient = useQueryClient();
+  var { isLoading, isError, error, data } = useQuery({
+    queryKey: ["items"],
+    queryFn: () => getItems(searchParams.get("sort") || "0"),
+  });
+
+  const [urlFilter, setUrlFilter] = useState(
+    parseInt(searchParams.get("sort")) || "0",
+  );
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    setIsLoading(true);
-    getItems("2").then((e) => {
-      setIsLoading(false);
-
-      urlFilter = searchParams.get("sort") || 0;
-      updateFilter(urlFilter, e);
-
-      console.log("Set List to ", e);
-    });
-
     return () => {};
-  }, [searchParams]);
+  }, []);
+
+  if (isError) {
+    return (
+      <QueryError
+        error={error}
+        onClick={() => {
+          queryClient.invalidateQueries(["items"]);
+        }}
+      />
+    );
+  }
 
   return (
     <>
-      <div className="mt-[8vh] px-10 pt-[4vh] pb-[3vh] flex flex-col md:flex-row items-center">
-        <h1 className="text-3xl font-semibold mr-auto">{getShopHeading()}</h1>
-        <div className="flex flex-row items-center">
-          {list.length > 0 && (
-            <Filter filter={urlFilter} updateFilter={updateFilter} />
-          )}
-          {appState.isFarmer() && (
-            <Button path="/add" text="Add Item" additionalClasses="ml-2" />
-          )}
+      <main className="px-[10vw] mt-[14vh]">
+        <div className="flex flex-col md:flex-row items-center">
+          <h1 className="text-3xl font-semibold mr-auto">{getShopHeading()}</h1>
+          <div className="flex flex-row items-center">
+            {!isError && !isLoading && (
+              <Filter filter={urlFilter} updateFilter={updateFilter} />
+            )}
+            {appState.isFarmer() && (
+              <NavigationButton
+                path="/add"
+                text="Add Item"
+                additionalClasses="ml-2"
+              />
+            )}
+          </div>
         </div>
-      </div>
 
-      {isLoading ? (
-        <section className="w-full bg-white min-h-screen px-8 lg:px-10 mb-8">
-          <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
-            {[1, 2, 3, 4, 5].map((e) => {
-              return <ShimmerShopItem key={e} id={e} />;
-            })}
-          </div>
-        </section>
-      ) : (
-        <section className="w-[100%] bg-white min-h-screen">
-          <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-5 px-8 lg:px-10 mb-8">
-            {list.map((e, i) => {
-              return (
-                <ShopItem
-                  key={e._id}
-                  itemId={e._id}
-                  isCart={false}
-                  onDelete={(item) => {
-                    setList((prevList) =>
-                      prevList.filter((i) => i._id !== item._id)
-                    );
-                  }}
-                />
-              );
-            })}
-          </div>
-        </section>
-      )}
+        <div className="h-[3vh]"></div>
+
+        {isLoading ? (
+          <section className="w-full bg-white min-h-screen mb-8">
+            <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+              {[1, 2, 3, 4, 5, 6].map((e) => {
+                return <ShimmerShopItem key={e} id={e} />;
+              })}
+            </div>
+          </section>
+        ) : (
+          <section className="w-[100%] min-h-screen">
+            <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
+              {data &&
+                data.map((e) => {
+                  return (
+                    <ShopItem
+                      key={e._id}
+                      itemId={e._id}
+                      isCart={false}
+                      onDelete={(item) => {
+                        queryClient.setQueryData(["items"], (prevData) => {
+                          return prevData.filter((i) => i._id !== item._id);
+                        });
+                      }}
+                    />
+                  );
+                })}
+            </div>
+          </section>
+        )}
+      </main>
     </>
   );
 
-  function updateFilter(value, list) {
+  function updateFilter(value) {
+    // Manually update the cache, in case of a sort mode change
+    queryClient.setQueryData(["items"], (prevData) => {
+      return sortList(prevData, value);
+    });
     navigate(`?sort=${value}`);
-    if (list) {
-      return setList((e) => sortList(list, value));
-    }
-    setList((prevList) => sortList(prevList, value));
+    setUrlFilter(value);
   }
 }
 
@@ -105,7 +118,7 @@ function getShopHeading() {
  * Build the Filter Dropdown
  * @param {object} props
  * @param {number} props.filter
- * @param {function} props.updateFilter
+ * @param {(string)=>void} props.updateFilter
  * @returns
  */
 const Filter = ({ filter, updateFilter }) => {

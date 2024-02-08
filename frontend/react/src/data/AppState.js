@@ -44,7 +44,7 @@ class AppState {
     this.isLoggedIn = isLoggedIn;
     localStorage.setItem(
       APP_STATE_KEY,
-      JSON.stringify({ userData, isLoggedIn })
+      JSON.stringify({ userData, isLoggedIn }),
     );
   }
 
@@ -82,7 +82,7 @@ class AppState {
   isFarmer() {
     return this.userData.userType === "farmer";
   }
-  
+
   isCustomer() {
     return this.userData.userType === "customer";
   }

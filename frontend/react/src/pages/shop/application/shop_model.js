@@ -21,7 +21,7 @@ export class Item {
     images,
     price,
     listedAt,
-    comments
+    comments,
   ) {
     this._id = id;
     this.listedBy = listedBy;

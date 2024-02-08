@@ -5,10 +5,12 @@ import appState from "../../../data/AppState";
 
 import { toast } from "react-toastify";
 import { addItem } from "../application/functions";
+import { useQueryClient } from "@tanstack/react-query";
 
 const AddItem = () => {
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
+  const queryClient = useQueryClient();
 
   const [data, setData] = useState({
     name: "",
@@ -89,7 +91,6 @@ const AddItem = () => {
     if (data.name.length === 0) {
       toast.error("Enter a name for the product");
       return;
-
     }
     if (data.description.length === 0) {
       toast.error("Enter a description for the product");
@@ -104,7 +105,7 @@ const AddItem = () => {
       return;
     }
 
-    if(data.longitude === "" || data.latitude === ""){
+    if (data.longitude === "" || data.latitude === "") {
       toast.error("Location not found, try again!");
       return;
     }
@@ -125,6 +126,10 @@ const AddItem = () => {
     setIsLoading(false);
 
     if (res) {
+      // add this data to the cache (react query)
+      queryClient.setQueryData(["items"], (oldData) => {
+        return [newData, ...oldData];
+      });
       navigate("/shop");
     }
   };

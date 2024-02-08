@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import Button from "../../../components/Button";
+import NavigationButton from "../../../components/Button";
 
 import { data, features } from "../../../data/data";
 import { getFourItems } from "../../shop/application/shop";
@@ -10,6 +10,7 @@ import { Item } from "../../shop/application/shop_model";
 
 import landing_bg from "../../../assets/landing_bg.jpg";
 import explore_image from "../../../assets/explore.png";
+import { useQuery } from "@tanstack/react-query";
 
 function Home() {
   useEffect(() => {
@@ -80,7 +81,7 @@ function Home() {
               <br />
               Check out now
             </h2>
-            <Button text="Shop Now" path="/shop" />
+            <NavigationButton text="Shop Now" path="/shop" />
           </div>
         </section>
       </main>
@@ -122,8 +123,8 @@ function TopSection() {
           transition={{ duration: 1, delay: 0.5 }}
           className="flex gap-4 mt-5"
         >
-          <Button text="Learn More" path="/about" />
-          <Button text="Explore Products" path="/shop" />
+          <NavigationButton text="Learn More" path="/about" />
+          <NavigationButton text="Explore Products" path="/shop" />
         </motion.div>
       </div>
     </section>
@@ -170,16 +171,22 @@ function ExploreProducts() {
   /**
    * @type {[Array<Item>, (e:Array<Item>)=>void]}
    */
-  const [products, setProducts] = useState([]);
+  // const [products, setProducts] = useState([]);
 
   const navigate = useNavigate();
+  const {
+    data: products,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["explore"],
+    queryFn: () => getFourItems(),
+  });
 
-  useEffect(() => {
-    getFourItems().then((e) => {
-      setProducts(e);
-      console.log("Set List to ", e);
-    });
-  }, []);
+  if (isLoading || isError) {
+    return <></>;
+  }
 
   return (
     <section>
@@ -219,10 +226,10 @@ function ExploreProducts() {
                   key={i}
                   className="flex flex-col items-center justify-center h-full"
                 >
-                  <div className="group w-10/12 md:full relative h-full">
+                  <div className="group w-[10/12] relative h-full">
                     <img
                       key={e.images[0]}
-                      className="bg-slate-200 h-full w-full object-cover object-center pz-2 group-hover:opacity-20 transition-all"
+                      className="h-full w-full object-contain object-center pz-2 group-hover:opacity-20 transition-all"
                       src={e.images[0]}
                       alt=""
                     />

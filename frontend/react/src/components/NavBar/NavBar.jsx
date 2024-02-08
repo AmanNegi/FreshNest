@@ -32,7 +32,7 @@ function NavBar() {
         <div className="flex flex-1"></div>
 
         {/* Desktop Icons */}
-        <div className="hidden md:flex">
+        <div className="">
           <BsSearch
             onClick={() => navigate("/search")}
             className="cursor-pointer mx-5"
@@ -113,10 +113,7 @@ const CartNotifier = () => {
   }, []);
 
   return (
-    <div
-      className="hidden md:flex mr-5 relative"
-      onClick={() => navigate("/cart")}
-    >
+    <div className=" flex mr-5 relative" onClick={() => navigate("/cart")}>
       <AiOutlineShoppingCart className="cursor-pointer text-xl ml-5" />
       {cartCount > 0 && (
         <span className="animate-bounce bg-red-600 text-white rounded-full w-[17px] h-[17px] text-center text-[12px] absolute right-[-10px] top-[-10px]">
