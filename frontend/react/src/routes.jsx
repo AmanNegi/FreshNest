@@ -42,6 +42,7 @@ const routes = createBrowserRouter([
         <Footer />
       </>
     ),
+
     children: [
       {
         path: "/",

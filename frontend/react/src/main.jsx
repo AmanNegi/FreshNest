@@ -13,6 +13,8 @@ import routes from "./routes";
 import "./index.css";
 import "react-toastify/dist/ReactToastify.css";
 import Loading from "./components/Loading";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 
 appState.__init__();
 
@@ -27,15 +29,21 @@ const app = initializeApp({
   measurementId: import.meta.env.VITE_MEASUREMENT_ID,
 });
 
+const queryClient = new QueryClient();
+
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
-    <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%] overflow-hidden">
-      <Suspense fallback={<Loading />}>
-        <RouterProvider router={routes} />
-      </Suspense>
-      <ToastContainer theme="dark" autoClose={1500} />
-    </main>
-  </GoogleOAuthProvider>
+  <QueryClientProvider client={queryClient}>
+    <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+      <main className="font-poppins box-border smooth-scroll h-[100%] w-[100%] overflow-hidden">
+        <Suspense fallback={<Loading />}>
+          <RouterProvider router={routes} />
+        </Suspense>
+        <ToastContainer theme="dark" autoClose={1500} />
+        {/* ! USE FOR DEV MODE ONLY */}
+        {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+      </main>
+    </GoogleOAuthProvider>
+  </QueryClientProvider>,
 );
 
 // To use Firebase Storage:

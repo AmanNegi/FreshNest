@@ -86,6 +86,46 @@ router.post("/add", async (req, res) => {
 });
 
 /**
+ * Update item count in cart
+ * @param {Object} req - The request object.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.userId - The user's ID.
+ * @param {string} req.body.itemId - The item's ID.
+ * @param {number} req.body.count - The count of the item.
+ *
+ */
+router.post("/update", async (req, res) => {
+  const { userId, itemId, count } = req.body;
+
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).send(getErrorResponse("Invalid User ID"));
+  }
+
+  if (!mongoose.Types.ObjectId.isValid(itemId)) {
+    return res.status(404).send(getErrorResponse("Invalid Item ID"));
+  }
+
+  const cart = await Cart.findOne({ userId: userId });
+
+  if (!cart) {
+    return res
+      .status(404)
+      .send(getErrorResponse("No cart exists for this userId"));
+  }
+
+  cart.items = cart.items.map((e) => {
+    if (e.item.toString() === itemId) {
+      e.count = count;
+    }
+    return e;
+  });
+  await cart.save();
+
+  const response = cart.items.find((e) => e.item.toString() === itemId);
+  return res.send(getSuccessResponse("Successfully updated cart", response));
+});
+
+/**
  * Remove item from cart
  * @param {Object} req - The request object.
  * @param {Object} req.body - The request body.

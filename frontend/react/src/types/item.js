@@ -21,7 +21,7 @@ class Item {
     price,
     comments,
     listedAt,
-    location
+    location,
   ) {
     this._id = _id;
     this.listedBy = listedBy;

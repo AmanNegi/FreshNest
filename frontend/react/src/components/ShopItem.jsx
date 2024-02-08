@@ -1,24 +1,23 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import Rating from "react-rating";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import appState from "../data/AppState";
 import { addToCart, removeFromCart } from "../pages/Cart/application/cart";
-import { deleteItem, getItem } from "../pages/shop/application/shop";
+import { getItem } from "../pages/shop/application/shop";
 import TimeAgo from "react-timeago";
-import enStrings from "react-timeago/lib/language-strings/en";
-import buildFormatter from "react-timeago/lib/formatters/buildFormatter";
 
-const formatter = buildFormatter(enStrings);
+import { BsFillTrash3Fill } from "react-icons/bs";
+import { FaClockRotateLeft } from "react-icons/fa6";
 
-import { BsFillTrash3Fill, BsCartFill } from "react-icons/bs";
-import {
-  AiFillStar,
-  AiOutlineStar,
-  AiOutlineMinus,
-  AiOutlinePlus,
-} from "react-icons/ai";
+import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
 import ImageView from "./ImageView";
+import { cn } from "../utils/cn";
+import { Item } from "../pages/shop/application/shop_model";
+import { useQuery } from "@tanstack/react-query";
+import ShimmerShopItem from "./ShimmerShopItem";
+import { toast } from "react-toastify";
+
+import useShopItemMutations from "../hooks/ShopItemHooks";
 
 /**
  *
@@ -27,43 +26,50 @@ import ImageView from "./ImageView";
  * @param {number} props.itemCount
  * @param {boolean} props.isCart
  * @param {function(Item): void} props.onDelete
- * @returns
+ * @returns {JSX.Element}
  */
 function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
   /** @type {[number, function]}*/
   const [count, setCount] = useState(itemCount);
 
-  /** @type {[Item, function]}*/
-  const [item, setItem] = useState(undefined);
-
-  /** @type {[boolean , function]} */
-  const [loading, setLoading] = useState(true);
-
   const navigate = useNavigate();
 
-  useEffect(() => {
-    getItem(itemId).then((data) => {
-      console.log("ItemData: ", data);
-      setItem(data);
-      setLoading(false);
-    });
-  }, []);
+  const {
+    isLoading,
+    isError,
+    data: item,
+    error,
+  } = useQuery({
+    queryKey: ["item", itemId],
+    queryFn: () => getItem(itemId),
+  });
+
+  const { deleteItemFromCartMutation, deleteItemMutation, updateCartMutation } =
+    useShopItemMutations(itemId);
+
+  if (isLoading) {
+    return <ShimmerShopItem id={itemId} key={itemId} />;
+  }
 
   // If Item removed show this card
-  if (!loading && !item) {
+  if (isError) {
     return (
       <div
         id={itemId}
-        className="bg-red-100 text-bold text-2xl flex flex-col justify-center items-center text-center p-10 rounded-lg"
+        className="flex flex-col items-center justify-center p-10 text-2xl text-center bg-red-100 rounded-lg text-bold"
       >
-        <h1>Item has been removed by admin</h1>
+        <h1>{error.message}</h1>
         <div className="h-4"></div>
         <button
           className="btn btn-error"
           onClick={async (e) => {
-            e.stopPropagation();
-            await removeFromCart(itemId);
-            if (onDelete) onDelete();
+            if (isCart) {
+              e.stopPropagation();
+              await removeFromCart(itemId);
+              if (onDelete) onDelete();
+            } else {
+              toast.error("An unforseeable error occured!");
+            }
           }}
         >
           Remove From Cart
@@ -74,7 +80,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
 
   return (
     <>
-      {item !== undefined && (
+      {
         <motion.div
           onClick={() => {
             navigate("/item/" + item._id);
@@ -84,117 +90,141 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.25, duration: 0.25 }}
           viewport={{ once: true }}
-          className="border cursor-pointer border-slate-300 relative transition duration-500 rounded-lg hover:shadow-md bg-white "
+          className="relative transition duration-500 bg-white border-2 rounded-lg cursor-pointer border-lightBorderColor hover:shadow-md "
         >
-          <div className="h-40 w-[100%] relative">
-            <ImageView
-              _id={item._id}
-              url={item.images[0]}
-              shimmerClass={"max-h-40"}
-              imageClass={"h-40"}
-            />
+          <div className="relative m-2">
+            <div className="w-full h-40 ">
+              <ImageView
+                _id={item._id}
+                url={item.images[0]}
+                shimmerClass={"max-h-40 rounded-md"}
+                imageClass={
+                  "h-40 border-dashed border-2 border-lightBorderColor rounded-md px-2 py-2"
+                }
+              />
+            </div>
             {!isCart && (
-              <div className="absolute top-0 right-0 text-white shadow-lg bg-accentColor  text-sm rounded-bl-md rounded-tr-md px-4 py-2">
-                <TimeAgo date={item.listedAt} formatter={formatter} />
-              </div>
-            )}
-
-            {isCart && (
-              <div
-                onClick={async (e) => {
-                  e.stopPropagation();
-                  removeFromCart(itemId);
-                  window.location.reload();
-                }}
-                className="absolute top-2 right-2 ml-2 lg:ml-4 w-[40px] h-[40px] flex justify-center items-center rounded-md bg-red-400"
-              >
-                <BsFillTrash3Fill className="text-white" />
+              <div className="absolute top-0 left-0 px-4 py-2 text-xs text-white shadow-lg bg-accentColor rounded-tl-md rounded-br-md">
+                23% off
               </div>
             )}
           </div>
 
-          <div className="px-4 py-2  rounded-lg ">
+          <div className="bg-gray-200 inline-flex flex-row mx-2 items-center justify-start px-3 gap-3 py-1 rounded-[5px] text-xs ">
+            <FaClockRotateLeft />
+            <TimeAgo date={item.listedAt} />
+          </div>
+          <div className="px-4 rounded-lg ">
             <h1 className="text-xl font-bold text-gray-700 hover:text-gray-900 hover:cursor-pointer">
               {item.name}
             </h1>
 
-            <p className="text-lg text-green-500 font-extrabold">
+            <p className="text-lg font-extrabold text-green-500">
               {`₹ ` + item.price + "/kg"}
             </p>
 
-            <div className="h-[1vh]"></div>
-            <Rating
-              initialRating={4.0}
-              readonly={true}
-              fullSymbol={<AiFillStar className="text-amber-400" />}
-              emptySymbol={<AiOutlineStar className="text-gray-300" />}
-            />
-            {/* <RatingComponent /> */}
-
-            <div className="h-[1vh]"></div>
-            <div className="flex flex-row gap-2 items-center">
-              {appState.isCustomer() && (
-                <div className="w-[50%] h-[40px] flex flex-row items-center justify-center border border-gray-300 rounded-md px-2">
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      if (count > 0) {
-                        setCount((count) => {
-                          return count - 1;
-                        });
-                      }
-                    }}
-                    className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
-                  >
-                    <AiOutlineMinus />
-                  </div>
-                  <div className="flex-1 h-[100%] flex justify-center items-center text-center bg-slate-200">
-                    {count}
-                  </div>
-                  <div
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      setCount((count) => count + 1);
-                    }}
-                    className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
-                  >
-                    <AiOutlinePlus />
-                  </div>
-                </div>
-              )}
-
-              {appState.isCustomer() && !isCart && (
-                <button
-                  onClick={async (e) => {
-                    e.stopPropagation();
-                    await addToCart(item._id, count);
-                  }}
-                  className="btn btn-accent"
-                >
-                  <BsCartFill className="text-white" />
-                </button>
-              )}
-
-              {!isCart &&
-                (appState.isAdmin() || appState.isOwner(item.listedBy)) && (
-                  <button
-                    onClick={async (e) => {
-                      e.stopPropagation();
-                      await deleteItem(itemId, item.listedBy);
-                      if (onDelete) {
-                        onDelete(item);
-                      }
-                    }}
-                    className="btn btn-error"
-                  >
-                    <BsFillTrash3Fill className="text-white" />
-                  </button>
+            {/* Add Button for Customer */}
+            {appState.isCustomer() && !isCart && (
+              <button
+                onClick={async (e) => {
+                  e.stopPropagation();
+                  await addToCart(item._id, count);
+                }}
+                className={cn(
+                  "h-[40px] z-10 absolute right-2 bottom-2 flex items-center justify-center transition-all duration-500 rounded-md ",
+                  `border-2 border-accentColor bg-accentColor bg-opacity-5`,
                 )}
-            </div>
+              >
+                <p
+                  className={cn(
+                    "px-4 py-2 text-lg font-bold ",
+                    `text-accentColor`,
+                  )}
+                >
+                  ADD
+                </p>
+              </button>
+            )}
+
+            {/* Spacing for the absolute actions */}
+            <div className="h-[8vh]"></div>
+
+            {/* Delete Button (Customer|Admin|Farmer) */}
+            {(isCart ||
+              appState.isAdmin() ||
+              appState.isOwner(item.listedBy)) && (
+              <div className="absolute bottom-2 right-2 w-full gap-3 flex flex-row">
+                <div className="flex-grow"></div>
+                <button
+                  onClick={async () => {
+                    e.stopPropagation();
+                    if (isCart) {
+                      deleteItemFromCartMutation.mutate();
+                      return;
+                      // return removeFromCart(itemId);
+                    }
+                    deleteItemMutation.mutate();
+                    // await deleteItem(itemId, item.listedBy);
+                    // if (onDelete) {
+                    //   onDelete(item);
+                    // }
+                  }}
+                  className={cn(
+                    "h-[40px] flex items-center justify-center transition-all duration-500 border-2 rounded-md bg-opacity-10 hover:bg-opacity-100",
+                    `border-errorColor bg-errorColor`,
+                  )}
+                >
+                  <p
+                    className={cn(
+                      "px-4 py-2 text-lg font-bold hover:text-white transition-all duration-500",
+                      `text-errorColor`,
+                    )}
+                  >
+                    <BsFillTrash3Fill />
+                  </p>
+                </button>
+                {appState.isCustomer() && isCart && (
+                  <div className="w-[50%] h-[40px] flex flex-row items-center justify-center border border-lightBorderColor rounded-md px-2">
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+
+                        if (count == 1) {
+                          deleteItemFromCartMutation.mutate();
+                          return;
+                        }
+
+                        if (count > 0) {
+                          const newCount = count - 1;
+                          setCount(newCount);
+                          updateCartMutation.mutate(newCount);
+                        }
+                      }}
+                      className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
+                    >
+                      <AiOutlineMinus />
+                    </div>
+                    <div className="flex-1 h-[100%] flex justify-center items-center text-center bg-lightBorderColor">
+                      {count}
+                    </div>
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        const newCount = count + 1;
+                        setCount(newCount);
+                        updateCartMutation.mutate(newCount);
+                      }}
+                      className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
+                    >
+                      <AiOutlinePlus />
+                    </div>
+                  </div>
+                )}
+              </div>
+            )}
           </div>
-          <div className="h-[1vh]"></div>
         </motion.div>
-      )}
+      }
     </>
   );
 }

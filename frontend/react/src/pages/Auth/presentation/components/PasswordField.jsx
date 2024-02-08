@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { BiHide, BiShow } from "react-icons/bi";
 
-const PasswordField = ({handleFieldChange}) => {
+const PasswordField = ({ handleFieldChange }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
