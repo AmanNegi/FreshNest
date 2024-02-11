@@ -1,43 +1,61 @@
 import appState from "../../../data/AppState";
 import { useEffect, useRef, useState } from "react";
+import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useNavigate } from "react-router-dom";
 
 import { FiSettings } from "react-icons/fi";
-import { useNavigate } from "react-router-dom";
-import UpdateModal from "./UpdateModal";
-import { addFarmImage, getFarmerImages } from "../application/profile";
-import Loading from "../../../components/Loading";
 
-import "./pattern.css";
+import UpdateModal from "./UpdateModal";
+import Loading from "../../../components/Loading";
+import QueryError from "../../../components/QueryError";
+import useProfileMutations from "../../../hooks/ProfileHook";
+
 import male from "../../../assets/icons/male.svg";
+import "./pattern.css";
+import { getUser } from "../application/profile";
 
 function Profile() {
-  var user = appState.getUserData();
   const fileInputRef = useRef(null);
-  var navigate = useNavigate();
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+
+  const { addFarmImageMutation } = useProfileMutations();
+
+  const {
+    data: user,
+    isLoading,
+    isError,
+    error,
+  } = useQuery({
+    queryKey: ["profile"],
+    queryFn: () => getUser(),
+    placeholderData: appState.getUserData(),
+  });
 
   const [pattern, setPattern] = useState("pattern1");
-  const [images, setImages] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
-
   const patterns = ["pattern1", "pattern2", "pattern3"];
 
   useEffect(() => {
     window.scrollTo(0, 0);
-    getFarmerImages().then((e) => {
-      setIsLoading(false);
-      setImages(e);
-    });
   }, []);
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
     console.log("Selected File:", selectedFile);
 
-    addFarmImage(selectedFile).then((e) => {
-      console.log(e);
-      setImages([...images, e]);
-    });
+    addFarmImageMutation.mutate(selectedFile);
   };
+
+  if (isError) {
+    return (
+      <QueryError
+        error={error}
+        onClick={() => {
+          queryClient.invalidateQueries(["profile"]);
+        }}
+      />
+    );
+  }
 
   return (
     <>
@@ -67,7 +85,7 @@ function Profile() {
                   const handleClose = () => {
                     if (modal.returnValue === "1") {
                       console.log("refreshing");
-                      location.reload();
+                      // location.reload();
                       modal.removeEventListener("close", handleClose);
                     }
                   };
@@ -141,19 +159,20 @@ function Profile() {
             <Loading />
           </section>
         )}
-        {!isLoading && appState.isFarmer() && (
+        {appState.isFarmer() && (
           <section className="min-h-[40vh] mt-[10vh] mb-[8vh] w-[100%]">
             <h1 className="mb-5 mx-20">Your Farm</h1>
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 w-[80vw] mx-20 ">
-              {images.map((e, i) => {
-                return (
-                  <img
-                    className="w-full rounded-md hover:scale-[1.025] transition-all duration-500 h-[35vh] object-cover"
-                    key={i + e}
-                    src={e}
-                  />
-                );
-              })}
+              {user &&
+                user.images.map((e, i) => {
+                  return (
+                    <img
+                      className="w-full rounded-md hover:scale-[1.025] transition-all duration-500 h-[35vh] object-cover"
+                      key={i + e}
+                      src={e}
+                    />
+                  );
+                })}
               <div
                 onClick={() => {
                   fileInputRef.current.click();

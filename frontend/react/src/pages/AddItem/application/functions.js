@@ -7,7 +7,7 @@ import storage from "../../../main";
 
 /**
  *  Uploads a file to Firebase Storage
- * @param {string} file
+ * @param {File} file
  * @returns {Promise<string?>} url
  */
 export async function handleUpload(file) {

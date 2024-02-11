@@ -40,7 +40,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         </Suspense>
         <ToastContainer theme="dark" autoClose={1500} />
         {/* ! USE FOR DEV MODE ONLY */}
-        {/* <ReactQueryDevtools initialIsOpen={true} /> */}
+        <ReactQueryDevtools initialIsOpen={true} />
       </main>
     </GoogleOAuthProvider>
   </QueryClientProvider>,

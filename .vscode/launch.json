@@ -12,7 +12,7 @@
       "cwd": "${workspaceFolder}/frontend/react/src/"
     },
     {
-      "type": "chrome",
+      "type": "msedge",
       "request": "launch",
       "name": "React: Debug FreshNest",
       "url": "http://localhost:5173",

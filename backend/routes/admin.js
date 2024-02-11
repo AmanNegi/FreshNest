@@ -31,17 +31,15 @@ router.post("/deleteItem", async (req, res) => {
   }
 
   const user = await User.findOne({ _id: adminId });
-  console.log(user);
 
   // When mongoose deletes an item it returns it as well
 
-  let deletedItem = await MilletItem.findOne({_id: itemId});
-  console.log(deletedItem.listedBy.toString(), adminId);
+  let deletedItem = await MilletItem.findOne({ _id: itemId });
 
-  if (deletedItem.listedBy.toString() !== adminId) {
-    if (user.userType !== "admin") {
-      return res.status(404).send(getErrorResponse("You are not an Admin"));
-    }
+  if (
+    user.userType !== "admin" &&
+    deletedItem.listedBy.toString() !== adminId
+  ) {
     return res
       .status(404)
       .send(getErrorResponse("You are not the owner of the item"));

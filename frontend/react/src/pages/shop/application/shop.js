@@ -105,7 +105,7 @@ export async function getAllFarmerItems() {
   const id = appState.getUserData()._id;
 
   const res = await axios.get(
-    `${import.meta.env.VITE_API_URL}/list/getAll/${id}`,
+    `${import.meta.env.VITE_API_URL}/list/getAll/${id}`
   );
 
   return res.data.data;
@@ -119,7 +119,7 @@ export async function getAllFarmerItems() {
 export async function getItem(id) {
   try {
     const res = await axios.get(
-      import.meta.env.VITE_API_URL + "/list/getItem/" + id,
+      import.meta.env.VITE_API_URL + "/list/getItem/" + id
     );
     return res.data.data;
   } catch (e) {
@@ -148,7 +148,7 @@ export async function addComment(comment) {
         name: appState.getUserData().name,
         content: comment.comment,
         commentAt: Date.now(),
-      },
+      }
     );
 
     toast.success("Comment added successfully!");
@@ -164,28 +164,33 @@ export async function addComment(comment) {
  * Delete an item from the database.
  * @param {string} itemId - The ID of the item to delete.
  * @param {string} listedBy - The ID of the user who listed the item.
- * @returns {Promise<number>}  A status code indicating success or failure.
+ * @returns {Promise<Object>}  A status code indicating success or failure.
  */
 export async function deleteItem(itemId, listedBy) {
-  if (!appState.isOwner(listedBy)) {
-    if (appState.getUserData().userType != "admin") {
-      toast.error("You must be an admin to delete an item");
+  if (appState.isAdmin() || appState.isOwner(listedBy)) {
+    const res = await axios.post(
+      import.meta.env.VITE_API_URL + "/admin/deleteItem",
+      {
+        adminId: appState.getUserData()._id,
+        itemId: itemId,
+      }
+    );
+
+    console.log(res);
+    if (res.data.statusCode == 200) {
+      toast.success(res.data.message);
+      return res.data.data;
+    } else {
+      toast.error(res.data.message);
       return 0;
     }
+  }
+  if (appState.getUserData().userType != "admin") {
+    toast.error("You must be an admin to delete an item");
+  }
+  if (!appState.isOwner(listedBy)) {
     toast.error("You are not the owner of the item");
-    return 0;
-  }
-  const res = await axios.post(
-    import.meta.env.VITE_API_URL + "/admin/deleteItem",
-    {
-      adminId: appState.getUserData()._id,
-      itemId: itemId,
-    },
-  );
-
-  if (res.data.statusCode == 200) {
-    toast.success(res.data.message);
   }
 
-  return 1;
+  return 0;
 }

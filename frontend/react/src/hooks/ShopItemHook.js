@@ -4,6 +4,14 @@ import {
   removeFromCart,
   updateCartCount,
 } from "../pages/Cart/application/cart";
+import { toast } from "react-toastify";
+
+/**
+ *
+ * Hook that extracts away complexity from the ShopItem component
+ * @param {string} itemId
+ * @returns
+ */
 
 export default function useShopItemMutations(itemId) {
   const queryClient = useQueryClient();
@@ -37,9 +45,8 @@ export default function useShopItemMutations(itemId) {
   const deleteItemMutation = useMutation({
     mutationFn: () => deleteItem(itemId),
     onError: (e) => {
-      console.log(e);
-      toast.error("An error occured while deleting the item!");
-      queryClient.invalidateQueries("items");
+      console.log("Error is ", e);
+      toast.error(e.message);
     },
     onSuccess: (e) => {
       console.log("Success", e);
