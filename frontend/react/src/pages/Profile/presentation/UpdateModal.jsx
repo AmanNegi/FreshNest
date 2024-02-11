@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { toast } from "react-toastify";
 import _ from "lodash";
-import updateUser from "../application/profile";
+import useProfileMutations from "../../../hooks/ProfileHook";
 
 const UpdateModal = ({ user }) => {
+  const { updateUserMutation } = useProfileMutations();
   const [data, setData] = useState({
     name: user.name,
     email: user.email,
@@ -28,6 +29,7 @@ const UpdateModal = ({ user }) => {
           <label htmlFor="input">Email</label>
           <input
             name="email"
+            disabled
             onChange={handleFieldChange}
             type="email"
             value={data.email}
@@ -38,6 +40,7 @@ const UpdateModal = ({ user }) => {
           <label htmlFor="input">Phone</label>
           <input
             name="phone"
+            disabled
             onChange={handleFieldChange}
             value={data.phone}
             type="phone"
@@ -54,9 +57,7 @@ const UpdateModal = ({ user }) => {
           </button>
           <button
             className="btn btn-accent text-white"
-            onClick={() => {
-              validateFields();
-            }}
+            onClick={validateFields}
           >
             Update Details
           </button>
@@ -94,7 +95,7 @@ const UpdateModal = ({ user }) => {
 
     const modal = document.getElementById("my_modal_1");
     if (_.isEmpty(errors)) {
-      await updateUser(data);
+      updateUserMutation.mutate(data);
       modal.returnValue = 1;
     } else {
       let message = "";

@@ -17,7 +17,7 @@ import { useQuery } from "@tanstack/react-query";
 import ShimmerShopItem from "./ShimmerShopItem";
 import { toast } from "react-toastify";
 
-import useShopItemMutations from "../hooks/ShopItemHooks";
+import useShopItemMutations from "../hooks/ShopItemHook";
 
 /**
  *
@@ -132,13 +132,13 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
                 }}
                 className={cn(
                   "h-[40px] z-10 absolute right-2 bottom-2 flex items-center justify-center transition-all duration-500 rounded-md ",
-                  `border-2 border-accentColor bg-accentColor bg-opacity-5`,
+                  `border-2 border-accentColor bg-accentColor bg-opacity-5`
                 )}
               >
                 <p
                   className={cn(
                     "px-4 py-2 text-lg font-bold ",
-                    `text-accentColor`,
+                    `text-accentColor`
                   )}
                 >
                   ADD
@@ -156,28 +156,23 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
               <div className="absolute bottom-2 right-2 w-full gap-3 flex flex-row">
                 <div className="flex-grow"></div>
                 <button
-                  onClick={async () => {
+                  onClick={async (e) => {
                     e.stopPropagation();
                     if (isCart) {
                       deleteItemFromCartMutation.mutate();
                       return;
-                      // return removeFromCart(itemId);
                     }
                     deleteItemMutation.mutate();
-                    // await deleteItem(itemId, item.listedBy);
-                    // if (onDelete) {
-                    //   onDelete(item);
-                    // }
                   }}
                   className={cn(
                     "h-[40px] flex items-center justify-center transition-all duration-500 border-2 rounded-md bg-opacity-10 hover:bg-opacity-100",
-                    `border-errorColor bg-errorColor`,
+                    `border-errorColor bg-errorColor`
                   )}
                 >
                   <p
                     className={cn(
                       "px-4 py-2 text-lg font-bold hover:text-white transition-all duration-500",
-                      `text-errorColor`,
+                      `text-errorColor`
                     )}
                   >
                     <BsFillTrash3Fill />

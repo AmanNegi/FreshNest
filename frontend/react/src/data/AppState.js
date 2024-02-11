@@ -44,7 +44,7 @@ class AppState {
     this.isLoggedIn = isLoggedIn;
     localStorage.setItem(
       APP_STATE_KEY,
-      JSON.stringify({ userData, isLoggedIn }),
+      JSON.stringify({ userData, isLoggedIn })
     );
   }
 
@@ -69,7 +69,7 @@ class AppState {
 
   /**
    * Get the user data.
-   * @returns {User}
+   * @returns {Object}
    */
   getUserData() {
     return { ...this.userData };

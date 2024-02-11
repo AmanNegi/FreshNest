@@ -9,23 +9,31 @@ import { handleUpload } from "../../AddItem/application/functions";
  * @param {string} body.name
  * @param {string} body.email
  * @param {string} body.phone
+ * @returns {Promise<User|undefined>} The user's updated profile
  */
 export default async function updateUser(body) {
   const res = await axios.post(
     import.meta.env.VITE_API_URL + "/profile/updateUser",
-    { ...body, _id: appState.getUserData()._id },
+    { ...body, _id: appState.getUserData()._id }
   );
 
   console.log(res);
   if (res.status !== 200) {
     toast.error(
-      "An error occurred while updating your profile. Please try again later.",
+      "An error occurred while updating your profile. Please try again later."
     );
+    throw new Error("An error occurred while updating your profile");
   } else {
     appState.setUserData(res.data.data);
+    return res.data.data;
   }
 }
 
+/**
+ * Add's Image to Farmers Profile
+ * @param {File} image
+ * @returns {Promise<string>} The URL of the uploaded image
+ */
 export async function addFarmImage(image) {
   toast.info("Uploading image...");
   const imageUrl = await handleUpload(image);
@@ -39,28 +47,30 @@ export async function addFarmImage(image) {
     import.meta.env.VITE_API_URL +
     `/auth/addImage/${appState.getUserData()._id}`;
 
-  // To make the process fast we don't wait for the response
-  axios.post(url, { image: imageUrl });
+  await axios.post(url, { image: imageUrl });
   return imageUrl;
 }
 
 /**
  * Makes request to backend to get the user's profile
- * @returns {Promise<string[]>} The user's profile
+ * @returns {Promise<User>} The user's profile
  */
-export async function getFarmerImages() {
+export async function getUser() {
   if (!appState.isUserLoggedIn()) {
     toast.error("You must be logged in to view your profile");
     return [];
   }
 
   const res = await axios.get(
-    import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`,
+    import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`
   );
 
   console.log(res);
   if (res.status === 200) {
-    return res.data.data.images;
+    appState.setUserData(res.data.data);
+    return res.data.data;
   }
-  return [];
+
+  appState.logOutUser();
+  return undefined;
 }
