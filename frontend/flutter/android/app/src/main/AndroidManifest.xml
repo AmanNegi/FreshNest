@@ -2,12 +2,20 @@
     package="com.example.fresh_nest">
 
     <uses-permission android:name="android.permission.INTERNET"/>
-    
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
    <application
         android:label="FreshNest"
         android:name="${applicationName}"
         android:icon="@mipmap/launcher_icon">
-        <activity
+
+       <!-- TODO: Remove the key -->
+       <meta-data android:name="com.google.android.geo.API_KEY"
+           android:value="AIzaSyCzbA0Tu3DbZpNNofIKLuaJB-wLEH8YRWc"/>
+
+
+       <activity
             android:name=".MainActivity"
             android:exported="true"
             android:launchMode="singleTop"

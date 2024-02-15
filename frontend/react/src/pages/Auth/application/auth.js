@@ -35,7 +35,7 @@ export default async function login(email, password) {
  * @returns {Promise<Object>} A Promise that resolves with the user account data.
  */
 export async function signUp(data) {
-  const { name, email, password, userType, phone } = data;
+  const { name, email, password, userType, phone, latitude, longitude } = data;
 
   const res = await axios.post(import.meta.env.VITE_API_URL + "/auth/signup", {
     name: name,
@@ -43,6 +43,10 @@ export async function signUp(data) {
     password: password,
     userType: userType,
     phone: phone,
+    location: {
+      type: "Point",
+      coordinates: [latitude, longitude],
+    },
   });
 
   console.log(res);
@@ -66,7 +70,7 @@ export async function gSignUp(name, email) {
     {
       name: name,
       email: email.toLowerCase(),
-    },
+    }
   );
 
   console.log(res);

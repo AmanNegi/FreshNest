@@ -22,12 +22,14 @@ class ItemFullView extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
       ),
-      body: Center(
-        child: Image.network(
-          src,
-          height: 0.5 * getHeight(context),
-          fit: BoxFit.contain,
-          width: double.infinity,
+      body: InteractiveViewer(
+        child: Center(
+          child: Image.network(
+            src,
+            // height: 0.5 * getHeight(context),
+            fit: BoxFit.cover,
+            width: double.infinity,
+          ),
         ),
       ),
     );

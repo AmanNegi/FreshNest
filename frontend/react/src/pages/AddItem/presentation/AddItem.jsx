@@ -17,46 +17,7 @@ const AddItem = () => {
     description: "",
     file: "",
     price: "",
-    latitude: "",
-    longitude: "",
   });
-
-  useEffect(() => {
-    function success(pos) {
-      var crd = pos.coords;
-      console.log("Your current position is:");
-      console.log(`Latitude : ${crd.latitude}`);
-      console.log(`Longitude: ${crd.longitude}`);
-
-      setData({ ...data, latitude: crd.latitude, longitude: crd.longitude });
-    }
-
-    function errors(err) {
-      console.warn(`ERROR(${err.code}): ${err.message}`);
-    }
-
-    var options = {
-      enableHighAccuracy: true,
-      timeout: 5000,
-      maximumAge: 0,
-    };
-    if (navigator.geolocation) {
-      navigator.permissions
-        .query({ name: "geolocation" })
-        .then(function (result) {
-          console.log(result);
-          if (result.state === "granted") {
-            navigator.geolocation.getCurrentPosition(success, errors, options);
-          } else if (result.state === "prompt") {
-            navigator.geolocation.getCurrentPosition(success, errors, options);
-          } else if (result.state === "denied") {
-            toast.error("Please grant the location permission to continue");
-          }
-        });
-    } else {
-      console.log("Geolocation is not supported by this browser.");
-    }
-  }, []);
 
   /**
    * Update state on input change
@@ -105,11 +66,6 @@ const AddItem = () => {
       return;
     }
 
-    if (data.longitude === "" || data.latitude === "") {
-      toast.error("Location not found, try again!");
-      return;
-    }
-
     setIsLoading(true);
 
     const newData = {
@@ -118,8 +74,6 @@ const AddItem = () => {
       description: data.description,
       price: data.price,
       file: data.file,
-      latitude: data.latitude,
-      longitude: data.longitude,
     };
     console.log(newData);
     const res = await addItem(newData);
@@ -138,14 +92,6 @@ const AddItem = () => {
     <main className={isLoading ? "pointer-events-none" : ""}>
       <section className="h-[100vh] w-full mt-[8vh] py-14 px-14 md:px-40">
         <h1>Add Item</h1>
-        <div className="flex flex-row gap-2 mb-4">
-          <div className="mt-4 badge badge-ghost p-4">
-            Latitude: {data.latitude}
-          </div>
-          <div className="mt-4 badge badge-ghost p-4">
-            Longitude: {data.longitude}
-          </div>
-        </div>
 
         <form className="flex flex-col items-start" onSubmit={handleSubmit}>
           <label htmlFor="name">Product Name</label>

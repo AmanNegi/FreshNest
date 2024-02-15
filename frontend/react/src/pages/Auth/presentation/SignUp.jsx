@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import { BiHide, BiShow } from "react-icons/bi";
 
 import { signUp } from "../application/auth";
 import appState from "../../../data/AppState";
@@ -26,6 +25,7 @@ function SignUp() {
   });
 
   useEffect(() => {
+    getLocation(setData, data);
     if (appState.isUserLoggedIn()) {
       navigate("/shop");
       toast("Logged in as " + appState.getUserData().name);
@@ -33,13 +33,29 @@ function SignUp() {
   }, []);
 
   const handleSignUp = async () => {
+    console.log(data);
+
     if (data.email.length === 0) {
-      toast.error("Enter your email to sign up 😥");
+      toast.error("Enter your email to sign up");
       return;
     }
 
     if (data.password.length === 0) {
-      toast.error("Enter your password to sign up 😥");
+      toast.error("Enter your password to sign up");
+      return;
+    }
+
+    if (data.userType.length === 0) {
+      toast.error("Select your user type to register");
+      return;
+    }
+
+    if (data.phone.length < 10) {
+      toast.error("Enter a correct phone number to continue");
+      return;
+    }
+    if (data.longitude === "" || data.latitude === "") {
+      toast.error("Unable to get your location, try reloading the page or providing access.");
       return;
     }
 
@@ -51,7 +67,7 @@ function SignUp() {
         navigate("/home");
       }
     } catch (error) {
-      toast.error("Sign-up failed. Please try again. 😥");
+      toast.error("Sign-up failed. Please try again.");
     } finally {
       setLoading(false);
     }
@@ -161,3 +177,44 @@ function SignUp() {
 }
 
 export default SignUp;
+
+/**
+ * A function to get the current location of the user.
+ * @param {function} setData
+ */
+const getLocation = (setData, data) => {
+  function success(pos) {
+    var crd = pos.coords;
+    console.log("Your current position is:");
+    console.log(`Latitude : ${crd.latitude}`);
+    console.log(`Longitude: ${crd.longitude}`);
+
+    setData({ ...data, latitude: crd.latitude, longitude: crd.longitude });
+  }
+
+  function errors(err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`);
+  }
+
+  var options = {
+    enableHighAccuracy: true,
+    timeout: 5000,
+    maximumAge: 0,
+  };
+  if (navigator.geolocation) {
+    navigator.permissions
+      .query({ name: "geolocation" })
+      .then(function (result) {
+        console.log(result);
+        if (result.state === "granted") {
+          navigator.geolocation.getCurrentPosition(success, errors, options);
+        } else if (result.state === "prompt") {
+          navigator.geolocation.getCurrentPosition(success, errors, options);
+        } else if (result.state === "denied") {
+          toast.error("Please grant the location permission to continue");
+        }
+      });
+  } else {
+    console.log("Geolocation is not supported by this browser.");
+  }
+};

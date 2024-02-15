@@ -50,7 +50,7 @@ export async function handleUpload(file) {
  */
 
 export async function addItem(data) {
-  const { listedBy, name, description, price, file, latitude, longitude } =
+  const { listedBy, name, description, price, file} =
     data;
 
   try {
@@ -65,11 +65,7 @@ export async function addItem(data) {
         images: [img],
         price: price,
         comments: [],
-        location: {
-          type: "Point",
-          coordinates: [latitude, longitude],
-        },
-      },
+      }
     );
 
     console.log(res);

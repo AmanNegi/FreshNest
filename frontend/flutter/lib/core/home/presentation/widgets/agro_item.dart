@@ -157,7 +157,7 @@ class AgroItem extends StatelessWidget {
                     width: 40,
                     height: 40,
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Colors.red.shade200,
                       boxShadow: [
                         BoxShadow(
                           color: Colors.black.withOpacity(0.05),
@@ -170,7 +170,7 @@ class AgroItem extends StatelessWidget {
                     ),
                     child: const Icon(
                       MdiIcons.delete,
-                      color: Colors.red,
+                      color: Colors.white,
                     ),
                   ),
                 ),

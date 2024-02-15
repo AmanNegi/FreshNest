@@ -38,6 +38,17 @@ const userSchema = new mongoose.Schema({
     type: [String],
     default: [],
   },
+  location: {
+    type: {
+      type: String,
+      enum: ["Point"],
+      default: "Point",
+    },
+    coordinates: {
+      type: [Number],
+      required: true,
+    },
+  },
 });
 
 const User = mongoose.model("User", userSchema);
@@ -48,6 +59,12 @@ function validateUser(user) {
     email: Joi.string().required().email(),
     password: Joi.string().required(),
     phone: Joi.string().required(),
+    location: Joi.object()
+      .keys({
+        type: Joi.string().valid("Point").default("Point"),
+        coordinates: Joi.array().items(Joi.number()).required(),
+      })
+      .required(),
   });
   return schema.validate(user);
 }

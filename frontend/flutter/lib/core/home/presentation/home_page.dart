@@ -3,12 +3,14 @@ import 'package:fresh_nest/core/home/application/home_provider.dart';
 import 'package:fresh_nest/core/home/presentation/add_item/add_item.dart';
 import 'package:fresh_nest/core/home/presentation/widgets/agro_grid_view.dart';
 import 'package:fresh_nest/core/home/presentation/widgets/drawer.dart';
+import 'package:fresh_nest/core/map/presentation/map_view.dart';
 import 'package:fresh_nest/core/search/presentation/search_page.dart';
 import 'package:fresh_nest/data/cache/app_cache.dart';
 import 'package:fresh_nest/globals.dart';
 import 'package:fresh_nest/widgets/text/large_text.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+
 class HomePage extends ConsumerStatefulWidget {
   const HomePage({super.key});
 
@@ -46,15 +48,20 @@ class _HomePageState extends ConsumerState<HomePage> {
               onPressed: () {
                 goToPage(context, const SearchPage());
               },
+            ),
+          if (appCache.isCustomer())
+            IconButton(
+              onPressed: () {
+                goToPage(context, const MapViewPage());
+              },
+              icon: const Icon(Icons.map),
             )
         ],
       ),
       body: RefreshIndicator(
         onRefresh: () async {
           _getHeading();
-          AgroGridView(
-              list: ref.watch(homeProvider).getItems());
-
+          AgroGridView(list: ref.watch(homeProvider).getItems());
         },
         child: ListView(
           children: [
@@ -69,10 +76,12 @@ class _HomePageState extends ConsumerState<HomePage> {
   }
 
   Builder _getFloatingActionButton() {
+    print(appCache.isLoggedIn());
+    print(appCache.isFarmer());
+    
     return Builder(
       builder: (context) {
-        if (appCache.isLoggedIn() &&
-            (appCache.isAdmin() || appCache.isFarmer())) {
+        if (appCache.isLoggedIn() && appCache.isFarmer()) {
           return FloatingActionButton(
             onPressed: () async {
               _homeManager.dispose();
@@ -91,7 +100,7 @@ class _HomePageState extends ConsumerState<HomePage> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       child: Builder(
-        builder: (context ) {
+        builder: (context) {
           if (appCache.isFarmer()) {
             return const LargeText("Your Products");
           } else if (appCache.isAdmin()) {

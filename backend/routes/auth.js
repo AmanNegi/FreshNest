@@ -58,13 +58,7 @@ router.post("/signup", async (req, res) => {
   /// NOTE: asterjoules@gmail.com is an admin email
   if (req.body.email === "asterjoules@gmail.com") userType = "admin";
 
-  user = new User({
-    email: req.body.email,
-    name: req.body.name,
-    password: req.body.password,
-    userType: userType,
-    phone: req.body.phone,
-  });
+  user = new User(req.body);
 
   await user.save();
   return res.send(
@@ -102,7 +96,6 @@ router.post("/saveGLogin", async (req, res) => {
     userType = "admin";
   }
   const email = req.body.email;
-
 
   // By default email is the password itself
   user = new User({
@@ -216,6 +209,12 @@ function validateSignUp(req) {
     password: Joi.string().required(),
     phone: Joi.string().required(),
     userType: Joi.string().default("customer"),
+    location: Joi.object()
+      .keys({
+        type: Joi.string().valid("Point").default("Point"),
+        coordinates: Joi.array().items(Joi.number()).required(),
+      })
+      .required(),
   });
   return schema.validate(req);
 }

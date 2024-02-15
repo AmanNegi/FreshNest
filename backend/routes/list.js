@@ -4,6 +4,23 @@ const { getErrorResponse, getSuccessResponse } = require("../utils/response");
 const { MilletItem, validateMilletItem } = require("../models/millet_item");
 const { Comment, validateComment } = require("../models/comment");
 const mongoose = require("mongoose");
+const { User } = require("../models/user");
+const _ = require("lodash");
+
+/**
+ * Get all farms
+ */
+router.get("/getFarms", async (req, res) => {
+  const farms = await User.find(
+    { userType: "farmer" },
+    {
+      password: 0,
+      __v: 0,
+    }
+  );
+
+  return res.send(getSuccessResponse("Success!", farms));
+});
 
 /**
  * Get 5 recent millet items
@@ -13,6 +30,7 @@ router.get("/getRecent", async (req, res) => {
 
   return res.send(getSuccessResponse("Success!", items));
 });
+
 /**
  * Get all millet items
  */
