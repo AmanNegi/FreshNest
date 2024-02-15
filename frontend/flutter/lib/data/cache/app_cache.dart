@@ -1,12 +1,14 @@
 import 'package:fresh_nest/data/auth_state_repository.dart';
 import 'package:flutter/material.dart';
+import 'package:fresh_nest/models/user.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 ValueNotifier<AppState> appState = ValueNotifier(AppState.initial());
 
 class AppCache {
   final String _prefsKey = "fresh_nest";
+  LatLng? currentLocation;
 
   getDataFromDevice() async {
     var sharedPreferences = await SharedPreferences.getInstance();

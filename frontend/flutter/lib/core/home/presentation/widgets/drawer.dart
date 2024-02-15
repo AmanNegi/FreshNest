@@ -20,6 +20,9 @@ class _AgroDrawerState extends State<AgroDrawer> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.zero,
+      ),
       child: Column(
         children: [
           UserAccountsDrawerHeader(

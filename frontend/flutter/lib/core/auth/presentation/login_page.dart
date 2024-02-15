@@ -24,8 +24,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   void initState() {
     _authManager = AuthManager(context, ref);
     super.initState();
-    // _authManager.loginUsingEmailPassword(
-    //     email: "asterjoules@gmail.com", password: "~");
   }
 
   @override
@@ -80,6 +78,16 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ActionButton(
             isFilled: false,
             onPressed: () async {
+              if (email.trim().isEmpty) {
+                showToast("Enter a valid email");
+                return;
+              }
+
+              if (password.trim().isEmpty) {
+                showToast("Enter a valid password");
+                return;
+              }
+
               var res = await _authManager.loginUsingEmailPassword(
                 email: email.trim(),
                 password: password.trim(),
@@ -105,9 +113,9 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(
                     MdiIcons.google,
                     color: Colors.white,

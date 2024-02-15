@@ -20,29 +20,32 @@ class AuthManager {
     required String email,
     required String password,
   }) async {
-    ref.read(authProvider).clearUserData();
+    // ref.read(authProvider).clearUserData();
     isLoading.value = true;
-    var response = await http.post(
-      Uri.parse("$API_URL/auth/login"),
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: json.encode({
-        "email": email,
-        "password": password,
-      }),
-    );
-    isLoading.value = false;
-    Map<String, dynamic> data = json.decode(response.body);
+    try {
+      var response = await http.post(
+        Uri.parse("$API_URL/auth/login"),
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: json.encode({
+          "email": email,
+          "password": password,
+        }),
+      );
+      isLoading.value = false;
+      Map data = json.decode(response.body);
 
-    if (data["statusCode"] == 200) {
-      ref.read(authProvider).updateUserData(
-            User.fromMap(data["data"]),
-          );
-
-      return 1;
-    } else {
-      showToast(data["message"]);
+      if (data["statusCode"] == 200) {
+        ref.read(authProvider).updateUserData(User.fromMap(data["data"]));
+        return 1;
+      } else {
+        showToast(data["message"]);
+        return -1;
+      }
+    } catch (error) {
+      showToast("An error occurred!");
+      debugPrint(error.toString());
       return -1;
     }
   }

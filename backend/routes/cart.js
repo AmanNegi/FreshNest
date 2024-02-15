@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const { getSuccessResponse, getErrorResponse } = require("../utils/response");
-const { Cart, validateCart } = require("../models/cart");
+const { Cart } = require("../models/cart");
 const _ = require("lodash");
 const { mongoose } = require("mongoose");
 

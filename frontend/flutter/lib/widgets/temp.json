@@ -1,0 +1,51 @@
+{
+  "streakCount": 2,
+  "data": [
+    {
+      "_id": 1,
+      "datedAt": "2019-01-01",
+      "totalObjectives": 3,
+      "completedObjectives": 2,
+      "objectives": [
+        {
+          "id": 1,
+          "name": "Objective 1",
+          "status": "completed"
+        },
+        {
+          "id": 2,
+          "name": "Objective 2",
+          "status": "completed"
+        },
+        {
+          "id": 3,
+          "name": "Objective 3",
+          "status": "notcompleted"
+        }
+      ]
+    },
+    {
+      "_id": 2,
+      "datedAt": "2019-01-01",
+      "totalObjectives": 3,
+      "completedObjectives": 3,
+      "objectives": [
+        {
+          "id": 1,
+          "name": "Objective 1",
+          "status": "completed"
+        },
+        {
+          "id": 2,
+          "name": "Objective 2",
+          "status": "completed"
+        },
+        {
+          "id": 3,
+          "name": "Objective 3",
+          "status": "completed"
+        }
+      ]
+    }
+  ]
+}

@@ -32,17 +32,6 @@ const milletItemSchema = new mongoose.Schema({
       return new Date();
     },
   },
-  location: {
-    type: {
-      type: String,
-      enum: ["Point"],
-      default: "Point",
-    },
-    coordinates: {
-      type: [Number],
-      required: true,
-    },
-  },
   comments: [commentSchema],
 });
 
@@ -56,12 +45,6 @@ function validateMilletItem(item) {
     images: Joi.array().items(Joi.string().required()).required(),
     comments: Joi.array(),
     price: Joi.number().required(),
-    location: Joi.object()
-      .keys({
-        type: Joi.string().valid("Point").default("Point"),
-        coordinates: Joi.array().items(Joi.number()).required(),
-      })
-      .required(),
   });
   return schema.validate(item);
 }

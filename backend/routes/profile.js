@@ -16,6 +16,7 @@ const { default: mongoose } = require("mongoose");
  * @param {string} req.body._id - The user's ID.
  * @returns {Object} The updated user object.
  */
+
 router.post("/updateUser", async function (req, res) {
   const { email, name, phone, _id } = req.body;
 
