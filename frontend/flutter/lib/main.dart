@@ -1,4 +1,3 @@
-import 'package:fresh_nest/core/map/presentation/map_view.dart';
 import 'package:fresh_nest/data/cache/app_cache.dart';
 import 'package:easy_localization/easy_localization.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -45,7 +44,6 @@ class App extends StatelessWidget {
         useMaterial3: true,
         fontFamily: GoogleFonts.poppins().fontFamily,
       ),
-      // home: const MapViewPage(),
       home: const Splash(),
     );
   }

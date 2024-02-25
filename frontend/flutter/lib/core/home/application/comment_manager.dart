@@ -58,7 +58,7 @@ class CommentManager {
   }
 
   Future<void> addComment(String content) async {
-    var response = await http.post(
+    await http.post(
       Uri.parse("$API_URL/list/comment"),
       body: {
         "itemID": itemID,
@@ -78,7 +78,7 @@ class CommentManager {
     required List<String> images,
     required double price,
   }) async {
-    var response = await http.post(
+    await http.post(
       Uri.parse("$API_URL/list/addItem"),
       headers: {"content-type": "application/json"},
       body: json.encode(

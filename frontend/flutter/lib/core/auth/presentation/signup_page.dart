@@ -120,9 +120,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 color: Theme.of(context).primaryColor,
                 borderRadius: BorderRadius.circular(10.0),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
+                children: [
                   Icon(
                     MdiIcons.google,
                     color: Colors.white,

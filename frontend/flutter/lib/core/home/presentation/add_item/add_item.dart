@@ -77,8 +77,8 @@ class AddItemPageState extends State<AddItemPage> {
           Navigator.pop(context);
         }
       },
-      label: Row(
-        children: const [
+      label: const Row(
+        children: [
           Text("Continue"),
           SizedBox(width: 5),
           Icon(

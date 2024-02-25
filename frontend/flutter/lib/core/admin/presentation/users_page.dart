@@ -40,8 +40,8 @@ class _UsersPageState extends State<UsersPage> {
                           ],
                         ),
                       ),
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Spacer(),
                           Icon(
                             Icons.delete,

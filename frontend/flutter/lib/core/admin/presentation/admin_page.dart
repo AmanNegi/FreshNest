@@ -66,8 +66,8 @@ class _AdminPageState extends ConsumerState<AdminPage> {
                 Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 15.0, vertical: 15.0),
-                  child: Row(
-                    children: const [
+                  child:   const Row(
+                    children: [
                       Text(
                         "Recently addded ",
                         style: TextStyle(

@@ -1,6 +1,5 @@
 import 'package:fresh_nest/data/auth_state_repository.dart';
 import 'package:flutter/material.dart';
-import 'package:fresh_nest/models/user.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
