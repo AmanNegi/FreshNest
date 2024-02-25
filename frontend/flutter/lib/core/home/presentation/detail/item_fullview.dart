@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:fresh_nest/globals.dart';
 
 class ItemFullView extends StatelessWidget {
   final String src;

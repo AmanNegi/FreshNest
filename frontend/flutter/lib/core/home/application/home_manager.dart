@@ -98,7 +98,7 @@ Future<void> addItem({
   required List<String> images,
   required double price,
 }) async {
-  var response = await http.post(
+  await http.post(
     Uri.parse("$API_URL/list/addItem"),
     headers: {"content-type": "application/json"},
     body: json.encode(
@@ -139,7 +139,7 @@ Future<void> deleteItem(String id) async {
     ),
   );
 
-  print(response.body.toString());
+  debugPrint(response.body.toString());
   var data = json.decode(response.body);
   showToast(data["message"]);
 }

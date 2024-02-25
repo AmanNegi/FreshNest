@@ -68,7 +68,7 @@ class CartManager {
     required CartItem item,
   }) async {
     var userId = appState.value.user!.id;
-    var response = await http.post(
+    await http.post(
       Uri.parse("$API_URL/cart/add"),
       headers: {"content-type": "application/json"},
       body: json.encode(
@@ -87,7 +87,7 @@ class CartManager {
     required String itemId,
   }) async {
     var userId = appState.value.user!.id;
-    var response = await http.post(
+    await http.post(
       Uri.parse("$API_URL/cart/remove"),
       headers: {"content-type": "application/json"},
       body: json.encode(

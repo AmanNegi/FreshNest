@@ -54,8 +54,8 @@ class _ProductsPageState extends State<ProductsPage> {
                           ],
                         ),
                       ),
-                      child: Row(
-                        children: const [
+                      child: const Row(
+                        children: [
                           Spacer(),
                           Icon(
                             Icons.delete,
