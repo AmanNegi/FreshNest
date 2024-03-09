@@ -1,4 +1,3 @@
- 
 exports.BASE_URL = "http://localhost:3000";
 exports.GET_ALL_ITEMS = "/api/list/getAll";
 exports.GET_RECENT_ITEMS = "/api/list/getRecent";
