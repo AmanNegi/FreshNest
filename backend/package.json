@@ -1,13 +1,14 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "description": "",
-  "main": "app.js",
+  "description": "Backend for FreshNest",
+  "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
     "test": "mocha 'test/**/*spec.js' --reporter nyan",
-    "stest": "mocha --grep"
+    "stest": "mocha --grep",
+    "gen-docs": "node ./utils/swagger.js"
   },
   "devDependencies": {
     "chai": "^4.3.10",
@@ -19,13 +20,15 @@
     "eslint-plugin-promise": "^6.1.1",
     "mocha": "^10.2.0",
     "nodemon": "2.0.22",
-    "prettier": "3.2.5",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.0"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "and": "^0.0.3",
     "body-parser": "^1.20.2",
     "chai-http": "^4.4.0",
     "cors": "^2.8.5",
@@ -35,6 +38,7 @@
     "joi-objectid": "^4.0.2",
     "lodash": "^4.17.21",
     "mongoose": "^7.0.3",
+    "swagger-autogen": "^2.23.7",
     "winston": "^3.8.1"
   }
 }
