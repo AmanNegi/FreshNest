@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node index.js",
     "dev": "nodemon index.js",
+    "lint": "eslint .",
     "test": "mocha 'test/**/*spec.js' --reporter nyan",
     "stest": "mocha --grep",
     "gen-docs": "node ./utils/swagger.js"
