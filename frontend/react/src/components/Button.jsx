@@ -1,33 +1,33 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
-function NavigationButton({
-  text = "Button",
-  additionalClasses = "",
-  path = "/",
+function NavigationButton ({
+  text = 'Button',
+  additionalClasses = '',
+  path = '/'
 }) {
-  var navigate = useNavigate();
+  const navigate = useNavigate()
   return (
     <button
       className="btn btn-accent text-white font-light"
       onClick={() => {
-        navigate(path);
+        navigate(path)
       }}
     >
       {text}
     </button>
-  );
+  )
 }
 
-export function ClickActionButton({
-  text = "Button",
-  additionalClasses = "",
-  onClick,
+export function ClickActionButton ({
+  text = 'Button',
+  additionalClasses = '',
+  onClick
 }) {
   return (
     <button className="btn btn-accent text-white font-light" onClick={onClick}>
       {text}
     </button>
-  );
+  )
 }
 
-export default NavigationButton;
+export default NavigationButton

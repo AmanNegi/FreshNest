@@ -1,21 +1,20 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { motion } from "framer-motion";
+import { useEffect } from 'react'
+import { useNavigate } from 'react-router-dom'
+import { motion } from 'framer-motion'
 
-import NavigationButton from "../../../components/Button";
+import NavigationButton from '../../../components/Button'
 
-import { data, features } from "../../../data/data";
-import { getFourItems } from "../../shop/application/shop";
-import { Item } from "../../shop/application/shop_model";
+import { data, features } from '../../../data/data'
+import { getFourItems } from '../../shop/application/shop'
 
-import landing_bg from "../../../assets/landing_bg.jpg";
-import explore_image from "../../../assets/explore.png";
-import { useQuery } from "@tanstack/react-query";
+import landingBg from '../../../assets/landing_bg.jpg'
+import exploreImage from '../../../assets/explore.png'
+import { useQuery } from '@tanstack/react-query'
 
-function Home() {
+function Home () {
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, []);
+    window.scrollTo(0, 0)
+  }, [])
 
   return (
     <>
@@ -61,7 +60,7 @@ function Home() {
                       </p>
                     </motion.div>
                   </motion.div>
-                );
+                )
               })}
             </div>
           </div>
@@ -70,7 +69,7 @@ function Home() {
         <section
           className="bg-cover bg-right bg-fixed relative"
           style={{
-            backgroundImage: `url(${landing_bg})`,
+            backgroundImage: `url(${landingBg})`
           }}
         >
           <div className="overlay absolute inset-0 bg-black opacity-50"></div>
@@ -86,14 +85,14 @@ function Home() {
         </section>
       </main>
     </>
-  );
+  )
 }
 
-function TopSection() {
+function TopSection () {
   return (
     <section
       className="relative h-[92vh] w-[100%] bg-slate-200 bg-cover bg-right bg-fixed"
-      style={{ backgroundImage: `url(${landing_bg})` }}
+      style={{ backgroundImage: `url(${landingBg})` }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-[#00000065] to-[#000000ac]"></div>
 
@@ -128,10 +127,10 @@ function TopSection() {
         </motion.div>
       </div>
     </section>
-  );
+  )
 }
 
-function OurMottoSection() {
+function OurMottoSection () {
   return (
     <motion.section
       transition={{ duration: 1.25 }}
@@ -159,33 +158,32 @@ function OurMottoSection() {
                   <p className="text-lg">{e.name}</p>
                 </div>
               </motion.div>
-            );
+            )
           })}
         </div>
       </div>
     </motion.section>
-  );
+  )
 }
 
-function ExploreProducts() {
+function ExploreProducts () {
   /**
    * @type {[Array<Item>, (e:Array<Item>)=>void]}
    */
   // const [products, setProducts] = useState([]);
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
   const {
     data: products,
     isLoading,
-    isError,
-    error,
+    isError
   } = useQuery({
-    queryKey: ["explore"],
-    queryFn: () => getFourItems(),
-  });
+    queryKey: ['explore'],
+    queryFn: () => getFourItems()
+  })
 
   if (isLoading || isError) {
-    return <></>;
+    return <></>
   }
 
   return (
@@ -201,7 +199,7 @@ function ExploreProducts() {
           >
             <img
               className="object-cover object-center h-full w-full"
-              src={explore_image}
+              src={exploreImage}
               alt=""
             />
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
@@ -246,13 +244,13 @@ function ExploreProducts() {
                   <h1 className="text-lg">{e.name}</h1>
                   <h2 className="font-bold">₹ {e.price}</h2>
                 </div>
-              );
+              )
             })}
           </motion.div>
         </div>
       </div>
     </section>
-  );
+  )
 }
 
-export default Home;
+export default Home

@@ -1,46 +1,47 @@
-import React from "react";
-import { GoogleLogin } from "@react-oauth/google";
-import jwtDecode from "jwt-decode";
-import { useNavigate } from "react-router-dom";
+import React from 'react'
+import { GoogleLogin } from '@react-oauth/google'
+import jwtDecode from 'jwt-decode'
+import { useNavigate } from 'react-router-dom'
 
-import appState from "../../../../data/AppState";
-import getCart from "../../../Cart/application/cart";
-import { gSignUp } from "../../application/auth";
+import appState from '../../../../data/AppState'
+import getCart from '../../../Cart/application/cart'
+import { gSignUp } from '../../application/auth'
+import { toast } from 'react-toastify'
 
 const GLoginButton = () => {
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   return (
     <GoogleLogin
       onSuccess={async (credentialResponse) => {
-        const data = jwtDecode(credentialResponse.credential);
-        console.log(data);
+        const data = jwtDecode(credentialResponse.credential)
+        console.log(data)
 
-        const { data: user, statusCode } = await gSignUp(data.name, data.email);
+        const { data: user, statusCode } = await gSignUp(data.name, data.email)
 
         // TODO: Save user to backend as well
 
         if (statusCode !== 200) {
-          toast.error("Error while logging in");
-          return;
+          toast.error('Error while logging in')
+          return
         }
         appState.saveUserData(
           {
             _id: user._id,
             name: data.name,
             email: data.email,
-            userType: "customer",
+            userType: 'customer'
           },
-          true,
-        );
-        await getCart();
-        navigate("/home");
+          true
+        )
+        await getCart()
+        navigate('/home')
       }}
       onError={() => {
-        console.log("Login Failed");
+        console.log('Login Failed')
       }}
     />
-  );
-};
+  )
+}
 
-export default GLoginButton;
+export default GLoginButton

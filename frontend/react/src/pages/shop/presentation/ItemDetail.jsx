@@ -1,66 +1,64 @@
-import { useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import Rating from "react-rating";
+import { useRef } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
+import Rating from 'react-rating'
 
-import { addComment, getItem } from "../application/shop";
-import ItemDetailShimmer from "./DetailShimmer";
-import ImageView from "../../../components/ImageView";
+import { addComment, getItem } from '../application/shop'
+import ItemDetailShimmer from './DetailShimmer'
+import ImageView from '../../../components/ImageView'
 
-import { Item } from "../application/shop_model";
-import { useRef } from "react";
-import { toast } from "react-toastify";
-import appState from "../../../data/AppState";
-import QueryError from "../../../components/QueryError";
+import { toast } from 'react-toastify'
+import appState from '../../../data/AppState'
+import QueryError from '../../../components/QueryError'
 
-import { AiFillStar, AiOutlineStar } from "react-icons/ai";
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
 
-function ItemDetail() {
-  const { id } = useParams();
+function ItemDetail () {
+  const { id } = useParams()
 
   /**
    * @type {[Item, function]}
    */
-  const [comment, setComment] = useState("");
-  const navigate = useNavigate();
-  const queryClient = useQueryClient();
-  const commentRef = useRef();
+  const navigate = useNavigate()
+  const queryClient = useQueryClient()
+  const commentRef = useRef()
 
   const {
     isLoading,
     isError,
     error,
-    data: item,
+    data: item
   } = useQuery({
-    queryKey: ["item", id],
-    queryFn: () => getItem(id),
-  });
+    queryKey: ['item', id],
+    queryFn: () => getItem(id)
+  })
 
   const mutation = useMutation({
     mutationFn: async () => {
       return addComment({
         comment: commentRef.current.value,
-        itemID: id,
-      });
+        itemID: id
+      })
     },
     onSuccess: (data) => {
       // Manually, update the cache as comment is added
-      queryClient.setQueryData(["item", id], (old) => {
-        return data;
-      });
-    },
-  });
+      queryClient.setQueryData(['item', id], (old) => {
+        return data
+      })
+    }
+  })
 
-  if (isLoading) return <ItemDetailShimmer />;
-  if (isError)
+  if (isLoading) return <ItemDetailShimmer />
+  if (isError) {
     return (
       <QueryError
         error={error}
         onClick={() => {
-          queryClient.invalidateQueries(["item", id]);
+          queryClient.invalidateQueries(['item', id])
         }}
       />
-    );
+    )
+  }
 
   return (
     <>
@@ -70,20 +68,20 @@ function ItemDetail() {
             <ImageView
               _id={item._id}
               url={item.images[0]}
-              shimmerClass={"min-h-[50vh] lg:w-[40vw]"}
+              shimmerClass={'min-h-[50vh] lg:w-[40vw]'}
               imageClass={
-                "h-40 object-cover min-h-[50vh] max-h-[70vh] h-[100%] w-[100%] lg:w-[40vw] bg-white border-slate-300 rounded-md border-2 p-4 border-dashed"
+                'h-40 object-cover min-h-[50vh] max-h-[70vh] h-[100%] w-[100%] lg:w-[40vw] bg-white border-slate-300 rounded-md border-2 p-4 border-dashed'
               }
             />
             <div className="flex flex-col pl-8 mt-5 lg:mt-0">
               <h1 className="pb-2 text-3xl font-bold">{item.name}</h1>
               <div className="flex flex-row items-end">
                 <h1 className="pb-5 mr-3 text-xl font-light text-gray-300 line-through">
-                  {"₹ " + (parseFloat(item.price) + 20)}
+                  {'₹ ' + (parseFloat(item.price) + 20)}
                 </h1>
 
                 <h1 className="pb-5 text-2xl font-bold text-accentColor">
-                  {"₹ " + item.price}
+                  {'₹ ' + item.price}
                 </h1>
               </div>
 
@@ -114,23 +112,24 @@ function ItemDetail() {
             className="px-5 h-[7vh] w-full md:w-auto mt-2 md:mt-0 text-white rounded-md bg-accentColor"
             onClick={async () => {
               if (!appState.isLoggedIn) {
-                navigate("/auth");
-                return;
+                navigate('/auth')
+                return
               }
 
               if (commentRef.current.value.length === 0) {
-                toast.error("Please enter a comment");
-                return;
+                toast.error('Please enter a comment')
+                return
               }
 
-              mutation.mutate();
+              mutation.mutate()
             }}
           >
             Comment
           </button>
         </div>
 
-        {item.comments.length > 0 ? (
+        {item.comments.length > 0
+          ? (
           <section className="px-5 mb-5 md:px-12 md:mb-12">
             {item.comments.map((comment) => (
               <div
@@ -147,12 +146,13 @@ function ItemDetail() {
               </div>
             ))}
           </section>
-        ) : (
+            )
+          : (
           <div className="h-5"></div>
-        )}
+            )}
       </main>
     </>
-  );
+  )
 }
 
-export default ItemDetail;
+export default ItemDetail

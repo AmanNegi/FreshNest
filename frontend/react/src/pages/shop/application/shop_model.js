@@ -13,7 +13,7 @@ export class Item {
    * @param {Date} listedAt - The date and time when the item was listed.
    * @param {Comment[]} comments - An array of comments on the item.
    */
-  constructor(
+  constructor (
     id,
     listedBy,
     name,
@@ -21,16 +21,16 @@ export class Item {
     images,
     price,
     listedAt,
-    comments,
+    comments
   ) {
-    this._id = id;
-    this.listedBy = listedBy;
-    this.name = name;
-    this.description = description;
-    this.images = images;
-    this.price = price;
-    this.listedAt = listedAt;
-    this.comments = comments;
+    this._id = id
+    this.listedBy = listedBy
+    this.name = name
+    this.description = description
+    this.images = images
+    this.price = price
+    this.listedAt = listedAt
+    this.comments = comments
   }
 }
 
@@ -46,11 +46,11 @@ export class Comment {
    * @param {Date} commentAt - The date and time when the comment was made.
    * @param {string} id - The ID of the comment.
    */
-  constructor(commentBy, name, content, commentAt, id) {
-    this.commentBy = commentBy;
-    this.name = name;
-    this.content = content;
-    this.commentAt = commentAt;
-    this._id = id;
+  constructor (commentBy, name, content, commentAt, id) {
+    this.commentBy = commentBy
+    this.name = name
+    this.content = content
+    this.commentAt = commentAt
+    this._id = id
   }
 }
