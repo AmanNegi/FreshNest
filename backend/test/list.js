@@ -1,32 +1,27 @@
-const chai = require("chai");
-const chaiHttp = require("chai-http");
-const logger = require("../utils/logger");
-const { app } = require("../index.js");
+const chai = require('chai')
+const chaiHttp = require('chai-http')
+const logger = require('../utils/logger')
+const { app } = require('../index.js')
 
-const {
-  BASE_URL,
-  GET_ALL_ITEMS,
-  GET_RECENT_ITEMS,
-  ADD_ITEM
-} = require('./test_util')
+const { GET_ALL_ITEMS } = require('./test_util')
 
 chai.use(chaiHttp)
 
-describe("Test List.js", function () {
-  describe("GET api/list/getAll", function () {
-    it("should return an array of items", function (done) {
+describe('Test List.js', function () {
+  describe('GET api/list/getAll', function () {
+    it('should return an array of items', function (done) {
       chai
         .request(app)
         .get(GET_ALL_ITEMS)
         .end(function (err, res) {
-          logger.info(res, err);
-          chai.expect(res).to.have.status(200);
-          chai.expect(res.body).to.have.property("data");
-          chai.expect(res.body.data).to.be.an("array");
-          done();
-        });
-    });
-  });
+          logger.info(res, err)
+          chai.expect(res).to.have.status(200)
+          chai.expect(res.body).to.have.property('data')
+          chai.expect(res.body.data).to.be.an('array')
+          done()
+        })
+    })
+  })
   // describe("GET api/list/getRecent", function () {
   //   it("should return the latest 5 items", function () {
   //     chai
@@ -95,6 +90,6 @@ describe("Test List.js", function () {
   //       });
   //   });
   // });
-});
+})
 
 exports.chai = chai

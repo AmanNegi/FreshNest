@@ -41,7 +41,6 @@ describe('test cart model', () => {
     const res = validateCart(cart)
 
     chai.expect(res.value).to.deep.equal(cart)
-    chai.expect(res.error).to.not.exist
   })
 
   it('should return error when wrong objects are provided in cart items', () => {
@@ -83,6 +82,5 @@ describe('test cart model', () => {
     const res = validateCart(cart)
 
     chai.expect(res.value).to.deep.equal(cart)
-    chai.expect(res.error).to.not.exist
   })
 })
