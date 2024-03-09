@@ -1,9 +1,9 @@
-import React from "react";
+import React from 'react'
 import {
   ShimmerThumbnail,
   ShimmerTitle,
-  ShimmerText,
-} from "react-shimmer-effects-18";
+  ShimmerText
+} from 'react-shimmer-effects-18'
 
 const ShimmerShopItem = ({ id }) => {
   return (
@@ -20,7 +20,7 @@ const ShimmerShopItem = ({ id }) => {
         <ShimmerText line={2} gap={10} />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ShimmerShopItem;
+export default ShimmerShopItem

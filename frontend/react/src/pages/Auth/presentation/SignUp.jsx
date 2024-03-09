@@ -1,77 +1,77 @@
-import { useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
-import { toast } from "react-toastify";
+import { useEffect, useState } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
+import { toast } from 'react-toastify'
 
-import { signUp } from "../application/auth";
-import appState from "../../../data/AppState";
-import getCart from "../../Cart/application/cart";
-import ButtonLoader from "../../../components/ButtonLoader";
-import GLoginButton from "./components/GLoginButton";
+import { signUp } from '../application/auth'
+import appState from '../../../data/AppState'
+import getCart from '../../Cart/application/cart'
+import ButtonLoader from '../../../components/ButtonLoader'
+import GLoginButton from './components/GLoginButton'
 
-import farm from "../../../assets/farm.jpg";
-import icon from "../../../assets/logo.png";
-import PasswordField from "./components/PasswordField";
+import farm from '../../../assets/farm.jpg'
+import icon from '../../../assets/logo.png'
+import PasswordField from './components/PasswordField'
 
-function SignUp() {
-  const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
+function SignUp () {
+  const [loading, setLoading] = useState(false)
+  const navigate = useNavigate()
 
   const [data, setData] = useState({
-    name: "",
-    email: "",
-    password: "",
-    userType: "",
-    phone: "",
-  });
+    name: '',
+    email: '',
+    password: '',
+    userType: '',
+    phone: ''
+  })
 
   useEffect(() => {
-    getLocation(setData, data);
+    getLocation(setData, data)
     if (appState.isUserLoggedIn()) {
-      navigate("/shop");
-      toast("Logged in as " + appState.getUserData().name);
+      navigate('/shop')
+      toast('Logged in as ' + appState.getUserData().name)
     }
-  }, []);
+  }, [])
 
   const handleSignUp = async () => {
-    console.log(data);
+    console.log(data)
 
     if (data.email.length === 0) {
-      toast.error("Enter your email to sign up");
-      return;
+      toast.error('Enter your email to sign up')
+      return
     }
 
     if (data.password.length === 0) {
-      toast.error("Enter your password to sign up");
-      return;
+      toast.error('Enter your password to sign up')
+      return
     }
 
     if (data.userType.length === 0) {
-      toast.error("Select your user type to register");
-      return;
+      toast.error('Select your user type to register')
+      return
     }
 
     if (data.phone.length < 10) {
-      toast.error("Enter a correct phone number to continue");
-      return;
+      toast.error('Enter a correct phone number to continue')
+      return
     }
-    if (data.longitude === "" || data.latitude === "") {
-      toast.error("Unable to get your location, try reloading the page or providing access.");
-      return;
+    if (data.longitude === '' || data.latitude === '') {
+      toast.error('Unable to get your location, try reloading the page or providing access.')
+      return
     }
 
     try {
-      setLoading(true);
-      const res = await signUp(data);
+      setLoading(true)
+      const res = await signUp(data)
       if (res.statusCode === 200) {
-        await getCart();
-        navigate("/home");
+        await getCart()
+        navigate('/home')
       }
     } catch (error) {
-      toast.error("Sign-up failed. Please try again.");
+      toast.error('Sign-up failed. Please try again.')
     } finally {
-      setLoading(false);
+      setLoading(false)
     }
-  };
+  }
 
   return (
     <>
@@ -144,17 +144,17 @@ function SignUp() {
             <button
               onClick={handleSignUp}
               className={`btn btn-primary flex-grow py-3 ${
-                loading ? "opacity-50 cursor-not-allowed" : ""
+                loading ? 'opacity-50 cursor-not-allowed' : ''
               }`}
               disabled={loading}
             >
-              {loading ? <ButtonLoader /> : "Sign Up"}
+              {loading ? <ButtonLoader /> : 'Sign Up'}
             </button>
             <GLoginButton />
           </div>
           <div className="mt-10">
             <p>
-              {"Already have an account? "}
+              {'Already have an account? '}
               <Link to="/" className="text-lightColor font-bold">
                 Login
               </Link>
@@ -167,54 +167,54 @@ function SignUp() {
         <img className="w-[100%] h-[100%] object-cover" src={farm} alt="" />
       </section>
     </>
-  );
+  )
 
-  function handleFieldChange(e) {
+  function handleFieldChange (e) {
     setData((prev) => {
-      return { ...prev, [e.target.name]: e.target.value };
-    });
+      return { ...prev, [e.target.name]: e.target.value }
+    })
   }
 }
 
-export default SignUp;
+export default SignUp
 
 /**
  * A function to get the current location of the user.
  * @param {function} setData
  */
 const getLocation = (setData, data) => {
-  function success(pos) {
-    var crd = pos.coords;
-    console.log("Your current position is:");
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
+  function success (pos) {
+    const crd = pos.coords
+    console.log('Your current position is:')
+    console.log(`Latitude : ${crd.latitude}`)
+    console.log(`Longitude: ${crd.longitude}`)
 
-    setData({ ...data, latitude: crd.latitude, longitude: crd.longitude });
+    setData({ ...data, latitude: crd.latitude, longitude: crd.longitude })
   }
 
-  function errors(err) {
-    console.warn(`ERROR(${err.code}): ${err.message}`);
+  function errors (err) {
+    console.warn(`ERROR(${err.code}): ${err.message}`)
   }
 
-  var options = {
+  const options = {
     enableHighAccuracy: true,
     timeout: 5000,
-    maximumAge: 0,
-  };
+    maximumAge: 0
+  }
   if (navigator.geolocation) {
     navigator.permissions
-      .query({ name: "geolocation" })
+      .query({ name: 'geolocation' })
       .then(function (result) {
-        console.log(result);
-        if (result.state === "granted") {
-          navigator.geolocation.getCurrentPosition(success, errors, options);
-        } else if (result.state === "prompt") {
-          navigator.geolocation.getCurrentPosition(success, errors, options);
-        } else if (result.state === "denied") {
-          toast.error("Please grant the location permission to continue");
+        console.log(result)
+        if (result.state === 'granted') {
+          navigator.geolocation.getCurrentPosition(success, errors, options)
+        } else if (result.state === 'prompt') {
+          navigator.geolocation.getCurrentPosition(success, errors, options)
+        } else if (result.state === 'denied') {
+          toast.error('Please grant the location permission to continue')
         }
-      });
+      })
   } else {
-    console.log("Geolocation is not supported by this browser.");
+    console.log('Geolocation is not supported by this browser.')
   }
-};
+}

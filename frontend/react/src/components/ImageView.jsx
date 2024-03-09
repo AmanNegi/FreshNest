@@ -1,14 +1,14 @@
-import React, { useState } from "react";
+import React, { useState } from 'react'
 
-import { ShimmerThumbnail } from "react-shimmer-effects-18";
+import { ShimmerThumbnail } from 'react-shimmer-effects-18'
 
 const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(true)
 
   return (
     <div id={_id}>
-      <div className={`overflow-hidden ${isLoading ? shimmerClass : ""} `}>
-        <div className={isLoading ? "block" : "hidden"}>
+      <div className={`overflow-hidden ${isLoading ? shimmerClass : ''} `}>
+        <div className={isLoading ? 'block' : 'hidden'}>
           <ShimmerThumbnail rounded height={400} />
         </div>
       </div>
@@ -16,18 +16,18 @@ const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
         <img
           className={
             `w-[100%] rounded-t-md object-contain transition-all ease-in-out duration-500 ${imageClass} ` +
-            (isLoading ? "hidden" : "block")
+            (isLoading ? 'hidden' : 'block')
           }
           src={url}
           alt=""
           onLoad={() => {
-            console.log("Image has loaded");
-            setIsLoading(false);
+            console.log('Image has loaded')
+            setIsLoading(false)
           }}
         />
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default ImageView;
+export default ImageView

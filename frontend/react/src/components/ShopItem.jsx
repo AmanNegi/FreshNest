@@ -1,23 +1,22 @@
-import { motion } from "framer-motion";
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import appState from "../data/AppState";
-import { addToCart, removeFromCart } from "../pages/Cart/application/cart";
-import { getItem } from "../pages/shop/application/shop";
-import TimeAgo from "react-timeago";
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import appState from '../data/AppState'
+import { addToCart, removeFromCart } from '../pages/Cart/application/cart'
+import { getItem } from '../pages/shop/application/shop'
+import TimeAgo from 'react-timeago'
 
-import { BsFillTrash3Fill } from "react-icons/bs";
-import { FaClockRotateLeft } from "react-icons/fa6";
+import { BsFillTrash3Fill } from 'react-icons/bs'
+import { FaClockRotateLeft } from 'react-icons/fa6'
 
-import { AiOutlineMinus, AiOutlinePlus } from "react-icons/ai";
-import ImageView from "./ImageView";
-import { cn } from "../utils/cn";
-import { Item } from "../pages/shop/application/shop_model";
-import { useQuery } from "@tanstack/react-query";
-import ShimmerShopItem from "./ShimmerShopItem";
-import { toast } from "react-toastify";
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import ImageView from './ImageView'
+import { cn } from '../utils/cn'
+import { useQuery } from '@tanstack/react-query'
+import ShimmerShopItem from './ShimmerShopItem'
+import { toast } from 'react-toastify'
 
-import useShopItemMutations from "../hooks/ShopItemHook";
+import useShopItemMutations from '../hooks/ShopItemHook'
 
 /**
  *
@@ -28,27 +27,27 @@ import useShopItemMutations from "../hooks/ShopItemHook";
  * @param {function(Item): void} props.onDelete
  * @returns {JSX.Element}
  */
-function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
-  /** @type {[number, function]}*/
-  const [count, setCount] = useState(itemCount);
+function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
+  /** @type {[number, function]} */
+  const [count, setCount] = useState(itemCount)
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const {
     isLoading,
     isError,
     data: item,
-    error,
+    error
   } = useQuery({
-    queryKey: ["item", itemId],
-    queryFn: () => getItem(itemId),
-  });
+    queryKey: ['item', itemId],
+    queryFn: () => getItem(itemId)
+  })
 
   const { deleteItemFromCartMutation, deleteItemMutation, updateCartMutation } =
-    useShopItemMutations(itemId);
+    useShopItemMutations(itemId)
 
   if (isLoading) {
-    return <ShimmerShopItem id={itemId} key={itemId} />;
+    return <ShimmerShopItem id={itemId} key={itemId} />
   }
 
   // If Item removed show this card
@@ -64,18 +63,18 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
           className="btn btn-error"
           onClick={async (e) => {
             if (isCart) {
-              e.stopPropagation();
-              await removeFromCart(itemId);
-              if (onDelete) onDelete();
+              e.stopPropagation()
+              await removeFromCart(itemId)
+              if (onDelete) onDelete()
             } else {
-              toast.error("An unforseeable error occured!");
+              toast.error('An unforseeable error occured!')
             }
           }}
         >
           Remove From Cart
         </button>
       </div>
-    );
+    )
   }
 
   return (
@@ -83,7 +82,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
       {
         <motion.div
           onClick={() => {
-            navigate("/item/" + item._id);
+            navigate('/item/' + item._id)
           }}
           key={item._id}
           initial={{ opacity: 0 }}
@@ -97,9 +96,9 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
               <ImageView
                 _id={item._id}
                 url={item.images[0]}
-                shimmerClass={"max-h-40 rounded-md"}
+                shimmerClass={'max-h-40 rounded-md'}
                 imageClass={
-                  "h-40 border-dashed border-2 border-lightBorderColor rounded-md px-2 py-2"
+                  'h-40 border-dashed border-2 border-lightBorderColor rounded-md px-2 py-2'
                 }
               />
             </div>
@@ -120,25 +119,25 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
             </h1>
 
             <p className="text-lg font-extrabold text-green-500">
-              {`₹ ` + item.price + "/kg"}
+              {'₹ ' + item.price + '/kg'}
             </p>
 
             {/* Add Button for Customer */}
             {appState.isCustomer() && !isCart && (
               <button
                 onClick={async (e) => {
-                  e.stopPropagation();
-                  await addToCart(item._id, count);
+                  e.stopPropagation()
+                  await addToCart(item._id, count)
                 }}
                 className={cn(
-                  "h-[40px] z-10 absolute right-2 bottom-2 flex items-center justify-center transition-all duration-500 rounded-md ",
-                  `border-2 border-accentColor bg-accentColor bg-opacity-5`
+                  'h-[40px] z-10 absolute right-2 bottom-2 flex items-center justify-center transition-all duration-500 rounded-md ',
+                  'border-2 border-accentColor bg-accentColor bg-opacity-5'
                 )}
               >
                 <p
                   className={cn(
-                    "px-4 py-2 text-lg font-bold ",
-                    `text-accentColor`
+                    'px-4 py-2 text-lg font-bold ',
+                    'text-accentColor'
                   )}
                 >
                   ADD
@@ -157,22 +156,22 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
                 <div className="flex-grow"></div>
                 <button
                   onClick={async (e) => {
-                    e.stopPropagation();
+                    e.stopPropagation()
                     if (isCart) {
-                      deleteItemFromCartMutation.mutate();
-                      return;
+                      deleteItemFromCartMutation.mutate()
+                      return
                     }
-                    deleteItemMutation.mutate();
+                    deleteItemMutation.mutate()
                   }}
                   className={cn(
-                    "h-[40px] flex items-center justify-center transition-all duration-500 border-2 rounded-md bg-opacity-10 hover:bg-opacity-100",
-                    `border-errorColor bg-errorColor`
+                    'h-[40px] flex items-center justify-center transition-all duration-500 border-2 rounded-md bg-opacity-10 hover:bg-opacity-100',
+                    'border-errorColor bg-errorColor'
                   )}
                 >
                   <p
                     className={cn(
-                      "px-4 py-2 text-lg font-bold hover:text-white transition-all duration-500",
-                      `text-errorColor`
+                      'px-4 py-2 text-lg font-bold hover:text-white transition-all duration-500',
+                      'text-errorColor'
                     )}
                   >
                     <BsFillTrash3Fill />
@@ -182,17 +181,17 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
                   <div className="w-[50%] h-[40px] flex flex-row items-center justify-center border border-lightBorderColor rounded-md px-2">
                     <div
                       onClick={(e) => {
-                        e.stopPropagation();
+                        e.stopPropagation()
 
-                        if (count == 1) {
-                          deleteItemFromCartMutation.mutate();
-                          return;
+                        if (count === 1) {
+                          deleteItemFromCartMutation.mutate()
+                          return
                         }
 
                         if (count > 0) {
-                          const newCount = count - 1;
-                          setCount(newCount);
-                          updateCartMutation.mutate(newCount);
+                          const newCount = count - 1
+                          setCount(newCount)
+                          updateCartMutation.mutate(newCount)
                         }
                       }}
                       className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
@@ -204,10 +203,10 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
                     </div>
                     <div
                       onClick={(e) => {
-                        e.stopPropagation();
-                        const newCount = count + 1;
-                        setCount(newCount);
-                        updateCartMutation.mutate(newCount);
+                        e.stopPropagation()
+                        const newCount = count + 1
+                        setCount(newCount)
+                        updateCartMutation.mutate(newCount)
                       }}
                       className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
                     >
@@ -221,7 +220,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
         </motion.div>
       }
     </>
-  );
+  )
 }
 
-export default ShopItem;
+export default ShopItem

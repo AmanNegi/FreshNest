@@ -1,6 +1,6 @@
-import { saveCartCount } from "../pages/Cart/application/cart_event";
+import { saveCartCount } from '../pages/Cart/application/cart_event'
 
-const APP_STATE_KEY = "AgroMillets-AppState";
+const APP_STATE_KEY = 'AgroMillets-AppState'
 
 class AppState {
   /**
@@ -22,80 +22,80 @@ class AppState {
     phone: undefined,
     userType: undefined,
     _id: undefined,
-    pattern: undefined,
-  };
+    pattern: undefined
+  }
 
-  isLoggedIn = false;
+  isLoggedIn = false
 
-  __init__() {
-    console.log("In __init__ AppState.js...");
-    const data = JSON.parse(localStorage.getItem(APP_STATE_KEY)) ?? {};
-    console.log("Local AppState Data: ", data);
-    this.userData = data.userData ?? {};
-    this.isLoggedIn = data.isLoggedIn ?? false;
+  __init__ () {
+    console.log('In __init__ AppState.js...')
+    const data = JSON.parse(localStorage.getItem(APP_STATE_KEY)) ?? {}
+    console.log('Local AppState Data: ', data)
+    this.userData = data.userData ?? {}
+    this.isLoggedIn = data.isLoggedIn ?? false
   }
 
   /**
    * @param {Map} userData
    * @param {boolean} isLoggedIn
    */
-  saveUserData(userData, isLoggedIn) {
-    this.userData = userData;
-    this.isLoggedIn = isLoggedIn;
+  saveUserData (userData, isLoggedIn) {
+    this.userData = userData
+    this.isLoggedIn = isLoggedIn
     localStorage.setItem(
       APP_STATE_KEY,
       JSON.stringify({ userData, isLoggedIn })
-    );
+    )
   }
 
-  logOutUser() {
-    this.saveUserData({}, false);
-    saveCartCount(0);
+  logOutUser () {
+    this.saveUserData({}, false)
+    saveCartCount(0)
   }
 
-  isUserLoggedIn() {
+  isUserLoggedIn () {
     // console.log("IS USER LOGGED IN : ", this.loggedIn, this.userData);
     if (
       this.userData === undefined ||
       !this.isLoggedIn ||
       this.userData._id === undefined
     ) {
-      this.isLoggedIn = false;
-      return false;
+      this.isLoggedIn = false
+      return false
     }
 
-    return true;
+    return true
   }
 
   /**
    * Get the user data.
    * @returns {Object}
    */
-  getUserData() {
-    return { ...this.userData };
+  getUserData () {
+    return { ...this.userData }
   }
 
-  isAdmin() {
-    return this.userData.userType === "admin";
+  isAdmin () {
+    return this.userData.userType === 'admin'
   }
 
-  isFarmer() {
-    return this.userData.userType === "farmer";
+  isFarmer () {
+    return this.userData.userType === 'farmer'
   }
 
-  isCustomer() {
-    return this.userData.userType === "customer";
+  isCustomer () {
+    return this.userData.userType === 'customer'
   }
 
-  isOwner(id) {
-    return this.userData._id === id;
+  isOwner (id) {
+    return this.userData._id === id
   }
 
-  setUserData(data) {
-    this.saveUserData(data, this.isLoggedIn);
+  setUserData (data) {
+    this.saveUserData(data, this.isLoggedIn)
   }
 }
 
 /// Singleton instance for AppState
-const appState = new AppState();
-export default appState;
+const appState = new AppState()
+export default appState

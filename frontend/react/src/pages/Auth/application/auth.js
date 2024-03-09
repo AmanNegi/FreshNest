@@ -1,6 +1,6 @@
-import axios from "axios";
-import { toast } from "react-toastify";
-import appState from "../../../data/AppState";
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import appState from '../../../data/AppState'
 
 /**
  * Login using email and password.
@@ -8,19 +8,19 @@ import appState from "../../../data/AppState";
  * @param {string} password
  * @returns {Promise<Object>} A Promise that resolves with the user account data.
  */
-export default async function login(email, password) {
-  const res = await axios.post(import.meta.env.VITE_API_URL + "/auth/login", {
-    email: email,
-    password: password,
-  });
+export default async function login (email, password) {
+  const res = await axios.post(import.meta.env.VITE_API_URL + '/auth/login', {
+    email,
+    password
+  })
 
-  if (res.data.statusCode == 200) {
-    toast.success(res.data.message);
+  if (res.data.statusCode === 200) {
+    toast.success(res.data.message)
   } else {
-    toast.error(res.data.message);
+    toast.error(res.data.message)
   }
-  appState.saveUserData(res.data.data, true);
-  return res.data;
+  appState.saveUserData(res.data.data, true)
+  return res.data
 }
 
 /**
@@ -34,29 +34,29 @@ export default async function login(email, password) {
  * @param {string} data.phone - The user's phone number.
  * @returns {Promise<Object>} A Promise that resolves with the user account data.
  */
-export async function signUp(data) {
-  const { name, email, password, userType, phone, latitude, longitude } = data;
+export async function signUp (data) {
+  const { name, email, password, userType, phone, latitude, longitude } = data
 
-  const res = await axios.post(import.meta.env.VITE_API_URL + "/auth/signup", {
-    name: name,
+  const res = await axios.post(import.meta.env.VITE_API_URL + '/auth/signup', {
+    name,
     email: email.toLowerCase(),
-    password: password,
-    userType: userType,
-    phone: phone,
+    password,
+    userType,
+    phone,
     location: {
-      type: "Point",
-      coordinates: [latitude, longitude],
-    },
-  });
+      type: 'Point',
+      coordinates: [latitude, longitude]
+    }
+  })
 
-  console.log(res);
-  if (res.data.statusCode == 200) {
-    toast.success(res.data.message);
+  console.log(res)
+  if (res.data.statusCode === 200) {
+    toast.success(res.data.message)
   } else {
-    toast.error(res.data.message);
+    toast.error(res.data.message)
   }
-  appState.saveUserData(res.data.data, true);
-  return res.data;
+  appState.saveUserData(res.data.data, true)
+  return res.data
 }
 
 /**
@@ -64,15 +64,15 @@ export async function signUp(data) {
  * @param {string} name
  * @param {string} email
  */
-export async function gSignUp(name, email) {
+export async function gSignUp (name, email) {
   const res = await axios.post(
-    import.meta.env.VITE_API_URL + "/auth/saveGLogin",
+    import.meta.env.VITE_API_URL + '/auth/saveGLogin',
     {
-      name: name,
-      email: email.toLowerCase(),
+      name,
+      email: email.toLowerCase()
     }
-  );
+  )
 
-  console.log(res);
-  return res.data;
+  console.log(res)
+  return res.data
 }
