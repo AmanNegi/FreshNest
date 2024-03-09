@@ -1,36 +1,35 @@
-import axios from "axios";
-import { toast } from "react-toastify";
-import appState from "../../../data/AppState";
-import { Item } from "./shop_model";
+import axios from 'axios'
+import { toast } from 'react-toastify'
+import appState from '../../../data/AppState'
 
 /**
  * Get a list of items from the database.
  * @param {string} filter - The filter to apply to the list.
  * @returns {Promise<Item>} - The sorted list of items.
  */
-export default async function getItems(filter = "0") {
-  let list;
+export default async function getItems (filter = '0') {
+  let list
 
   if (appState.isFarmer()) {
     // farmers will only see their products
-    list = await getAllFarmerItems();
+    list = await getAllFarmerItems()
   } else {
     // admin and user will see all items
-    list = await getAllItems();
+    list = await getAllItems()
   }
 
-  return sortList(list, filter);
+  return sortList(list, filter)
 }
 
 /**
  * Get First Four Items for Home Page
  * @returns {Promise<Array<Item>>} - First Four Items
  */
-export async function getFourItems() {
-  let list = [];
+export async function getFourItems () {
+  const res = await axios.get(`${import.meta.env.VITE_API_URL}/list/getRecent`)
 
-  list = await getItems("2");
-  return list.slice(0, 4);
+  console.log('Get four items:', res)
+  return res.data.data
 }
 
 /**
@@ -39,76 +38,76 @@ export async function getFourItems() {
  * @param {string} filter - The filter to apply to the list.
  * @returns {Array<Item>} - The sorted list of items.
  */
-export function sortList(list, filter) {
+export function sortList (list, filter) {
   switch (filter) {
-    case "0": {
+    case '0': {
       list.sort((a, b) => {
-        return a.listedAt < b.listedAt ? 1 : -1;
-      });
-      break;
+        return a.listedAt < b.listedAt ? 1 : -1
+      })
+      break
     }
 
-    case "1": {
+    case '1': {
       list.sort((a, b) => {
-        return a.listedAt > b.listedAt ? 1 : -1;
-      });
-      break;
+        return a.listedAt > b.listedAt ? 1 : -1
+      })
+      break
     }
-    case "2": {
+    case '2': {
       list.sort((a, b) => {
-        return a.name[0] > b.name[0] ? 1 : -1;
-      });
-      break;
+        return a.name[0] > b.name[0] ? 1 : -1
+      })
+      break
     }
-    case "3": {
+    case '3': {
       list.sort((a, b) => {
-        return a.name[0] < b.name[0] ? 1 : -1;
-      });
-      break;
+        return a.name[0] < b.name[0] ? 1 : -1
+      })
+      break
     }
-    case "4": {
+    case '4': {
       list.sort((a, b) => {
-        return a.price > b.price ? 1 : -1;
-      });
-      break;
+        return a.price > b.price ? 1 : -1
+      })
+      break
     }
-    case "5": {
+    case '5': {
       list.sort((a, b) => {
-        return a.price < b.price ? 1 : -1;
-      });
-      break;
+        return a.price < b.price ? 1 : -1
+      })
+      break
     }
 
     default: {
-      return list;
+      return list
     }
   }
 
-  return list;
+  return list
 }
 
 /**
  * Get all items from the database.
  * @returns {Promise<Item|undefined>} - The list of all items.
  */
-export async function getAllItems() {
-  const res = await axios.get(import.meta.env.VITE_API_URL + "/list/getAll");
+export async function getAllItems () {
+  const res = await axios.get(import.meta.env.VITE_API_URL + '/list/getAll')
 
-  return res.data.data;
+  return res.data.data
 }
 
 /**
  * Get all items listed by the current farmer from the database.
  * @returns {Promise<Item|undefined>} - The list of items listed by the current farmer.
  */
-export async function getAllFarmerItems() {
-  const id = appState.getUserData()._id;
+export async function getAllFarmerItems () {
+  const id = appState.getUserData()._id
 
   const res = await axios.get(
     `${import.meta.env.VITE_API_URL}/list/getAll/${id}`
-  );
+  )
 
-  return res.data.data;
+  return res.data.data
 }
 
 /**
@@ -116,14 +115,14 @@ export async function getAllFarmerItems() {
  * @param {string} id - The ID of the item to get.
  * @returns {Promise<Item|Error|undefined>} - The item with the specified ID.
  */
-export async function getItem(id) {
+export async function getItem (id) {
   try {
     const res = await axios.get(
-      import.meta.env.VITE_API_URL + "/list/getItem/" + id
-    );
-    return res.data.data;
+      import.meta.env.VITE_API_URL + '/list/getItem/' + id
+    )
+    return res.data.data
   } catch (e) {
-    throw e;
+    throw e
   }
 }
 
@@ -134,29 +133,29 @@ export async function getItem(id) {
  * @param {string} comment.comment - The content of the comment.
  * @returns {Promise<Object>} A status code indicating success or failure.
  */
-export async function addComment(comment) {
+export async function addComment (comment) {
   if (!appState.isUserLoggedIn()) {
-    toast.error("You must be logged in to add a comment");
-    return null;
+    toast.error('You must be logged in to add a comment')
+    return null
   }
   try {
     const res = await axios.post(
-      import.meta.env.VITE_API_URL + "/list/comment",
+      import.meta.env.VITE_API_URL + '/list/comment',
       {
         commentBy: appState.getUserData()._id,
         itemID: comment.itemID,
         name: appState.getUserData().name,
         content: comment.comment,
-        commentAt: Date.now(),
+        commentAt: Date.now()
       }
-    );
+    )
 
-    toast.success("Comment added successfully!");
-    console.log(res);
+    toast.success('Comment added successfully!')
+    console.log(res)
 
-    return res.data.data;
+    return res.data.data
   } catch (e) {
-    throw e;
+    throw e
   }
 }
 
@@ -166,31 +165,31 @@ export async function addComment(comment) {
  * @param {string} listedBy - The ID of the user who listed the item.
  * @returns {Promise<Object>}  A status code indicating success or failure.
  */
-export async function deleteItem(itemId, listedBy) {
+export async function deleteItem (itemId, listedBy) {
   if (appState.isAdmin() || appState.isOwner(listedBy)) {
     const res = await axios.post(
-      import.meta.env.VITE_API_URL + "/admin/deleteItem",
+      import.meta.env.VITE_API_URL + '/admin/deleteItem',
       {
         adminId: appState.getUserData()._id,
-        itemId: itemId,
+        itemId
       }
-    );
+    )
 
-    console.log(res);
-    if (res.data.statusCode == 200) {
-      toast.success(res.data.message);
-      return res.data.data;
+    console.log(res)
+    if (res.data.statusCode === 200) {
+      toast.success(res.data.message)
+      return res.data.data
     } else {
-      toast.error(res.data.message);
-      return 0;
+      toast.error(res.data.message)
+      return 0
     }
   }
-  if (appState.getUserData().userType != "admin") {
-    toast.error("You must be an admin to delete an item");
+  if (appState.getUserData().userType !== 'admin') {
+    toast.error('You must be an admin to delete an item')
   }
   if (!appState.isOwner(listedBy)) {
-    toast.error("You are not the owner of the item");
+    toast.error('You are not the owner of the item')
   }
 
-  return 0;
+  return 0
 }

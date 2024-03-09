@@ -1,12 +1,12 @@
-import React, { useState } from "react";
-import { BiHide, BiShow } from "react-icons/bi";
+import React, { useState } from 'react'
+import { BiHide, BiShow } from 'react-icons/bi'
 
 const PasswordField = ({ handleFieldChange }) => {
-  const [passwordVisible, setPasswordVisible] = useState(false);
+  const [passwordVisible, setPasswordVisible] = useState(false)
 
   const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible);
-  };
+    setPasswordVisible(!passwordVisible)
+  }
 
   return (
     <div className="flex flex-col w-[100%] ">
@@ -15,7 +15,7 @@ const PasswordField = ({ handleFieldChange }) => {
         <input
           name="password"
           onChange={handleFieldChange}
-          type={passwordVisible ? "text" : "password"}
+          type={passwordVisible ? 'text' : 'password'}
           className="input input-bordered w-full mt-2"
         ></input>
         <button
@@ -27,7 +27,7 @@ const PasswordField = ({ handleFieldChange }) => {
         </button>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default PasswordField;
+export default PasswordField
