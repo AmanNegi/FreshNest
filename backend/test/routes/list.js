@@ -1,7 +1,7 @@
 const chai = require('chai')
 
-const { FreshNestTester } = require('./utils/tester')
-const { GET_ALL_ITEMS, GET_RECENT_ITEMS, ADD_ITEM, GET_FARMS, GET_ITEM } = require('./utils/endpoints')
+const { FreshNestTester } = require('../utils/tester')
+const { GET_ALL_ITEMS, GET_RECENT_ITEMS, ADD_ITEM, GET_FARMS, GET_ITEM } = require('../utils/endpoints')
 
 describe('Test routes/list.js', function () {
   /** @type {FreshNestTester} */

@@ -3,4 +3,3 @@ node_modules
 .env*
 *pnpm-lock.yaml
 *.log
-*swagger_output.json
