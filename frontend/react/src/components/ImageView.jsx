@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
-import { ShimmerThumbnail } from 'react-shimmer-effects-18'
+import { ShimmerThumbnail } from 'react-shimmer-effects-18';
 
 const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div id={_id}>
@@ -21,13 +21,13 @@ const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
           src={url}
           alt=""
           onLoad={() => {
-            console.log('Image has loaded')
-            setIsLoading(false)
+            console.log('Image has loaded');
+            setIsLoading(false);
           }}
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default ImageView
+export default ImageView;

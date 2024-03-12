@@ -1,20 +1,20 @@
-import { motion } from 'framer-motion'
-import { useEffect } from 'react'
+import { motion } from 'framer-motion';
+import { useEffect } from 'react';
 
-import aboutImg from '../../../assets/about_img.jpg'
-import aboutImg2 from '../../../assets/about_img_2.jpg'
-import aboutImg3 from '../../../assets/about_img_3.jpg'
+import aboutImg from '../../../assets/about_img.jpg';
+import aboutImg2 from '../../../assets/about_img_2.jpg';
+import aboutImg3 from '../../../assets/about_img_3.jpg';
 
 const problemStatement =
-  'Many consumers struggle to find fresh and high-quality vegetables while local vegetable sellers and farmers face challenges in reaching a wider customer base. Limited access, lack of transparency, and reliance on intermediaries create barriers to connecting consumers directly with local produce.'
+  'Many consumers struggle to find fresh and high-quality vegetables while local vegetable sellers and farmers face challenges in reaching a wider customer base. Limited access, lack of transparency, and reliance on intermediaries create barriers to connecting consumers directly with local produce.';
 
 const solutionStatement =
-  'FreshNest is an online platform that bridges the gap between local vegetable sellers, farmers, and consumers. It provides a convenient and transparent marketplace where consumers can easily access a wide variety of fresh and locally grown vegetables. By eliminating intermediaries, FreshNest empowers local farmers and sellers to showcase their produce directly to customers, enabling a direct farm-to-table connection. '
+  'FreshNest is an online platform that bridges the gap between local vegetable sellers, farmers, and consumers. It provides a convenient and transparent marketplace where consumers can easily access a wide variety of fresh and locally grown vegetables. By eliminating intermediaries, FreshNest empowers local farmers and sellers to showcase their produce directly to customers, enabling a direct farm-to-table connection. ';
 
-function About () {
+function About() {
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
   return (
     <>
       <main className="mt-[8vh]">
@@ -23,9 +23,7 @@ function About () {
             <h1 className=" text-3xl md:text-5xl font-bold mb-5 mt-8 md:mt-0 tracking-tight text-green-900 ">
               The Problem
             </h1>
-            <p className="leading-relaxed text-semiDarkColor">
-              {problemStatement}
-            </p>
+            <p className="leading-relaxed text-semiDarkColor">{problemStatement}</p>
           </div>
           <motion.img
             initial={{ x: 250, opacity: 0 }}
@@ -55,9 +53,7 @@ function About () {
             <h1 className=" text-3xl md:text-5xl font-bold mb-5 mt-8 md:mt-0 tracking-wide text-green-900">
               The Solution
             </h1>
-            <p className="leading-relaxed text-semiDarkColor">
-              {solutionStatement}
-            </p>
+            <p className="leading-relaxed text-semiDarkColor">{solutionStatement}</p>
           </div>
         </section>
       </main>
@@ -78,7 +74,7 @@ function About () {
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default About
+export default About;

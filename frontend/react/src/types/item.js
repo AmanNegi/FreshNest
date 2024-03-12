@@ -12,26 +12,16 @@
  * @property {string} listedAt
  */
 class Item {
-  constructor (
-    _id,
-    listedBy,
-    name,
-    description,
-    images,
-    price,
-    comments,
-    listedAt,
-    location
-  ) {
-    this._id = _id
-    this.listedBy = listedBy
-    this.name = name
-    this.description = description
-    this.images = images
-    this.price = price
-    this.comments = comments
-    this.listedAt = listedAt
-    this.location = location
+  constructor(_id, listedBy, name, description, images, price, comments, listedAt, location) {
+    this._id = _id;
+    this.listedBy = listedBy;
+    this.name = name;
+    this.description = description;
+    this.images = images;
+    this.price = price;
+    this.comments = comments;
+    this.listedAt = listedAt;
+    this.location = location;
   }
 }
 
@@ -41,9 +31,9 @@ class Item {
  * @property {number[]} coordinates
  */
 class Location {
-  constructor (type, coordinates) {
-    this.type = type
-    this.coordinates = coordinates
+  constructor(type, coordinates) {
+    this.type = type;
+    this.coordinates = coordinates;
   }
 }
 /**
@@ -57,11 +47,11 @@ class Location {
  */
 
 class Comment {
-  constructor (id, commentBy, name, content, commentAt) {
-    this.id = id
-    this.commentBy = commentBy
-    this.name = name
-    this.content = content
-    this.commentAt = commentAt
+  constructor(id, commentBy, name, content, commentAt) {
+    this.id = id;
+    this.commentBy = commentBy;
+    this.name = name;
+    this.content = content;
+    this.commentAt = commentAt;
   }
 }

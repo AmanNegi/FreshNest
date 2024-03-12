@@ -1,45 +1,43 @@
-import { useEffect, useState } from 'react'
-import { useNavigate, useSearchParams } from 'react-router-dom'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect, useState } from 'react';
+import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import ShopItem from '../../../components/ShopItem'
-import NavigationButton from '../../../components/Button'
-import ShimmerShopItem from '../../../components/ShimmerShopItem'
+import ShopItem from '../../../components/ShopItem';
+import NavigationButton from '../../../components/Button';
+import ShimmerShopItem from '../../../components/ShimmerShopItem';
 
-import appState from '../../../data/AppState'
-import getItems, { sortList } from '../application/shop'
+import appState from '../../../data/AppState';
+import getItems, { sortList } from '../application/shop';
 
-import { FaCaretDown } from 'react-icons/fa'
-import QueryError from '../../../components/QueryError'
+import { FaCaretDown } from 'react-icons/fa';
+import QueryError from '../../../components/QueryError';
 
-function Shop () {
-  const [searchParams] = useSearchParams()
-  const navigate = useNavigate()
+function Shop() {
+  const [searchParams] = useSearchParams();
+  const navigate = useNavigate();
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ['items'],
     queryFn: () => getItems(searchParams.get('sort') || '0')
-  })
+  });
 
-  const [urlFilter, setUrlFilter] = useState(
-    parseInt(searchParams.get('sort')) || '0'
-  )
+  const [urlFilter, setUrlFilter] = useState(parseInt(searchParams.get('sort')) || '0');
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-    return () => {}
-  }, [])
+    window.scrollTo(0, 0);
+    return () => {};
+  }, []);
 
   if (isError) {
     return (
       <QueryError
         error={error}
         onClick={() => {
-          queryClient.invalidateQueries(['items'])
+          queryClient.invalidateQueries(['items']);
         }}
       />
-    )
+    );
   }
 
   return (
@@ -48,32 +46,24 @@ function Shop () {
         <div className="flex flex-col md:flex-row items-center">
           <h1 className="text-3xl font-semibold mr-auto">{getShopHeading()}</h1>
           <div className="flex flex-row items-center">
-            {!isError && !isLoading && (
-              <Filter filter={urlFilter} updateFilter={updateFilter} />
-            )}
+            {!isError && !isLoading && <Filter filter={urlFilter} updateFilter={updateFilter} />}
             {appState.isFarmer() && (
-              <NavigationButton
-                path="/add"
-                text="Add Item"
-                additionalClasses="ml-2"
-              />
+              <NavigationButton path="/add" text="Add Item" additionalClasses="ml-2" />
             )}
           </div>
         </div>
 
         <div className="h-[3vh]"></div>
 
-        {isLoading
-          ? (
+        {isLoading ? (
           <section className="w-full bg-white min-h-screen mb-8">
             <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
               {[1, 2, 3, 4, 5, 6].map((e) => {
-                return <ShimmerShopItem key={e} id={e} />
+                return <ShimmerShopItem key={e} id={e} />;
               })}
             </div>
           </section>
-            )
-          : (
+        ) : (
           <section className="w-[100%] min-h-screen">
             <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mb-8">
               {data &&
@@ -85,34 +75,34 @@ function Shop () {
                       isCart={false}
                       onDelete={(item) => {
                         queryClient.setQueryData(['items'], (prevData) => {
-                          return prevData.filter((i) => i._id !== item._id)
-                        })
+                          return prevData.filter((i) => i._id !== item._id);
+                        });
                       }}
                     />
-                  )
+                  );
                 })}
             </div>
           </section>
-            )}
+        )}
       </main>
     </>
-  )
+  );
 
-  function updateFilter (value) {
+  function updateFilter(value) {
     // Manually update the cache, in case of a sort mode change
     queryClient.setQueryData(['items'], (prevData) => {
-      return sortList(prevData, value)
-    })
-    navigate(`?sort=${value}`)
-    setUrlFilter(value)
+      return sortList(prevData, value);
+    });
+    navigate(`?sort=${value}`);
+    setUrlFilter(value);
   }
 }
 
-function getShopHeading () {
-  if (appState.isFarmer()) return 'Your Products'
-  else if (appState.isAdmin()) return 'All Products'
+function getShopHeading() {
+  if (appState.isFarmer()) return 'Your Products';
+  else if (appState.isAdmin()) return 'All Products';
 
-  return 'Explore Products'
+  return 'Explore Products';
 }
 
 /**
@@ -137,12 +127,12 @@ const Filter = ({ filter, updateFilter }) => {
                 {e.label}
               </option>
             </li>
-          )
+          );
         })}
       </ul>
     </details>
-  )
-}
+  );
+};
 
 const options = [
   { value: '0', label: 'Latest' },
@@ -151,6 +141,6 @@ const options = [
   { value: '3', label: 'Z-A' },
   { value: '4', label: 'Price: Low to High' },
   { value: '5', label: 'Price: High to Low' }
-]
+];
 
-export default Shop
+export default Shop;

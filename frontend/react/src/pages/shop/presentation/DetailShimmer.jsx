@@ -1,10 +1,6 @@
-import {
-  ShimmerThumbnail,
-  ShimmerTitle,
-  ShimmerText
-} from 'react-shimmer-effects-18'
+import { ShimmerThumbnail, ShimmerTitle, ShimmerText } from 'react-shimmer-effects-18';
 
-function ItemDetailShimmer () {
+function ItemDetailShimmer() {
   return (
     <>
       <section className="mt-[8vh] min-h-[52vh] w-[100%] p-6 lg:p-12 ">
@@ -21,7 +17,7 @@ function ItemDetailShimmer () {
         </div>
       </section>
     </>
-  )
+  );
 }
 
-export default ItemDetailShimmer
+export default ItemDetailShimmer;

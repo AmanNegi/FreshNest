@@ -1,13 +1,13 @@
-import { useEffect } from 'react'
-import { useQuery, useQueryClient } from '@tanstack/react-query'
+import { useEffect } from 'react';
+import { useQuery, useQueryClient } from '@tanstack/react-query';
 
-import ShopItem from '../../../components/ShopItem'
-import ShimmerShopItem from '../../../components/ShimmerShopItem'
+import ShopItem from '../../../components/ShopItem';
+import ShimmerShopItem from '../../../components/ShimmerShopItem';
 
-import getCart from '../application/cart'
-import QueryError from '../../../components/QueryError'
+import getCart from '../application/cart';
+import QueryError from '../../../components/QueryError';
 
-function CartPage () {
+function CartPage() {
   const {
     isLoading,
     isError,
@@ -16,14 +16,14 @@ function CartPage () {
   } = useQuery({
     queryKey: ['cart'],
     queryFn: () => getCart()
-  })
+  });
 
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
 
   useEffect(() => {
-    window.scrollTo(0, 0)
-    return () => {}
-  }, [])
+    window.scrollTo(0, 0);
+    return () => {};
+  }, []);
 
   if (isLoading) {
     return (
@@ -32,12 +32,12 @@ function CartPage () {
         <div className="h-[3vh]"></div>
         <div className=" w-[100%] grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 p-8 lg:p-10 ">
           {[1, 2, 3, 4, 5, 6].map((e) => {
-            return <ShimmerShopItem key={e} id={e} />
+            return <ShimmerShopItem key={e} id={e} />;
           })}
         </div>
         <div className="h-[10vh]"></div>
       </section>
-    )
+    );
   }
 
   if (isError) {
@@ -45,10 +45,10 @@ function CartPage () {
       <QueryError
         error={error}
         onClick={() => {
-          queryClient.invalidateQueries(['cart'])
+          queryClient.invalidateQueries(['cart']);
         }}
       />
-    )
+    );
   }
 
   return (
@@ -75,18 +75,18 @@ function CartPage () {
                     isCart={true}
                     onDelete={(item) => {
                       queryClient.setQueryData(['cart'], (prevData) => {
-                        return prevData.filter((i) => i.item !== item._id)
-                      })
+                        return prevData.filter((i) => i.item !== item._id);
+                      });
                     }}
                   />
-                )
+                );
               })}
           </div>
           <div className="h-[10vh]"></div>
         </section>
       </main>
     </>
-  )
+  );
 }
 
-export default CartPage
+export default CartPage;

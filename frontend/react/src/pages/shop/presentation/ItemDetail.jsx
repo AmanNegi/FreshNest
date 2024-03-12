@@ -1,27 +1,27 @@
-import { useRef } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import Rating from 'react-rating'
+import { useRef } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import Rating from 'react-rating';
 
-import { addComment, getItem } from '../application/shop'
-import ItemDetailShimmer from './DetailShimmer'
-import ImageView from '../../../components/ImageView'
+import { addComment, getItem } from '../application/shop';
+import ItemDetailShimmer from './DetailShimmer';
+import ImageView from '../../../components/ImageView';
 
-import { toast } from 'react-toastify'
-import appState from '../../../data/AppState'
-import QueryError from '../../../components/QueryError'
+import { toast } from 'react-toastify';
+import appState from '../../../data/AppState';
+import QueryError from '../../../components/QueryError';
 
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai'
+import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
 
-function ItemDetail () {
-  const { id } = useParams()
+function ItemDetail() {
+  const { id } = useParams();
 
   /**
    * @type {[Item, function]}
    */
-  const navigate = useNavigate()
-  const queryClient = useQueryClient()
-  const commentRef = useRef()
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
+  const commentRef = useRef();
 
   const {
     isLoading,
@@ -31,33 +31,33 @@ function ItemDetail () {
   } = useQuery({
     queryKey: ['item', id],
     queryFn: () => getItem(id)
-  })
+  });
 
   const mutation = useMutation({
     mutationFn: async () => {
       return addComment({
         comment: commentRef.current.value,
         itemID: id
-      })
+      });
     },
     onSuccess: (data) => {
       // Manually, update the cache as comment is added
       queryClient.setQueryData(['item', id], (old) => {
-        return data
-      })
+        return data;
+      });
     }
-  })
+  });
 
-  if (isLoading) return <ItemDetailShimmer />
+  if (isLoading) return <ItemDetailShimmer />;
   if (isError) {
     return (
       <QueryError
         error={error}
         onClick={() => {
-          queryClient.invalidateQueries(['item', id])
+          queryClient.invalidateQueries(['item', id]);
         }}
       />
-    )
+    );
   }
 
   return (
@@ -80,9 +80,7 @@ function ItemDetail () {
                   {'₹ ' + (parseFloat(item.price) + 20)}
                 </h1>
 
-                <h1 className="pb-5 text-2xl font-bold text-accentColor">
-                  {'₹ ' + item.price}
-                </h1>
+                <h1 className="pb-5 text-2xl font-bold text-accentColor">{'₹ ' + item.price}</h1>
               </div>
 
               <div className="flex flex-row gap-4 mb-2 items-center">
@@ -112,30 +110,26 @@ function ItemDetail () {
             className="px-5 h-[7vh] w-full md:w-auto mt-2 md:mt-0 text-white rounded-md bg-accentColor"
             onClick={async () => {
               if (!appState.isLoggedIn) {
-                navigate('/auth')
-                return
+                navigate('/auth');
+                return;
               }
 
               if (commentRef.current.value.length === 0) {
-                toast.error('Please enter a comment')
-                return
+                toast.error('Please enter a comment');
+                return;
               }
 
-              mutation.mutate()
+              mutation.mutate();
             }}
           >
             Comment
           </button>
         </div>
 
-        {item.comments.length > 0
-          ? (
+        {item.comments.length > 0 ? (
           <section className="px-5 mb-5 md:px-12 md:mb-12">
             {item.comments.map((comment) => (
-              <div
-                key={comment._id}
-                className="flex flex-row pt-4 pb-2 border-b border-slate-200"
-              >
+              <div key={comment._id} className="flex flex-row pt-4 pb-2 border-b border-slate-200">
                 <div className="h-[25px] w-[25px] text-white p-4 rounded-full bg-lightColor flex justify-center items-center">
                   <p className="">{comment.name[0]}</p>
                 </div>
@@ -146,13 +140,12 @@ function ItemDetail () {
               </div>
             ))}
           </section>
-            )
-          : (
+        ) : (
           <div className="h-5"></div>
-            )}
+        )}
       </main>
     </>
-  )
+  );
 }
 
-export default ItemDetail
+export default ItemDetail;
