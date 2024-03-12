@@ -3,6 +3,7 @@ import 'package:fresh_nest/core/cart/application/cart_manager.dart';
 import 'package:fresh_nest/core/cart/application/cart_provider.dart';
 import 'package:fresh_nest/core/home/application/home_manager.dart';
 import 'package:fresh_nest/core/home/presentation/widgets/agro_item.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/shimmer_agro_item.dart';
 import 'package:fresh_nest/globals.dart';
 import 'package:fresh_nest/models/cart_item.dart';
 import 'package:flutter/material.dart';
@@ -51,6 +52,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                     left: 15,
                     right: 15,
                     bottom: 30.0,
+                    top: 5.0,
                   ),
                   crossAxisCount: 2,
                   mainAxisSpacing: 10,
@@ -71,9 +73,7 @@ class _CartPageState extends ConsumerState<CartPage> {
                             child: Text("Error Occurred"),
                           );
                         }
-                        return const Center(
-                          child: CircularProgressIndicator(),
-                        );
+                        return ShimmerAgroItem(index: index);
                       },
                     );
                   },

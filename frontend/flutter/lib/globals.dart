@@ -17,3 +17,9 @@ showToast(String message) {
 
 double getWidth(context) => MediaQuery.of(context).size.width;
 double getHeight(context) => MediaQuery.of(context).size.height;
+
+LinearGradient shimmerGradient = LinearGradient(colors: [
+  Colors.grey.shade300,
+  Colors.grey.shade100,
+  Colors.grey.shade300,
+]);
