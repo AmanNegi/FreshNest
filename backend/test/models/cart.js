@@ -1,11 +1,10 @@
-const { validateCart } = require('../models/cart.js')
+const { validateCart } = require('../../src/models/cart.js')
 const chai = require('chai')
 const mongoose = require('mongoose')
 
 /**
  * This file tests the cart model
  */
-
 describe('test cart model', () => {
   it('should throw error when no userId is provided', async () => {
     const cart = {

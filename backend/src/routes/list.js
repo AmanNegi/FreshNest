@@ -136,6 +136,9 @@ router.post('/getComments', async (req, res) => {
     return res.status(404).send(getErrorResponse('Invalid Item ID'))
   }
   const item = await MilletItem.findOne({ _id: itemID })
+  if (!item) {
+    return res.status(404).send(getErrorResponse('No Product Found'))
+  }
   return res.send(getSuccessResponse('Success!', item.comments))
 })
 
