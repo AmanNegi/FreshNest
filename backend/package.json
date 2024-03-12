@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "cross-env NODE_ENV=test mocha 'test/**/*.js' --timeout 10000 --exit",
-    "dev": "cross-env NODE_ENV=dev nodemon index.js",
+    "dev": "npm run gen-docs && cross-env NODE_ENV=dev nodemon index.js",
     "prod": "cross-env NODE_ENV=prod nodemon index.js",
     "lint": "eslint .",
     "gen-docs": "node ./src/utils/swagger.js"

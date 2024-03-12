@@ -4,13 +4,17 @@ const cors = require('cors')
 const logger = require('./src/utils/logger')
 const dotenv = require('dotenv')
 
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./swagger_output.json')
-
 const env = process.env.NODE_ENV || 'prod'
 dotenv.config({ path: `.env.${env}` })
 
 const app = express()
+
+if (env === 'dev') {
+  const swaggerUi = require('swagger-ui-express')
+  const swaggerFile = require('./src/swagger_output.json')
+
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+}
 
 const corsPrefs = cors({
   origin: ['https://fresh-nest.netlify.app', 'http://localhost:5173'],
@@ -29,10 +33,6 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 app.use(customLogger)
 require('./src/startup/routes')(app)
-
-if (env === 'dev') {
-  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-}
 
 if (env !== 'test') require('./src/startup/db')()
 
