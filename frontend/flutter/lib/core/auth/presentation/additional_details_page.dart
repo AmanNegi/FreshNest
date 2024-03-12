@@ -1,6 +1,5 @@
 import 'package:fresh_nest/core/auth/application/auth.dart';
 import 'package:fresh_nest/core/auth/application/location_service.dart';
-import 'package:fresh_nest/core/auth/presentation/login_page.dart';
 import 'package:fresh_nest/core/home/presentation/widgets/loading_widget.dart';
 import 'package:fresh_nest/globals.dart';
 import 'package:fresh_nest/widgets/action_button.dart';
@@ -8,23 +7,32 @@ import 'package:fresh_nest/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:fresh_nest/splash.dart';
 
-class SignUpPage extends ConsumerStatefulWidget {
-  const SignUpPage({super.key});
+class AdditionalDetailsPage extends ConsumerStatefulWidget {
+  final String email;
+  final String name;
+  const AdditionalDetailsPage({
+    super.key,
+    required this.email,
+    required this.name,
+  });
 
   @override
-  ConsumerState<SignUpPage> createState() => _SignUpPageState();
+  ConsumerState<AdditionalDetailsPage> createState() =>
+      _AdditionalDetailsState();
 }
 
-class _SignUpPageState extends ConsumerState<SignUpPage> {
+class _AdditionalDetailsState extends ConsumerState<AdditionalDetailsPage> {
   late AuthManager _authManager;
   String dropdownValue = "customer";
   String email = "", password = "", username = "", phone = "";
 
   @override
   void initState() {
+    email = widget.email;
+    username = widget.name;
+
     _authManager = AuthManager(context, ref);
     super.initState();
     if (locationService.locationData == null) {
@@ -36,11 +44,11 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   Widget build(BuildContext context) {
     return LoadingWidget(
       isLoading: _authManager.isLoading,
-      child: _getSignUpPage(context),
+      child: _getAdditionalDetails(context),
     );
   }
 
-  SingleChildScrollView _getSignUpPage(BuildContext context) {
+  SingleChildScrollView _getAdditionalDetails(BuildContext context) {
     return SingleChildScrollView(
       padding: const EdgeInsets.symmetric(horizontal: 15.0),
       child: Column(
@@ -63,7 +71,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           ),
           const Center(
             child: Text(
-              "Bringing the farm to your doorstep",
+              "Just a few more details to continue",
               style: TextStyle(
                 fontSize: 12,
               ),
@@ -78,6 +86,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           const SizedBox(height: 10),
           CustomTextField(
             value: email,
+            isEditable: false,
             keyboardType: TextInputType.emailAddress,
             onChanged: (v) => email = v,
             label: "Email",
@@ -126,64 +135,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
                 goToPage(context, const RolePage(), clearStack: true);
               }
             },
-            text: "Sign up",
+            text: "Get Started!",
           ),
           SizedBox(height: 0.015 * getHeight(context)),
-          GestureDetector(
-            onTap: () async {
-              var res = await _authManager.googleAuth();
-              if (res == 1 && mounted) {
-                goToPage(context, const RolePage(), clearStack: true);
-              }
-            },
-            child: Container(
-              height: 0.06 * getHeight(context),
-              decoration: BoxDecoration(
-                color: Theme.of(context).primaryColor,
-                borderRadius: BorderRadius.circular(10.0),
-              ),
-              child: const Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Icon(
-                    MdiIcons.google,
-                    color: Colors.white,
-                  ),
-                  SizedBox(width: 10),
-                  Text(
-                    "Sign up using Google",
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 16,
-                    ),
-                  )
-                ],
-              ),
-            ),
-          ),
-          SizedBox(height: 0.015 * getHeight(context)),
-          GestureDetector(
-            onTap: () => goToPage(
-              context,
-              const LoginPage(),
-              clearStack: true,
-            ),
-            child: RichText(
-              text: TextSpan(
-                style: Theme.of(context).textTheme.bodyMedium,
-                children: [
-                  const TextSpan(text: "Already have an account?"),
-                  TextSpan(
-                    text: " Login",
-                    style: TextStyle(
-                      fontWeight: FontWeight.w600,
-                      color: Theme.of(context).primaryColor,
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          ),
         ],
       ),
     );

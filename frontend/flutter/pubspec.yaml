@@ -1,5 +1,5 @@
 name: fresh_nest
-description: A new Flutter project.
+description: Your cozy corner for farm fresh delights.
 
 publish_to: "none"
 
@@ -9,6 +9,7 @@ environment:
   sdk: ">=2.19.2 <3.0.0"
 
 dependencies:
+  collection: ^1.18.0
   cupertino_icons: ^1.0.2
   easy_localization: ^3.0.1
   equatable: ^2.0.5
@@ -20,19 +21,20 @@ dependencies:
   flutter_riverpod: ^2.3.2
   flutter_staggered_grid_view: ^0.6.2
   fluttertoast: ^8.2.1
+  geocoding: ^2.1.1
+  geolocator: ^10.1.0
   google_fonts: ^4.0.3
+  google_maps_flutter: ^2.5.3
   google_sign_in: ^6.0.2
   http: ^0.13.5
   image_picker: ^0.8.7
+  location: ^5.0.3
   material_design_icons_flutter: ^6.0.7096
   package_info_plus: ^3.1.0
   shared_preferences: ^2.1.0
+  shimmer: ^3.0.0
   timeago: ^3.3.0
   uuid: ^3.0.7
-  google_maps_flutter: ^2.5.3
-  geolocator: ^10.1.0
-  geocoding: ^2.1.1
-  collection: ^1.18.0
 
 dev_dependencies:
   flutter_launcher_icons: "^0.13.1"
@@ -52,10 +54,7 @@ flutter:
   fonts:
     - family: Sriracha
       fonts:
-      - asset: assets/fonts/Sriracha-Regular.ttf
+        - asset: assets/fonts/Sriracha-Regular.ttf
   assets:
     - assets/translations/.
-    - assets/.
     - assets/
-  
-

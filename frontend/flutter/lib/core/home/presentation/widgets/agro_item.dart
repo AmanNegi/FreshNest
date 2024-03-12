@@ -115,9 +115,12 @@ class AgroItem extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () async {
                     CartItem cartItem = CartItem(item: item.id, count: 1);
-                    ref.read(cartProvider).addItemToCart(cartItem);
-                    CartManager(context, ref, poll: false)
-                        .addItemToCart(item: cartItem);
+                    bool val = ref.read(cartProvider).addItemToCart(cartItem);
+                    //TODO: add feature to increment/decrement
+                    if (val) {
+                      CartManager(context, ref, poll: false)
+                          .addItemToCart(item: cartItem);
+                    }
                   },
                   child: Container(
                     width: 40,
