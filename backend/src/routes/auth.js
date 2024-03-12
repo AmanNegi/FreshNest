@@ -43,11 +43,12 @@ router.post('/login', async (req, res) => {
  * @param {string} req.body.password - The user's password.
  * @param {string} req.body.userType - The user's type.
  * @param {string} req.body.phone - The user's phone number.
+ * @param {Object} req.body.location - The user's location.
  */
 router.post('/signup', async (req, res) => {
   console.log('Request Body: ', req.body)
   const { error } = validateSignUp(req.body)
-  if (error) return res.status(400).send(error.details[0].message)
+  if (error) return res.status(400).send(getErrorResponse(error.details[0].message))
 
   let user = await User.findOne({ email: req.body.email })
   if (user) {

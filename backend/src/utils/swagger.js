@@ -3,16 +3,9 @@ const swaggerAutogen = require('swagger-autogen')()
 const doc = {
   info: {
     title: 'FreshNest Backend',
-    description: 'Node/Express backend for FreshNest application'
+    description: 'Node/Express backend for FreshNest application (for dev only)'
   },
-  host: 'localhost:3000',
-  tags: [
-    {
-      name: 'Auth',
-      description: 'Endpoints for user authentication'
-
-    }
-  ]
+  host: 'localhost:3000'
 }
 
 const outputFile = '../swagger_output.json'
