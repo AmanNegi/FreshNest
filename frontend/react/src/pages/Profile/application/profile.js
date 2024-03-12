@@ -1,7 +1,7 @@
-import axios from 'axios'
-import appState from '../../../data/AppState'
-import { toast } from 'react-toastify'
-import { handleUpload } from '../../AddItem/application/functions'
+import axios from 'axios';
+import appState from '../../../data/AppState';
+import { toast } from 'react-toastify';
+import { handleUpload } from '../../AddItem/application/functions';
 
 /**
  * Makes request to backend to update the user's profile
@@ -11,21 +11,19 @@ import { handleUpload } from '../../AddItem/application/functions'
  * @param {string} body.phone
  * @returns {Promise<User|undefined>} The user's updated profile
  */
-export default async function updateUser (body) {
-  const res = await axios.post(
-    import.meta.env.VITE_API_URL + '/profile/updateUser',
-    { ...body, _id: appState.getUserData()._id }
-  )
+export default async function updateUser(body) {
+  const res = await axios.post(import.meta.env.VITE_API_URL + '/profile/updateUser', {
+    ...body,
+    _id: appState.getUserData()._id
+  });
 
-  console.log(res)
+  console.log(res);
   if (res.status !== 200) {
-    toast.error(
-      'An error occurred while updating your profile. Please try again later.'
-    )
-    throw new Error('An error occurred while updating your profile')
+    toast.error('An error occurred while updating your profile. Please try again later.');
+    throw new Error('An error occurred while updating your profile');
   } else {
-    appState.setUserData(res.data.data)
-    return res.data.data
+    appState.setUserData(res.data.data);
+    return res.data.data;
   }
 }
 
@@ -34,43 +32,39 @@ export default async function updateUser (body) {
  * @param {File} image
  * @returns {Promise<string>} The URL of the uploaded image
  */
-export async function addFarmImage (image) {
-  toast.info('Uploading image...')
-  const imageUrl = await handleUpload(image)
+export async function addFarmImage(image) {
+  toast.info('Uploading image...');
+  const imageUrl = await handleUpload(image);
 
   if (!imageUrl) {
-    toast.error('An error occurred while uploading image')
-    return
+    toast.error('An error occurred while uploading image');
+    return;
   }
 
-  const url =
-    import.meta.env.VITE_API_URL +
-    `/auth/addImage/${appState.getUserData()._id}`
+  const url = import.meta.env.VITE_API_URL + `/auth/addImage/${appState.getUserData()._id}`;
 
-  await axios.post(url, { image: imageUrl })
-  return imageUrl
+  await axios.post(url, { image: imageUrl });
+  return imageUrl;
 }
 
 /**
  * Makes request to backend to get the user's profile
  * @returns {Promise<User | undefined>} The user's profile
  */
-export async function getUser () {
+export async function getUser() {
   if (!appState.isUserLoggedIn()) {
-    toast.error('You must be logged in to view your profile')
-    return undefined
+    toast.error('You must be logged in to view your profile');
+    return undefined;
   }
 
-  const res = await axios.get(
-    import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`
-  )
+  const res = await axios.get(import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`);
 
-  console.log(res)
+  console.log(res);
   if (res.status === 200) {
-    appState.setUserData(res.data.data)
-    return res.data.data
+    appState.setUserData(res.data.data);
+    return res.data.data;
   }
 
-  appState.logOutUser()
-  return undefined
+  appState.logOutUser();
+  return undefined;
 }

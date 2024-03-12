@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
-import _ from 'lodash'
-import useProfileMutations from '../../../hooks/ProfileHook'
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import _ from 'lodash';
+import useProfileMutations from '../../../hooks/ProfileHook';
 
 const UpdateModal = ({ user }) => {
-  console.log(user)
-  const { updateUserMutation } = useProfileMutations()
+  console.log(user);
+  const { updateUserMutation } = useProfileMutations();
   const [data, setData] = useState({
     name: user.name,
     email: user.email,
     phone: user.phone
-  })
-  console.log(data)
+  });
+  console.log(data);
 
   return (
     <dialog id="my_modal_1" className="modal">
@@ -57,10 +57,7 @@ const UpdateModal = ({ user }) => {
           >
             Close
           </button>
-          <button
-            className="btn btn-accent text-white"
-            onClick={validateFields}
-          >
+          <button className="btn btn-accent text-white" onClick={validateFields}>
             Update Details
           </button>
         </div>
@@ -69,47 +66,47 @@ const UpdateModal = ({ user }) => {
         <form method="dialog"></form>
       </div>
     </dialog>
-  )
+  );
 
-  function handleFieldChange (e) {
+  function handleFieldChange(e) {
     setData((prev) => {
-      return { ...prev, [e.target.name]: e.target.value }
-    })
+      return { ...prev, [e.target.name]: e.target.value };
+    });
   }
 
-  async function validateFields () {
-    const errors = {}
+  async function validateFields() {
+    const errors = {};
 
     if (_.isEmpty(data.name)) {
-      errors.name = 'Name is required'
+      errors.name = 'Name is required';
     }
     if (_.isEmpty(data.email)) {
-      errors.email = 'Email is required'
+      errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(data.email)) {
-      errors.email = 'Invalid email address'
+      errors.email = 'Invalid email address';
     }
 
     if (_.isEmpty(data.phone)) {
-      errors.phone = 'Phone is required'
+      errors.phone = 'Phone is required';
     } else if (!/^\d{10}$/.test(data.phone)) {
-      errors.phone = 'Invalid phone number'
+      errors.phone = 'Invalid phone number';
     }
 
-    const modal = document.getElementById('my_modal_1')
+    const modal = document.getElementById('my_modal_1');
     if (_.isEmpty(errors)) {
-      updateUserMutation.mutate(data)
-      modal.returnValue = 1
+      updateUserMutation.mutate(data);
+      modal.returnValue = 1;
     } else {
-      let message = ''
+      let message = '';
       for (const key in errors) {
-        message += errors[key] + '\n'
+        message += errors[key] + '\n';
       }
-      toast.error(message)
-      console.log(errors)
-      modal.returnValue = 0
+      toast.error(message);
+      console.log(errors);
+      modal.returnValue = 0;
     }
-    modal.close()
+    modal.close();
   }
-}
+};
 
-export default UpdateModal
+export default UpdateModal;

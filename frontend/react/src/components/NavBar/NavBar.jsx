@@ -1,23 +1,21 @@
-import { useNavigate, Link } from 'react-router-dom'
-import { motion } from 'framer-motion'
-import { useEffect, useState } from 'react'
+import { useNavigate, Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
+import { useEffect, useState } from 'react';
 
-import { useQueryClient } from '@tanstack/react-query'
+import { useQueryClient } from '@tanstack/react-query';
 
-import appState from '../../data/AppState'
-import cartEmitter, {
-  getCartCount
-} from '../../pages/Cart/application/cart_event'
+import appState from '../../data/AppState';
+import cartEmitter, { getCartCount } from '../../pages/Cart/application/cart_event';
 
-import logo from '../../assets/logo.png'
+import logo from '../../assets/logo.png';
 
-import { BsSearch } from 'react-icons/bs'
-import { AiOutlineUser, AiOutlineShoppingCart, AiOutlineShop } from 'react-icons/ai'
-import { FaBars } from 'react-icons/fa'
+import { BsSearch } from 'react-icons/bs';
+import { AiOutlineUser, AiOutlineShoppingCart, AiOutlineShop } from 'react-icons/ai';
+import { FaBars } from 'react-icons/fa';
 
-function NavBar () {
-  const navigate = useNavigate()
-  const queryClient = useQueryClient()
+function NavBar() {
+  const navigate = useNavigate();
+  const queryClient = useQueryClient();
 
   return (
     <>
@@ -34,10 +32,7 @@ function NavBar () {
 
         {/* Desktop Icons */}
         <div className="">
-          <BsSearch
-            onClick={() => navigate('/search')}
-            className="cursor-pointer mx-5"
-          />
+          <BsSearch onClick={() => navigate('/search')} className="cursor-pointer mx-5" />
         </div>
 
         <div className="hidden md:flex">
@@ -69,9 +64,12 @@ function NavBar () {
             <NavBarItem text="About" route="/about" />
             <li
               onClick={() => {
-                appState.logOutUser()
-                queryClient.invalidateQueries(['profile'])
-                navigate('/auth')
+                appState.logOutUser();
+                queryClient.invalidateQueries(['profile']);
+                queryClient.invalidateQueries(['cart']);
+                queryClient.invalidateQueries(['explore']);
+
+                navigate('/auth');
               }}
             >
               <h6>Logout</h6>
@@ -80,39 +78,39 @@ function NavBar () {
         </div>
       </motion.header>
     </>
-  )
+  );
 }
 
-function NavBarItem ({ text = 'NavItem', route = '/' }) {
-  const navigate = useNavigate()
+function NavBarItem({ text = 'NavItem', route = '/' }) {
+  const navigate = useNavigate();
   return (
     <li onClick={() => navigate(route)}>
       <h6>{text}</h6>
     </li>
-  )
+  );
 }
 
 const CartNotifier = () => {
-  const navigate = useNavigate()
-  const [cartCount, setCartCount] = useState(0)
-  if (!appState.isCustomer()) return
+  const navigate = useNavigate();
+  const [cartCount, setCartCount] = useState(0);
+  if (!appState.isCustomer()) return;
 
   useEffect(() => {
-    console.log('NavBar.jsx: Adding Listener...')
-    setCartCount(getCartCount())
+    console.log('NavBar.jsx: Adding Listener...');
+    setCartCount(getCartCount());
 
     const listener = (count) => {
-      console.log('Cart Counter notified: ', count)
-      setCartCount(count)
-    }
+      console.log('Cart Counter notified: ', count);
+      setCartCount(count);
+    };
 
-    cartEmitter.on('cartUpdate', listener)
+    cartEmitter.on('cartUpdate', listener);
 
     return () => {
-      console.log('NavBar.jsx: Removing Listener...')
-      cartEmitter.off('cartUpdate', listener)
-    }
-  }, [])
+      console.log('NavBar.jsx: Removing Listener...');
+      cartEmitter.off('cartUpdate', listener);
+    };
+  }, []);
 
   return (
     <div className=" flex mr-5 relative" onClick={() => navigate('/cart')}>
@@ -123,7 +121,7 @@ const CartNotifier = () => {
         </span>
       )}
     </div>
-  )
-}
+  );
+};
 
-export default NavBar
+export default NavBar;

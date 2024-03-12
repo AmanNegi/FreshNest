@@ -1,20 +1,20 @@
-import { useEffect } from 'react'
-import { useNavigate } from 'react-router-dom'
-import { motion } from 'framer-motion'
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { motion } from 'framer-motion';
 
-import NavigationButton from '../../../components/Button'
+import NavigationButton from '../../../components/Button';
 
-import { data, features } from '../../../data/data'
-import { getFourItems } from '../../shop/application/shop'
+import { data, features } from '../../../data/data';
+import { getFourItems } from '../../shop/application/shop';
 
-import landingBg from '../../../assets/landing_bg.jpg'
-import exploreImage from '../../../assets/explore.png'
-import { useQuery } from '@tanstack/react-query'
+import landingBg from '../../../assets/landing_bg.jpg';
+import exploreImage from '../../../assets/explore.png';
+import { useQuery } from '@tanstack/react-query';
 
-function Home () {
+function Home() {
   useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [])
+    window.scrollTo(0, 0);
+  }, []);
 
   return (
     <>
@@ -30,18 +30,12 @@ function Home () {
               viewport={{ once: true }}
               className="w-[100%] p-5 md:w-[30%] my-5 flex flex-col justify-center items-center bg-green-300 rounded-lg"
             >
-              <h1 className="text-4xl font-bold text-green-900">
-                Our Features
-              </h1>
+              <h1 className="text-4xl font-bold text-green-900">Our Features</h1>
             </motion.div>
             <div className="w-[100%] md:w-[70%] grid grid-cols-1 md:grid-cols-2 gap-4 md:m-5">
               {features.map((e, i) => {
                 return (
-                  <motion.div
-                    key={i}
-                    whileHover={{ scale: 1.05 }}
-                    transition={{ duration: 0.05 }}
-                  >
+                  <motion.div key={i} whileHover={{ scale: 1.05 }} transition={{ duration: 0.05 }}>
                     <motion.div
                       transition={{ delay: 0.25, duration: 1 }}
                       initial={{ opacity: 0 }}
@@ -55,12 +49,10 @@ function Home () {
                       </div>
 
                       <h1 className="text-2xl font-bold  ">{e.title}</h1>
-                      <p className="text-black text-opacity-50">
-                        {e.description}
-                      </p>
+                      <p className="text-black text-opacity-50">{e.description}</p>
                     </motion.div>
                   </motion.div>
-                )
+                );
               })}
             </div>
           </div>
@@ -85,10 +77,10 @@ function Home () {
         </section>
       </main>
     </>
-  )
+  );
 }
 
-function TopSection () {
+function TopSection() {
   return (
     <section
       className="relative h-[92vh] w-[100%] bg-slate-200 bg-cover bg-right bg-fixed"
@@ -127,10 +119,10 @@ function TopSection () {
         </motion.div>
       </div>
     </section>
-  )
+  );
 }
 
-function OurMottoSection () {
+function OurMottoSection() {
   return (
     <motion.section
       transition={{ duration: 1.25 }}
@@ -158,21 +150,21 @@ function OurMottoSection () {
                   <p className="text-lg">{e.name}</p>
                 </div>
               </motion.div>
-            )
+            );
           })}
         </div>
       </div>
     </motion.section>
-  )
+  );
 }
 
-function ExploreProducts () {
+function ExploreProducts() {
   /**
    * @type {[Array<Item>, (e:Array<Item>)=>void]}
    */
   // const [products, setProducts] = useState([]);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   const {
     data: products,
     isLoading,
@@ -180,10 +172,10 @@ function ExploreProducts () {
   } = useQuery({
     queryKey: ['explore'],
     queryFn: () => getFourItems()
-  })
+  });
 
   if (isLoading || isError) {
-    return <></>
+    return <></>;
   }
 
   return (
@@ -197,15 +189,9 @@ function ExploreProducts () {
             viewport={{ once: true }}
             className="relative object-cover text-center h-[100%]" // Adjust the height here
           >
-            <img
-              className="object-cover object-center h-full w-full"
-              src={exploreImage}
-              alt=""
-            />
+            <img className="object-cover object-center h-full w-full" src={exploreImage} alt="" />
             <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-              <p className="text-white font-light tracking-wider text-xl md:text-lg">
-                EXPLORE OUR
-              </p>
+              <p className="text-white font-light tracking-wider text-xl md:text-lg">EXPLORE OUR</p>
               <p className="text-white font-bold text-7xl">Products</p>
             </div>
           </motion.div>
@@ -220,10 +206,7 @@ function ExploreProducts () {
           >
             {products.map((e, i) => {
               return (
-                <div
-                  key={i}
-                  className="flex flex-col items-center justify-center h-full"
-                >
+                <div key={i} className="flex flex-col items-center justify-center h-full">
                   <div className="group w-[10/12] relative h-full">
                     <img
                       key={e.images[0]}
@@ -244,13 +227,13 @@ function ExploreProducts () {
                   <h1 className="text-lg">{e.name}</h1>
                   <h2 className="font-bold">₹ {e.price}</h2>
                 </div>
-              )
+              );
             })}
           </motion.div>
         </div>
       </div>
     </section>
-  )
+  );
 }
 
-export default Home
+export default Home;

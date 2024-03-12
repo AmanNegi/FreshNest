@@ -1,31 +1,31 @@
-import axios from 'axios'
-import { toast } from 'react-toastify'
+import axios from 'axios';
+import { toast } from 'react-toastify';
 
-import appState from '../../../data/AppState'
-import { emitCartUpdateEvent, saveCartCount } from './cart_event'
+import appState from '../../../data/AppState';
+import { emitCartUpdateEvent, saveCartCount } from './cart_event';
 
 /**
  * Get a list of cart items from the database.
  * @returns {Promise<Array<CartItem>|Error>} - The list of items in the cart.
  */
-export default async function getCart () {
+export default async function getCart() {
   if (!appState.isUserLoggedIn()) {
-    toast.error('You must be logged in to view your cart')
-    return null
+    toast.error('You must be logged in to view your cart');
+    return null;
   }
 
-  const id = appState.userData._id
-  const res = await axios.get(import.meta.env.VITE_API_URL + `/cart/get/${id}`)
+  const id = appState.userData._id;
+  const res = await axios.get(import.meta.env.VITE_API_URL + `/cart/get/${id}`);
 
-  console.log('cart.js: ', res)
-  emitCartUpdateEvent(res.data.data.items.length)
-  saveCartCount(res.data.data.items.length)
+  console.log('cart.js: ', res);
+  emitCartUpdateEvent(res.data.data.items.length);
+  saveCartCount(res.data.data.items.length);
 
   if (!res.data.data.items) {
-    console.log('cart.js: An error occurred', res)
-    return []
+    console.log('cart.js: An error occurred', res);
+    return [];
   }
-  return res.data.data.items
+  return res.data.data.items;
 }
 
 /**
@@ -34,52 +34,52 @@ export default async function getCart () {
  * @param {number} count
  * @returns {Promise<number>} A status code indicating success or failure.
  */
-export async function addToCart (itemId, count) {
+export async function addToCart(itemId, count) {
   if (!appState.isUserLoggedIn()) {
-    toast.error('You must be logged in to add item to cart')
-    return 0
+    toast.error('You must be logged in to add item to cart');
+    return 0;
   }
 
   const res = await axios.post(import.meta.env.VITE_API_URL + '/cart/add', {
     userId: appState.userData._id,
     item: itemId,
     count
-  })
+  });
 
   if (res.data.statusCode === 200) {
-    console.log(res.data.data.items)
-    emitCartUpdateEvent(res.data.data.items.length)
-    saveCartCount(res.data.data.items.length)
+    console.log(res.data.data.items);
+    emitCartUpdateEvent(res.data.data.items.length);
+    saveCartCount(res.data.data.items.length);
 
-    toast.success(res.data.message)
+    toast.success(res.data.message);
   } else {
-    toast.error(res.data.message)
+    toast.error(res.data.message);
   }
 
-  console.log(res)
-  return 1
+  console.log(res);
+  return 1;
 }
 
-export async function updateCartCount (itemId, count) {
-  console.log('updateCartCount  ', itemId, count)
+export async function updateCartCount(itemId, count) {
+  console.log('updateCartCount  ', itemId, count);
   if (!appState.isUserLoggedIn()) {
-    toast.error('You must be logged in to update cart')
-    return 0
+    toast.error('You must be logged in to update cart');
+    return 0;
   }
 
   const res = await axios.post(import.meta.env.VITE_API_URL + '/cart/update', {
     userId: appState.userData._id,
     itemId,
     count
-  })
+  });
 
   if (res.data.statusCode === 200) {
-    console.log('Updated Cart Successfully')
+    console.log('Updated Cart Successfully');
   } else {
-    toast.error(res.data.message)
+    toast.error(res.data.message);
   }
 
-  return res.data.data
+  return res.data.data;
 }
 
 /**
@@ -87,23 +87,23 @@ export async function updateCartCount (itemId, count) {
  * @param {string} itemId
  * @returns {Promise<number>} A status code indicating success or failure.
  */
-export async function removeFromCart (itemId) {
+export async function removeFromCart(itemId) {
   if (!appState.isUserLoggedIn()) {
-    toast.error('You must be logged in to remove item from cart')
-    return 0
+    toast.error('You must be logged in to remove item from cart');
+    return 0;
   }
 
   const res = await axios.post(import.meta.env.VITE_API_URL + '/cart/remove', {
     userId: appState.userData._id,
     itemId
-  })
+  });
 
   if (res.data.statusCode === 200) {
-    toast.success(res.data.message)
+    toast.success(res.data.message);
   } else {
-    toast.error(res.data.message)
+    toast.error(res.data.message);
   }
 
-  console.log('cart.js | removeFromCart()', res)
-  return 1
+  console.log('cart.js | removeFromCart()', res);
+  return 1;
 }
