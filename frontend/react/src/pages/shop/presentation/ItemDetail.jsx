@@ -77,10 +77,10 @@ function ItemDetail() {
               <h1 className="pb-2 text-3xl font-bold">{item.name}</h1>
               <div className="flex flex-row items-end">
                 <h1 className="pb-5 mr-3 text-xl font-light text-gray-300 line-through">
-                  {'₹ ' + (parseFloat(item.price) + 20)}
+                  {'₹ ' + (parseFloat(item.price) + 20).toFixed(2)}
                 </h1>
 
-                <h1 className="pb-5 text-2xl font-bold text-accentColor">{'₹ ' + item.price}</h1>
+                <h1 className="pb-5 text-2xl font-bold text-accentColor">{'₹ ' + item.price.toFixed(2)}</h1>
               </div>
 
               <div className="flex flex-row gap-4 mb-2 items-center">
