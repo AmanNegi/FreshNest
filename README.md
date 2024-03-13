@@ -43,7 +43,7 @@ With FreshNest, you can explore a wide range of locally grown vegetables, source
 - **Shop Local with Confidence**: Effortlessly discover farms and vendors in your area. FreshNest uses your location to connect you with nearby producers, ensuring you get the freshest produce with minimal travel time.
 - **See What You're Getting**: Browse captivating images uploaded directly by sellers. Get a clear picture of the farm, the produce itself, and gain confidence in your purchase before adding it to your cart. FreshNest fosters transparency by allowing you to virtually visit the source of your food.
 
-## How we built it?
+## How we built it? 🤷
 
 To deliver a user-friendly web interface, the project uses a Node.js & Express.js backend for server-side operations, while the frontend utilizes React & TailwindCSS. A mobile client was developed using Flutter for greater accessibility.
 
@@ -51,7 +51,7 @@ The application caters to two types of users: customers and farmers. Farmers can
 
 The project is maintained to industry standards, with separate branches for different tasks, comprehensive documentation, and beginner-friendly issues to give newcomers hands-on experience with the frameworks (Flutter/Express/ReactJS). For deployment, we evaluated several platforms and chose [Netlify](https://www.netlify.com) for the website and [Adaptable.io](https://adaptable.io) for the backend.
 
-## 🛠️ Tech Stack
+## Tech Stack 🛠️
 
 | Technology | Tech Stack                                                                                                           | Version      |
 | ---------- | -------------------------------------------------------------------------------------------------------------------- | ------------ |
@@ -72,6 +72,8 @@ We've created an elaborate contribution document, feel free to check the [`CONTR
 
 ## License 🛡️
 
+> We believe the AGPLv3 best supports our commitment to open-source development and fosters a collaborative atmosphere where everyone can contribute and benefit from the project's growth.
+
 Distributed under the AGPLv3 License. See [`LICENSE.md`](./LICENSE) for more information.
 
 We've chosen to license this project under the **GNU Affero General Public License version 3 (AGPLv3)** to promote open-source development and collaboration. Here are the key reasons for this decision:
@@ -79,9 +81,8 @@ We've chosen to license this project under the **GNU Affero General Public Licen
 - **Strong Copyleft**: The AGPLv3 ensures that derivative works (modified versions) of our code also remain open-source. This means anyone who distributes a modified version over a network (like our backend, frontend, or mobile app) must make the corresponding source code available under the same AGPLv3 license. This fosters a collaborative environment and prevents users from creating closed-source derivatives from our open-source work.
 - **Open Source for Everyone**: The AGPLv3 guarantees that not only our code, but also significant modifications to it, remain open and accessible to everyone. This transparency and collaborative spirit are essential for open-source projects.
 - **Network Compatibility**: Since our project involves components that communicate over a network (backend, frontend, mobile client), the AGPLv3 is particularly fitting. It specifically addresses network-based interactions, ensuring that modifications made to these network-facing parts are also open-source.
-  > We believe the AGPLv3 best supports our commitment to open-source development and fosters a collaborative atmosphere where everyone can contribute and benefit from the project's growth.
 
-## 🙏 Support
+## Support 🙏
 
 Currently the best way to support our project is by leaving a ⭐️. Don't forget to leave a star.
 
