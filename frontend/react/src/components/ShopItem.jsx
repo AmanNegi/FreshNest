@@ -111,7 +111,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
 
           <div className="bg-gray-200 inline-flex flex-row mx-2 items-center justify-start px-3 gap-3 py-1 rounded-[5px] text-xs ">
             <FaClockRotateLeft />
-            <TimeAgo date={item.listedAt} />
+            <TimeAgo date={item.listedAt} live={false} />
           </div>
           <div className="px-4 rounded-lg ">
             <h1 className="text-xl font-bold text-gray-700 hover:text-gray-900 hover:cursor-pointer">
