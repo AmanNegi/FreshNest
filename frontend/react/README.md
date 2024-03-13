@@ -74,6 +74,8 @@ npm run dev
 
 ## Want to use GoogleLogin on local dev server?
 
+> Only needed if you are working on any GoogleLogin related issue
+
 ### **Step 1: Generate Google Login (GLogin) Credentials**
 
 1. Go to the [Google Developer Console](https://console.developers.google.com/).
