@@ -49,22 +49,22 @@ export async function addFarmImage(image) {
 
 /**
  * Makes request to backend to get the user's profile
- * @returns {Promise<User | undefined>} The user's profile
+ * @returns {Promise<User|Error>} The user's profile or Error
  */
 export async function getUser() {
   if (!appState.isUserLoggedIn()) {
     toast.error('You must be logged in to view your profile');
-    return undefined;
+    throw Error('User not logged in');
   }
 
   const res = await axios.get(import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`);
+  console.log('Server Respponse: ', res);
 
-  console.log(res);
   if (res.status === 200) {
     appState.setUserData(res.data.data);
     return res.data.data;
   }
 
   appState.logOutUser();
-  return undefined;
+  throw Error('User not found');
 }

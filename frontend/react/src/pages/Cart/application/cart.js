@@ -11,7 +11,7 @@ import { emitCartUpdateEvent, saveCartCount } from './cart_event';
 export default async function getCart() {
   if (!appState.isUserLoggedIn()) {
     toast.error('You must be logged in to view your cart');
-    return null;
+    throw new Error('User not logged in');
   }
 
   const id = appState.userData._id;
@@ -21,9 +21,9 @@ export default async function getCart() {
   emitCartUpdateEvent(res.data.data.items.length);
   saveCartCount(res.data.data.items.length);
 
-  if (!res.data.data.items) {
+  if (res.data.data == undefined || res.data.data.items == undefined) {
     console.log('cart.js: An error occurred', res);
-    return [];
+    throw new Error('Error occured while getting items');
   }
   return res.data.data.items;
 }

@@ -25,11 +25,13 @@ function Profile() {
     data: user,
     isLoading,
     isError,
-    error
+    error,
+    status
   } = useQuery({
     queryKey: ['profile'],
-    queryFn: () => getUser()
+    queryFn: getUser
   });
+  console.log(status, isLoading, isError, error, user);
 
   const [pattern, setPattern] = useState('pattern1');
   const patterns = ['pattern1', 'pattern2', 'pattern3'];
@@ -38,10 +40,18 @@ function Profile() {
     const selectedFile = event.target.files[0];
     console.log('Selected File:', selectedFile);
 
-    addFarmImageMutation.mutate(selectedFile);
+    if (selectedFile) {
+      addFarmImageMutation.mutate(selectedFile);
+    }
   };
 
-  console.log(isError, isLoading, user);
+  if (isLoading) {
+    return (
+      <main className="min-h-[100vh]">
+        <Loading />
+      </main>
+    );
+  }
 
   if (isError) {
     return (
@@ -52,14 +62,6 @@ function Profile() {
             queryClient.invalidateQueries(['profile']);
           }}
         />
-      </main>
-    );
-  }
-
-  if (isLoading) {
-    return (
-      <main className="min-h-[100vh]">
-        <Loading />
       </main>
     );
   }
@@ -118,9 +120,10 @@ function Profile() {
                 <a
                   onClick={() => {
                     appState.logOutUser();
-                    queryClient.invalidateQueries(['profile']);
-                    queryClient.invalidateQueries(['cart']);
-                    queryClient.invalidateQueries(['explore']);
+                    queryClient.removeQueries(['profile']);
+                    queryClient.removeQueries(['cart']);
+                    queryClient.removeQueries(['explore']);
+                    queryClient.removeQueries(['items']);
 
                     navigate('/auth');
                   }}

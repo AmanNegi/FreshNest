@@ -23,13 +23,19 @@ export default async function getItems(filter = '0') {
 
 /**
  * Get First Four Items for Home Page
- * @returns {Promise<Array<Item>>} - First Four Items
+ * @returns {Promise<Array<Item>>} - First Five Items
  */
 export async function getFourItems() {
+  let list = [];
   const res = await axios.get(`${import.meta.env.VITE_API_URL}/list/getRecent`);
 
   console.log('Get four items:', res);
-  return res.data.data;
+
+  if (res.data.statusCode === 200 && res.data.data) {
+    list = res.data.data.slice(0, 4);
+  }
+
+  return list;
 }
 
 /**

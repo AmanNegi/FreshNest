@@ -4,14 +4,12 @@ import _ from 'lodash';
 import useProfileMutations from '../../../hooks/ProfileHook';
 
 const UpdateModal = ({ user }) => {
-  console.log(user);
   const { updateUserMutation } = useProfileMutations();
   const [data, setData] = useState({
     name: user.name,
     email: user.email,
     phone: user.phone
   });
-  console.log(data);
 
   return (
     <dialog id="my_modal_1" className="modal">

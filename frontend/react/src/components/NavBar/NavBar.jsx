@@ -65,9 +65,10 @@ function NavBar() {
             <li
               onClick={() => {
                 appState.logOutUser();
-                queryClient.invalidateQueries(['profile']);
-                queryClient.invalidateQueries(['cart']);
-                queryClient.invalidateQueries(['explore']);
+                queryClient.removeQueries(['profile']);
+                queryClient.removeQueries(['cart']);
+                queryClient.removeQueries(['explore']);
+                queryClient.removeQueries(['items']);
 
                 navigate('/auth');
               }}

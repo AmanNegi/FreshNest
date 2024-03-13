@@ -42,7 +42,7 @@ function ItemDetail() {
     },
     onSuccess: (data) => {
       // Manually, update the cache as comment is added
-      queryClient.setQueryData(['item', id], (old) => {
+      queryClient.setQueryData(['item', id], () => {
         return data;
       });
     }
@@ -80,7 +80,9 @@ function ItemDetail() {
                   {'₹ ' + (parseFloat(item.price) + 20).toFixed(2)}
                 </h1>
 
-                <h1 className="pb-5 text-2xl font-bold text-accentColor">{'₹ ' + item.price.toFixed(2)}</h1>
+                <h1 className="pb-5 text-2xl font-bold text-accentColor">
+                  {'₹ ' + item.price.toFixed(2)}
+                </h1>
               </div>
 
               <div className="flex flex-row gap-4 mb-2 items-center">

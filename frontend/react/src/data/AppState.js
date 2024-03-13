@@ -51,13 +51,7 @@ class AppState {
   }
 
   isUserLoggedIn() {
-    // console.log("IS USER LOGGED IN : ", this.loggedIn, this.userData);
-    if (this.userData === undefined || !this.isLoggedIn || this.userData._id === undefined) {
-      this.isLoggedIn = false;
-      return false;
-    }
-
-    return true;
+    return this.isLoggedIn;
   }
 
   /**
