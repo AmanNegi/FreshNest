@@ -10,7 +10,9 @@ export default function useProfileMutations() {
     onSuccess: (e) => {
       toast.success('Image uploaded successfully');
       queryClient.setQueryData(['profile'], (old) => {
-        return [...old, e];
+        console.log(old, e);
+        old.images.push(e);
+        return { ...old };
       });
     },
     onError: (e) => {

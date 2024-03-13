@@ -162,8 +162,6 @@ function ExploreProducts() {
   /**
    * @type {[Array<Item>, (e:Array<Item>)=>void]}
    */
-  // const [products, setProducts] = useState([]);
-
   const navigate = useNavigate();
   const {
     data: products,
@@ -210,11 +208,11 @@ function ExploreProducts() {
                   <div className="group w-[10/12] relative h-full">
                     <img
                       key={e.images[0]}
-                      className="h-full w-full object-contain object-center pz-2 group-hover:opacity-20 transition-all"
+                      className="h-full w-full object-contain object-center p-8 group-hover:opacity-20 transition-all"
                       src={e.images[0]}
                       alt=""
                     />
-                    <div className="bg-black bg-opacity-10 hidden group-hover:flex transition-all justify-center items-center absolute inset-0 rounded-md">
+                    <div className="bg-white bg-opacity-5 border border-gray-100 hidden group-hover:flex transition-all justify-center items-center absolute inset-0 rounded-md">
                       <button
                         onClick={() => navigate(`/item/${e._id}`)}
                         className="bg-green-500 text-white px-5 py-[2vh] rounded-md transition-all"
