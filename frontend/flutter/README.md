@@ -16,13 +16,13 @@ git clone https://github.com/[your-username]/freshnest.git
 cd /frontend/flutter/
 ```
 4. Open the project folder `frontend/flutter` in your preferred IDE or code editor.
-4. Install the required dependencies by running the **`flutter pub get`** command in your terminal.
+4. Install the required dependencies by running the **`flutter pub get`** command in your terminal, and next generate a `google-services.json` mentioned below.
 5. Make changes to the code as needed, ensuring that you follow the project's coding standards and best practices.
 6. Test your changes using the project's existing test suite or by writing new tests.
 7. Submit a pull request to the project repository, detailing the changes you have made and any relevant information.
 
 
-## Setup google firebase 🔥
+## Setup google firebase (Required)🔥
 If you try to run main.dart now you may encounter like:
 ```
 Execution failed for task ':app:processDebugGoogleServices'

@@ -31,8 +31,12 @@ If you're new to contributing code, follow these steps:
 6. Claim an issue by commenting on it.
 7. Work on the issue, submit early PRs, and update your progress.
 
+Additionally, here are some resources that might help:
+- https://opensource.guide (Read Guide)
+- https://youtu.be/apGV9Kg7ics?si=qchaP453IoJpGMP3 (Video tutorial OSS, Git & GitHub)
+
 ## 🌟 Support Us
-Currently, leaving a star 🌟 is the best way to support us.
+Currently, leaving a star 🌟 and spreading word is the best way to support us.
  
 ## 📜 Code of Conduct
 Check out our [CODE_OF_CONDUCT](https://github.com/AmanNegi/FreshNest/blob/main/CODE_OF_CONDUCT.md) and help us foster a welcoming environment in our community.
