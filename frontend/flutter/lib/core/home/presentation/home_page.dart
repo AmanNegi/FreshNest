@@ -72,6 +72,7 @@ class _HomePageState extends ConsumerState<HomePage> {
                   AgroGridView(
                     list: ref.watch(homeProvider).getItems(),
                   ),
+                  SizedBox(height: 0.1 * getHeight(context)),
                 ],
               ),
             ),
