@@ -5,6 +5,7 @@ import 'package:fresh_nest/core/home/application/home_provider.dart';
 import 'package:fresh_nest/data/cache/app_cache.dart';
 import 'package:fresh_nest/globals.dart';
 import 'package:fresh_nest/models/millet_item.dart';
+import 'package:fresh_nest/models/user.dart';
 import "package:fresh_nest/secrets.dart";
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -121,6 +122,18 @@ Future<MilletItem?> getItemById(String id) async {
   if (data["statusCode"] == 200) {
     MilletItem item = MilletItem.fromMap(data["data"]);
     return item;
+  }
+  return null;
+}
+
+Future<User?> getUserById(String id) async {
+  var response = await http.get(Uri.parse("$API_URL/auth/$id"));
+  print(response);
+  Map data = json.decode(response.body);
+
+  if (data["statusCode"] == 200) {
+    User user = User.fromMap(data["data"]);
+    return user;
   }
   return null;
 }

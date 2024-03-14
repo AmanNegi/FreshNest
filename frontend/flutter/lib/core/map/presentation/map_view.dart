@@ -219,7 +219,7 @@ class _MapViewPageState extends ConsumerState<MapViewPage> {
                         vertical: 10.0,
                       ),
                       height: 0.15 * getHeight(context),
-                      width: 0.8 * getWidth(context),
+                      width: 0.85 * getWidth(context),
                       decoration: BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.circular(10),
@@ -232,7 +232,7 @@ class _MapViewPageState extends ConsumerState<MapViewPage> {
                                 ? Image.network(
                                     item.images[0],
                                     fit: BoxFit.cover,
-                                    width: 0.25 * getWidth(context),
+                                    width: 0.3 * getWidth(context),
                                     height: double.infinity,
                                   )
                                 : Container(
@@ -240,7 +240,7 @@ class _MapViewPageState extends ConsumerState<MapViewPage> {
                                     child: Image.asset(
                                       "assets/logo.png",
                                       fit: BoxFit.contain,
-                                      width: 0.25 * getWidth(context),
+                                      width: 0.3 * getWidth(context),
                                       height: double.infinity,
                                     ),
                                   ),
