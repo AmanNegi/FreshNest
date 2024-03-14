@@ -51,9 +51,10 @@ export async function addFarmImage(image) {
  * Makes request to backend to get the user's profile
  * @returns {Promise<User|Error>} The user's profile or Error
  */
-export async function getUser() {
+export async function getUser(navigate) {
   if (!appState.isUserLoggedIn()) {
     toast.error('You must be logged in to view your profile');
+    navigate('/auth');
     throw Error('User not logged in');
   }
 

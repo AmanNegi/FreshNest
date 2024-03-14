@@ -4,6 +4,7 @@ import { lazy } from 'react';
 import NavBar from './components/NavBar/NavBar';
 import Footer from './components/Footer';
 import ErrorPage from './pages/Error';
+import FarmerProfile from './pages/Profile/presentation/FarmerProfile';
 
 const Login = lazy(() => import('./pages/Auth/presentation/Login'));
 const Landing = lazy(() => import('./pages/Landing/presentation/Landing'));
@@ -72,6 +73,10 @@ const routes = createBrowserRouter([
       {
         path: '/profile',
         element: <Profile />
+      },
+      {
+        path: '/profile/:id',
+        element: <FarmerProfile />
       },
       {
         path: '/cart',

@@ -29,7 +29,7 @@ function Profile() {
     status
   } = useQuery({
     queryKey: ['profile'],
-    queryFn: getUser
+    queryFn: () => getUser(navigate)
   });
   console.log(status, isLoading, isError, error, user);
 
