@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 const { User } = require('../models/user')
 
 /**
- * Get all farms
+ * Get all farms in the database
  */
 router.get('/getFarms', async (req, res) => {
   const farms = await User.find(
@@ -31,7 +31,7 @@ router.get('/getRecent', async (req, res) => {
 })
 
 /**
- * Get all millet items
+ * Get all products in the database
  */
 router.get('/getAll', async (req, res) => {
   const items = await MilletItem.find({})
@@ -57,10 +57,10 @@ router.get('/getAll/:farmerID', async (req, res) => {
 })
 
 /**
- * Add a millet item
+ * Add a Product
  * @param {Object} req - The request object.
  * @param {Object} req.body - The request body.
- * @param {Date} req.body.listedBy - The ID of the user who listed the item.
+ * @param {string} req.body.listedBy - The ID of the user who listed the item.
  * @param {string} req.body.title - The title of the item.
  * @param {string} req.body.description - The description of the item.
  * @param {number} req.body.price - The price of the item.
@@ -80,7 +80,7 @@ router.post('/addItem', async (req, res) => {
 })
 
 /**
- * Get a millet item by ID
+ * Get a Product by ID
  * @param {Object} req - The request object.
  * @param {string} req.params.id - The ID of the item.
  */
@@ -96,7 +96,7 @@ router.get('/getItem/:id', async (req, res) => {
 })
 
 /**
- * Add a comment to a millet item
+ * Add a comment to a  product
  * @param {Object} req - The request object.
  * @param {Object} req.body - The request body.
  * @param {string} req.body.commentBy - The ID of the user who commented.
@@ -136,6 +136,9 @@ router.post('/getComments', async (req, res) => {
     return res.status(404).send(getErrorResponse('Invalid Item ID'))
   }
   const item = await MilletItem.findOne({ _id: itemID })
+  if (!item) {
+    return res.status(404).send(getErrorResponse('No Product Found'))
+  }
   return res.send(getSuccessResponse('Success!', item.comments))
 })
 
