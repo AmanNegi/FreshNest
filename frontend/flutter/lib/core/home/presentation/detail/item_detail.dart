@@ -5,11 +5,14 @@ import 'package:fresh_nest/core/home/application/comment_manager.dart';
 import 'package:fresh_nest/core/home/application/comment_provider.dart';
 import 'package:fresh_nest/core/home/application/home_manager.dart';
 import 'package:fresh_nest/core/home/presentation/detail/item_fullview.dart';
+import 'package:fresh_nest/core/home/presentation/profile/farm_profile.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/loading_widget.dart';
 import 'package:fresh_nest/data/cache/app_cache.dart';
 import 'package:fresh_nest/globals.dart';
 import 'package:fresh_nest/models/cart_item.dart';
 import 'package:fresh_nest/models/comment.dart';
 import 'package:fresh_nest/models/millet_item.dart';
+import 'package:fresh_nest/models/user.dart';
 import 'package:fresh_nest/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -27,7 +30,10 @@ class ItemDetailPage extends ConsumerStatefulWidget {
 class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
   late CommentManager _commentManager;
   late MilletItem item;
+  User? listedBy;
   final TextEditingController _commentController = TextEditingController();
+
+  ValueNotifier<bool> isLoading = ValueNotifier(true);
 
   int amount = 1;
 
@@ -36,6 +42,12 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
     item = widget.item;
     _commentManager = CommentManager(context, ref, item.id);
     super.initState();
+
+    getUserById(widget.item.listedBy).then((value) {
+      listedBy = value;
+      isLoading.value = false;
+      if (mounted) setState(() {});
+    });
   }
 
   @override
@@ -82,138 +94,155 @@ class _ItemDetailPageState extends ConsumerState<ItemDetailPage> {
         centerTitle: true,
         title: const Text("Details"),
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            SizedBox(height: 0.015 * getHeight(context)),
-            Container(
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(30.0),
-              ),
-              child: ClipRRect(
-                borderRadius: BorderRadius.circular(10.0),
-                child: GestureDetector(
-                  onTap: () {
-                    goToPage(context, ItemFullView(src: item.images[0]));
-                  },
-                  child: Image.network(
-                    item.images[0],
-                    height: 0.3 * getHeight(context),
-                    fit: BoxFit.cover,
-                    width: double.infinity,
-                  ),
+      body: LoadingWidget(
+        isLoading: isLoading,
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(height: 0.015 * getHeight(context)),
+              Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(30.0),
                 ),
-              ),
-            ),
-            SizedBox(height: 0.025 * getHeight(context)),
-            Row(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  width: 0.6 * getWidth(context),
-                  child: Text(
-                    item.name,
-                    style: const TextStyle(
-                      fontSize: 22,
-                      fontWeight: FontWeight.w400,
+                child: ClipRRect(
+                  borderRadius: BorderRadius.circular(10.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      goToPage(context, ItemFullView(src: item.images[0]));
+                    },
+                    child: Image.network(
+                      item.images[0],
+                      height: 0.3 * getHeight(context),
+                      fit: BoxFit.contain,
+                      width: double.infinity,
                     ),
-                    maxLines: 2,
-                    overflow: TextOverflow.ellipsis,
                   ),
                 ),
-                const Spacer(),
-                Text(
-                  "₹ ${item.price}",
-                  style: const TextStyle(
-                      fontSize: 25,
-                      color: lightColor,
-                      fontWeight: FontWeight.w600),
-                ),
-              ],
-            ),
-            SizedBox(height: 0.01 * getHeight(context)),
-            Text(
-              item.description,
-              style: const TextStyle(
-                fontSize: 15,
-                color: Colors.grey,
               ),
-            ),
-
-            SizedBox(height: 0.025 * getHeight(context)),
-            const Divider(height: 10),
-            SizedBox(height: 0.025 * getHeight(context)),
-            const Text(
-              "Comments",
-              style: TextStyle(
-                fontSize: 20,
+              SizedBox(height: 0.025 * getHeight(context)),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    width: 0.6 * getWidth(context),
+                    child: Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          item.name,
+                          style: const TextStyle(
+                            fontSize: 22,
+                            fontWeight: FontWeight.w400,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                        if (listedBy != null)
+                          GestureDetector(
+                            onTap: () {
+                              goToPage(
+                                  context, FarmProfilePage(user: listedBy!));
+                            },
+                            child: Text("Seller: ${listedBy!.name}"),
+                          ),
+                      ],
+                    ),
+                  ),
+                  const Spacer(),
+                  Text(
+                    "₹ ${item.price}",
+                    style: const TextStyle(
+                        fontSize: 25,
+                        color: lightColor,
+                        fontWeight: FontWeight.w600),
+                  ),
+                ],
               ),
-            ),
-            SizedBox(height: 0.015 * getHeight(context)),
-            Row(
-              children: [
-                Expanded(
-                  child: CustomTextField(
-                    hint: "Type comment here...",
-                    controller: _commentController,
-                    onChanged: (v) {},
-                    onSubmitted: (v) => postComment(),
-                  ),
+              SizedBox(height: 0.01 * getHeight(context)),
+              Text(
+                item.description,
+                style: const TextStyle(
+                  fontSize: 15,
+                  color: Colors.grey,
                 ),
-                IconButton(
-                  icon: const Icon(
-                    MdiIcons.sendCircle,
-                    size: 35,
-                  ),
-                  onPressed: () => postComment(),
-                ),
-              ],
-            ),
+              ),
 
-            ListView.builder(
-              shrinkWrap: true,
-              physics: const NeverScrollableScrollPhysics(),
-              itemCount: ref.watch(commentProvider).getComments().length,
-              itemBuilder: (context, index) {
-                var list = ref.watch(commentProvider).getComments();
-                if (appCache.isAdmin()) {
-                  return Dismissible(
-                    key: ValueKey(list[index].id),
-                    background: Container(
-                      decoration: const BoxDecoration(
-                        gradient: LinearGradient(
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                          colors: [
-                            Colors.white,
-                            Colors.red,
+              SizedBox(height: 0.025 * getHeight(context)),
+              const Divider(height: 10),
+              SizedBox(height: 0.025 * getHeight(context)),
+              const Text(
+                "Comments",
+                style: TextStyle(
+                  fontSize: 20,
+                ),
+              ),
+              SizedBox(height: 0.015 * getHeight(context)),
+              Row(
+                children: [
+                  Expanded(
+                    child: CustomTextField(
+                      hint: "Type comment here...",
+                      controller: _commentController,
+                      onChanged: (v) {},
+                      onSubmitted: (v) => postComment(),
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(
+                      MdiIcons.sendCircle,
+                      size: 35,
+                    ),
+                    onPressed: () => postComment(),
+                  ),
+                ],
+              ),
+
+              ListView.builder(
+                shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
+                itemCount: ref.watch(commentProvider).getComments().length,
+                itemBuilder: (context, index) {
+                  var list = ref.watch(commentProvider).getComments();
+                  if (appCache.isAdmin()) {
+                    return Dismissible(
+                      key: ValueKey(list[index].id),
+                      background: Container(
+                        decoration: const BoxDecoration(
+                          gradient: LinearGradient(
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
+                            colors: [
+                              Colors.white,
+                              Colors.red,
+                            ],
+                          ),
+                        ),
+                        child: const Row(
+                          children: [
+                            Spacer(),
+                            Icon(
+                              Icons.delete,
+                              color: Colors.white,
+                            ),
+                            SizedBox(width: 20),
                           ],
                         ),
                       ),
-                      child: const Row(
-                        children: [
-                          Spacer(),
-                          Icon(
-                            Icons.delete,
-                            color: Colors.white,
-                          ),
-                          SizedBox(width: 20),
-                        ],
-                      ),
-                    ),
-                    child: _getCommentItem(list, index),
-                  );
-                } else {
-                  return _getCommentItem(list, index);
-                }
-              },
-            ),
-            const SizedBox(height: 20),
+                      child: _getCommentItem(list, index),
+                    );
+                  } else {
+                    return _getCommentItem(list, index);
+                  }
+                },
+              ),
+              const SizedBox(height: 20),
 
-            // _getQuantityIncrementer(context)
-          ],
+              // _getQuantityIncrementer(context)
+            ],
+          ),
         ),
       ),
     );

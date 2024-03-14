@@ -12,7 +12,7 @@ export default async function getItems(filter = '0') {
 
   if (appState.isFarmer()) {
     // farmers will only see their products
-    list = await getAllFarmerItems();
+    list = await getAllFarmerItems(appState.getUserData()._id);
   } else {
     // admin and user will see all items
     list = await getAllItems();
@@ -94,7 +94,7 @@ export function sortList(list, filter) {
 
 /**
  * Get all items from the database.
- * @returns {Promise<Item|undefined>} - The list of all items.
+ * @returns {Promise<Array<Item>|undefined>} - The list of all items.
  */
 export async function getAllItems() {
   const res = await axios.get(import.meta.env.VITE_API_URL + '/list/getAll');
@@ -104,11 +104,9 @@ export async function getAllItems() {
 
 /**
  * Get all items listed by the current farmer from the database.
- * @returns {Promise<Item|undefined>} - The list of items listed by the current farmer.
+ * @returns {Promise<Array<Item>|undefined>} - The list of items listed by the current farmer.
  */
-export async function getAllFarmerItems() {
-  const id = appState.getUserData()._id;
-
+export async function getAllFarmerItems(id) {
   const res = await axios.get(`${import.meta.env.VITE_API_URL}/list/getAll/${id}`);
 
   return res.data.data;
@@ -181,4 +179,23 @@ export async function deleteItem(itemId, listedBy) {
   }
 
   return 0;
+}
+
+/**
+ * Returns the user's profile from the database.
+ * @param {string} id
+ * @returns {User} If User is found
+ */
+export async function getUserFromId(id) {
+  const res = await axios.get(import.meta.env.VITE_API_URL + '/auth/' + id);
+
+  if (!res) {
+    throw new Error('User not found');
+  }
+
+  if (!res.data.data) {
+    throw new Error('User not found');
+  }
+
+  return res.data.data;
 }

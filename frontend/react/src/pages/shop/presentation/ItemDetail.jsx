@@ -3,7 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import Rating from 'react-rating';
 
-import { addComment, getItem } from '../application/shop';
+import { addComment, getItem, getUserFromId } from '../application/shop';
 import ItemDetailShimmer from './DetailShimmer';
 import ImageView from '../../../components/ImageView';
 
@@ -23,14 +23,23 @@ function ItemDetail() {
   const queryClient = useQueryClient();
   const commentRef = useRef();
 
-  const {
-    isLoading,
-    isError,
-    error,
-    data: item
-  } = useQuery({
+  const { isLoading, isError, error, data } = useQuery({
     queryKey: ['item', id],
-    queryFn: () => getItem(id)
+    queryFn: async () => {
+      const item = await getItem(id);
+
+      if (!item) throw Error('An error occured while loading item!');
+
+      const user = await getUserFromId(item?.listedBy);
+
+      if (!user) throw Error('An error occured while loading item!');
+
+      console.log('IN QUERY: ', item, user);
+      return {
+        item,
+        user
+      };
+    }
   });
 
   const mutation = useMutation({
@@ -59,7 +68,7 @@ function ItemDetail() {
       />
     );
   }
-
+  const { item, user: lister } = data;
   return (
     <>
       <main className="px-[10vw] pt-[8vh]">
@@ -75,6 +84,17 @@ function ItemDetail() {
             />
             <div className="flex flex-col pl-8 mt-5 lg:mt-0">
               <h1 className="pb-2 text-3xl font-bold">{item.name}</h1>
+
+              {appState.userData._id != lister._id && (
+                <p
+                  onClick={() => {
+                    navigate('/profile/' + lister._id);
+                  }}
+                  className="cursor-pointer bg-accentColor text-white rounded-full py-2 w-[10vw] items-center justify-center flex "
+                >
+                  By: {lister.name}
+                </p>
+              )}
               <div className="flex flex-row items-end">
                 <h1 className="pb-5 mr-3 text-xl font-light text-gray-300 line-through">
                   {'₹ ' + (parseFloat(item.price) + 20).toFixed(2)}
