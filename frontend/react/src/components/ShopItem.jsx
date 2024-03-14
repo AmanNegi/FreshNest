@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import appState from '../data/AppState';
 import { addToCart, removeFromCart } from '../pages/Cart/application/cart';
-import { getItem } from '../pages/shop/application/shop';
+import { getItem, getUserFromId } from '../pages/shop/application/shop';
 import TimeAgo from 'react-timeago';
 
 import { BsFillTrash3Fill } from 'react-icons/bs';
@@ -33,14 +33,22 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
 
   const navigate = useNavigate();
 
-  const {
-    isLoading,
-    isError,
-    data: item,
-    error
-  } = useQuery({
+  const { isLoading, isError, data, error } = useQuery({
     queryKey: ['item', itemId],
-    queryFn: () => getItem(itemId)
+    queryFn: async () => {
+      const item = await getItem(itemId);
+
+      if (!item) throw Error('An error occured while loading item!');
+
+      const user = await getUserFromId(item?.listedBy);
+
+      if (!user) throw Error('An error occured while loading item!');
+      console.log('IN QUERY: ', item, user);
+      return {
+        item,
+        user
+      };
+    }
   });
 
   const { deleteItemFromCartMutation, deleteItemMutation, updateCartMutation } =
@@ -76,6 +84,8 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
       </div>
     );
   }
+  const { item, user: lister } = data;
+  console.log('Shop Item.jsx', data);
 
   return (
     <>
@@ -117,6 +127,9 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
             <h1 className="text-xl font-bold text-gray-700 hover:text-gray-900 hover:cursor-pointer">
               {item.name}
             </h1>
+            {appState.userData._id != lister._id && (
+              <p className="text-sm text-gray-500">{lister.name}</p>
+            )}
 
             <p className="text-lg font-extrabold text-green-500">{'₹ ' + item.price + '/kg'}</p>
 
