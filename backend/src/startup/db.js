@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const logger = require('../utils/logger')
 /**
  *
- * @returns {Promise<mongoose|undefined|err>} - Resolves to a connection object if successful
+ * @returns {Promise<mongoose | undefined | Error>} - Resolves to a connection object if successful
  */
 module.exports = async function () {
   const dbUrl = process.env.DATABASE_URL
