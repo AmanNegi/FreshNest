@@ -1,3 +1,8 @@
+/**
+ * This file is used to generate the swagger documentation for the backend.
+ * A seperate script is created to run this file to generate the swagger documentation.
+ * npm run swagger-autogen
+ */
 const swaggerAutogen = require('swagger-autogen')()
 
 const doc = {

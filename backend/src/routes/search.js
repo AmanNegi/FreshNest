@@ -16,6 +16,7 @@ router.get('/:query', async function (req, res) {
     const items = await MilletItem.find({
       name: {
         $regex: query,
+        // $options: 'i' makes the search case-insensitive
         $options: 'i'
       }
     })

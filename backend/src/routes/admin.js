@@ -5,17 +5,37 @@ const { User } = require('../models/user')
 const { default: mongoose } = require('mongoose')
 const { MilletItem } = require('../models/millet_item')
 
-// TODO: Add a function to check if user is admin
-router.get('/isAdmin/:userId', async function (req, res) {})
+/**
+ * Check if a user is an admin
+ * @param {Object} req - The request object.
+ * @param {string} req.params.userId - The user's ID.
+ */
+router.get('/isAdmin/:userId', async function (req, res) {
+  const userId = req.params.userId
+  if (!mongoose.Types.ObjectId.isValid(userId)) {
+    return res.status(404).send(getErrorResponse('Invalid User ID'))
+  }
+  const user = await User.findOne({ _id: userId })
+  if (!user) {
+    return res.status(404).send(getErrorResponse('User not found'))
+  }
+  if (user.userType === 'admin') {
+    return res.send(getSuccessResponse('Success', {
+      isAdmin: true
+    }))
+  } else {
+    return res.send(getSuccessResponse('Success', {
+      isAdmin: false
+    }))
+  }
+})
 
 /**
- * Delete a millet item by ID
+ * Delete a product by ID
  * @param {Object} req - The request object.
  * @param {Object} req.body - The request body.
  * @param {string} req.body.itemId - The ID of the item to delete.
  * @param {string} req.body.adminId - The ID of the admin performing the delete operation.
- * @param {Object} res - The response object.
- * @returns {Object} The response object.
  */
 router.post('/deleteItem', async (req, res) => {
   const { itemId, adminId } = req.body

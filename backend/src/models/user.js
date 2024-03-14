@@ -69,5 +69,42 @@ function validateUser (user) {
   return schema.validate(user)
 }
 
+function validateLogin (req) {
+  const schema = Joi.object().keys({
+    email: Joi.string().required().email(),
+    password: Joi.string().required()
+  })
+  return schema.validate(req)
+}
+
+function validateSignUp (req) {
+  const schema = Joi.object().keys({
+    name: Joi.string().required(),
+    email: Joi.string().required().email(),
+    password: Joi.string().required(),
+    phone: Joi.string().required(),
+    userType: Joi.string().default('customer'),
+    location: Joi.object()
+      .keys({
+        type: Joi.string().valid('Point').default('Point'),
+        coordinates: Joi.array().items(Joi.number()).required()
+      })
+      .required()
+  })
+  return schema.validate(req)
+}
+
+function validateGLogin (req) {
+  const schema = Joi.object().keys({
+    name: Joi.string().required(),
+    email: Joi.string().required().email()
+  })
+
+  return schema.validate(req)
+}
+
 exports.User = User
 exports.validate = validateUser
+exports.validateLogin = validateLogin
+exports.validateSignUp = validateSignUp
+exports.validateGLogin = validateGLogin
