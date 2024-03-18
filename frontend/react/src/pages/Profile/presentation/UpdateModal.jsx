@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { toast } from 'react-toastify'
 import _ from 'lodash'
 import useProfileMutations from '../../../hooks/ProfileHook'
+import PropTypes from 'prop-types'
 
 const UpdateModal = ({ user }) => {
   console.log(user)
@@ -110,6 +111,14 @@ const UpdateModal = ({ user }) => {
     }
     modal.close()
   }
+}
+
+UpdateModal.propTypes = {
+  user: PropTypes.shape({
+    name: PropTypes.string.isRequired,
+    email: PropTypes.string.isRequired,
+    phone: PropTypes.string
+  }).isRequired
 }
 
 export default UpdateModal

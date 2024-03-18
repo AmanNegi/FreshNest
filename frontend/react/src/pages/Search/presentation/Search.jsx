@@ -3,6 +3,7 @@ import Loading from '../../../components/Loading'
 import search from '../application/search'
 import { toast } from 'react-toastify'
 import ShopItem from '../../../components/ShopItem'
+import PropTypes from 'prop-types'
 
 function Search () {
   const [loading, setLoading] = useState(false)
@@ -87,6 +88,14 @@ function LoadedPage ({ items }) {
       </section>
     </>
   )
+}
+
+LoadedPage.propTypes = {
+  items: PropTypes.arrayOf(
+    PropTypes.shape({
+      _id: PropTypes.string.isRequired
+    }).isRequired
+  ).isRequired
 }
 
 export default Search

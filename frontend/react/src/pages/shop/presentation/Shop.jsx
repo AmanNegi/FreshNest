@@ -11,6 +11,7 @@ import getItems, { sortList } from '../application/shop'
 
 import { FaCaretDown } from 'react-icons/fa'
 import QueryError from '../../../components/QueryError'
+import PropTypes from 'prop-types'
 
 function Shop () {
   const [searchParams] = useSearchParams()
@@ -142,6 +143,11 @@ const Filter = ({ filter, updateFilter }) => {
       </ul>
     </details>
   )
+}
+
+Filter.propTypes = {
+  filter: PropTypes.number.isRequired,
+  updateFilter: PropTypes.func.isRequired
 }
 
 const options = [
