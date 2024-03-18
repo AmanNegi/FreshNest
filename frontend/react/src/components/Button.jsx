@@ -1,4 +1,5 @@
 import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 function NavigationButton ({
   text = 'Button',
@@ -18,6 +19,12 @@ function NavigationButton ({
   )
 }
 
+NavigationButton.propTypes = {
+  text: PropTypes.string.isRequired,
+  additionalClasses: PropTypes.string,
+  path: PropTypes.string.isRequired
+}
+
 export function ClickActionButton ({
   text = 'Button',
   additionalClasses = '',
@@ -28,6 +35,12 @@ export function ClickActionButton ({
       {text}
     </button>
   )
+}
+
+ClickActionButton.propTypes = {
+  text: PropTypes.string.isRequired,
+  additionalClasses: PropTypes.string,
+  onClick: PropTypes.func.isRequired
 }
 
 export default NavigationButton

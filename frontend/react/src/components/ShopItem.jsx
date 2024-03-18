@@ -17,6 +17,7 @@ import ShimmerShopItem from './ShimmerShopItem'
 import { toast } from 'react-toastify'
 
 import useShopItemMutations from '../hooks/ShopItemHook'
+import PropTypes from 'prop-types'
 
 /**
  *
@@ -221,6 +222,13 @@ function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
       }
     </>
   )
+}
+
+ShopItem.propTypes = {
+  itemId: PropTypes.string.isRequired,
+  itemCount: PropTypes.number.isRequired,
+  isCart: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired
 }
 
 export default ShopItem

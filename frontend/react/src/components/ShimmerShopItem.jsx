@@ -4,6 +4,7 @@ import {
   ShimmerTitle,
   ShimmerText
 } from 'react-shimmer-effects-18'
+import PropTypes from 'prop-types'
 
 const ShimmerShopItem = ({ id }) => {
   return (
@@ -21,6 +22,10 @@ const ShimmerShopItem = ({ id }) => {
       </div>
     </div>
   )
+}
+
+ShimmerShopItem.propTypes = {
+  id: PropTypes.number.isRequired
 }
 
 export default ShimmerShopItem

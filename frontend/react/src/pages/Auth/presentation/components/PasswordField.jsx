@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { BiHide, BiShow } from 'react-icons/bi'
+import PropTypes from 'prop-types'
 
 const PasswordField = ({ handleFieldChange }) => {
   const [passwordVisible, setPasswordVisible] = useState(false)
@@ -28,6 +29,10 @@ const PasswordField = ({ handleFieldChange }) => {
       </div>
     </div>
   )
+}
+
+PasswordField.propTypes = {
+  handleFieldChange: PropTypes.func.isRequired
 }
 
 export default PasswordField

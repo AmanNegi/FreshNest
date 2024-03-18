@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 
 function ButtonLoader ({ className = '' }) {
   return (
@@ -8,6 +9,10 @@ function ButtonLoader ({ className = '' }) {
       ></span>
     </>
   )
+}
+
+ButtonLoader.propTypes = {
+  className: PropTypes.string
 }
 
 export default ButtonLoader

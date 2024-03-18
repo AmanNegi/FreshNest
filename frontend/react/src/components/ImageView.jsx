@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 
 import { ShimmerThumbnail } from 'react-shimmer-effects-18'
+import PropTypes from 'prop-types'
 
 const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
   const [isLoading, setIsLoading] = useState(true)
@@ -28,6 +29,13 @@ const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
       </div>
     </div>
   )
+}
+
+ImageView.propTypes = {
+  url: PropTypes.string.isRequired,
+  _id: PropTypes.string.isRequired,
+  shimmerClass: PropTypes.string.isRequired,
+  imageClass: PropTypes.string.isRequired
 }
 
 export default ImageView
