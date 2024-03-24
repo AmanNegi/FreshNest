@@ -146,7 +146,7 @@ const Filter = ({ filter, updateFilter }) => {
 }
 
 Filter.propTypes = {
-  filter: PropTypes.number.isRequired,
+  filter: PropTypes.string.isRequired,
   updateFilter: PropTypes.func.isRequired
 }
 
