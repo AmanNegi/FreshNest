@@ -12,7 +12,6 @@ const { mongoose } = require('mongoose')
  */
 router.get('/get/:userId', async function (req, res) {
   const userId = req.params.userId
-  console.log('Get Cart for user: ' + userId)
 
   if (!mongoose.Types.ObjectId.isValid(userId)) {
     return res.status(404).send(getErrorResponse('Invalid User ID'))

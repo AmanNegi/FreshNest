@@ -24,32 +24,30 @@
 }
 .pattern2 {
   --s: 100px; /* control the size */
-  --c1: #E1F5C4;
-  --c2: #3B8183;
-  
-  --_g:#0000, #0004 5%,
-     var(--c2) 6%  14%,var(--c1) 16% 24%,var(--c2) 26% 34%,var(--c1) 36% 44%,
-     var(--c2) 46% 54%,var(--c1) 56% 64%,var(--c2) 66% 74%,var(--c1) 76% 84%,
-     var(--c2) 86% 94%,#0004 95%,#0000;
-  background:
-    radial-gradient(100% 50% at 100% 0   ,var(--_g)),
-    radial-gradient(100% 50% at 0    50% ,var(--_g)),
-    radial-gradient(100% 50% at 100% 100%,var(--_g));
-  background-size: var(--s) calc(2*var(--s));
+  --c1: #e1f5c4;
+  --c2: #3b8183;
+
+  --_g: #0000, #0004 5%, var(--c2) 6% 14%, var(--c1) 16% 24%, var(--c2) 26% 34%, var(--c1) 36% 44%,
+    var(--c2) 46% 54%, var(--c1) 56% 64%, var(--c2) 66% 74%, var(--c1) 76% 84%, var(--c2) 86% 94%,
+    #0004 95%, #0000;
+  background: radial-gradient(100% 50% at 100% 0, var(--_g)),
+    radial-gradient(100% 50% at 0 50%, var(--_g)), radial-gradient(100% 50% at 100% 100%, var(--_g));
+  background-size: var(--s) calc(2 * var(--s));
 }
 .pattern3 {
   --s: 194px; /* control the size */
   --c1: #f6edb3;
   --c2: #acc4a3;
-  
-  --_l:#0000 calc(25%/3),var(--c1) 0 25%,#0000 0;
-  --_g:conic-gradient(from 120deg at 50% 87.5%,var(--c1) 120deg,#0000 0);
+
+  --_l: #0000 calc(25% / 3), var(--c1) 0 25%, #0000 0;
+  --_g: conic-gradient(from 120deg at 50% 87.5%, var(--c1) 120deg, #0000 0);
   background:
-    var(--_g),var(--_g) 0 calc(var(--s)/2),
-    conic-gradient(from 180deg at 75%,var(--c2) 60deg,#0000 0),
-    conic-gradient(from 60deg at 75% 75%,var(--c1) 0 60deg,#0000 0),
-    linear-gradient(150deg,var(--_l)) 0 calc(var(--s)/2),
-    conic-gradient(at 25% 25%,#0000 50%,var(--c2) 0 240deg,var(--c1) 0 300deg,var(--c2) 0),
-    linear-gradient(-150deg,var(--_l)) #55897c /* third color here */;
-  background-size: calc(0.866*var(--s)) var(--s);
+    var(--_g),
+    var(--_g) 0 calc(var(--s) / 2),
+    conic-gradient(from 180deg at 75%, var(--c2) 60deg, #0000 0),
+    conic-gradient(from 60deg at 75% 75%, var(--c1) 0 60deg, #0000 0),
+    linear-gradient(150deg, var(--_l)) 0 calc(var(--s) / 2),
+    conic-gradient(at 25% 25%, #0000 50%, var(--c2) 0 240deg, var(--c1) 0 300deg, var(--c2) 0),
+    linear-gradient(-150deg, var(--_l)) #55897c /* third color here */;
+  background-size: calc(0.866 * var(--s)) var(--s);
 }

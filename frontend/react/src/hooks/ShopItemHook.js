@@ -1,10 +1,8 @@
-import { useMutation, useQueryClient } from '@tanstack/react-query'
-import { deleteItem } from '../pages/shop/application/shop'
-import {
-  removeFromCart,
-  updateCartCount
-} from '../pages/Cart/application/cart'
-import { toast } from 'react-toastify'
+import { useMutation, useQueryClient } from '@tanstack/react-query';
+import { deleteItem } from '../pages/shop/application/shop';
+import { removeFromCart, updateCartCount } from '../pages/Cart/application/cart';
+import { toast } from 'react-toastify';
+import appState from '../data/AppState';
 
 /**
  *
@@ -13,46 +11,46 @@ import { toast } from 'react-toastify'
  * @returns
  */
 
-export default function useShopItemMutations (itemId) {
-  const queryClient = useQueryClient()
+export default function useShopItemMutations(itemId) {
+  const queryClient = useQueryClient();
 
   const updateCartMutation = useMutation({
     mutationFn: (e) => updateCartCount(itemId, e),
     onError: (e) => {
-      console.log(e)
-      toast.error('An error occured while updating the cart!')
-      queryClient.invalidateQueries('cart')
+      console.log(e);
+      toast.error('An error occured while updating the cart!');
+      queryClient.invalidateQueries('cart');
     },
     onSuccess: (e) => {
-      console.log('Success', e)
-      queryClient.invalidateQueries(['cart'])
+      console.log('Success', e);
+      queryClient.invalidateQueries(['cart']);
     }
-  })
+  });
 
   const deleteItemFromCartMutation = useMutation({
     mutationFn: () => removeFromCart(itemId),
     onError: (e) => {
-      console.log(e)
-      toast.error('An error occured while removing the item from the cart!')
-      queryClient.invalidateQueries('cart')
+      console.log(e);
+      toast.error('An error occured while removing the item from the cart!');
+      queryClient.invalidateQueries('cart');
     },
     onSuccess: (e) => {
-      console.log('Success', e)
-      queryClient.invalidateQueries(['cart'])
+      console.log('Success', e);
+      queryClient.invalidateQueries(['cart']);
     }
-  })
+  });
 
   const deleteItemMutation = useMutation({
-    mutationFn: () => deleteItem(itemId),
+    mutationFn: () => deleteItem(itemId, appState.userData?._id),
     onError: (e) => {
-      console.log('Error is ', e)
-      toast.error(e.message)
+      console.log('Error is ', e);
+      toast.error(e.message);
     },
     onSuccess: (e) => {
-      console.log('Success', e)
-      queryClient.invalidateQueries(['items'])
+      console.log('Success', e);
+      queryClient.invalidateQueries(['items']);
     }
-  })
+  });
 
-  return { updateCartMutation, deleteItemFromCartMutation, deleteItemMutation }
+  return { updateCartMutation, deleteItemFromCartMutation, deleteItemMutation };
 }

@@ -21,8 +21,8 @@ const ShimmerShopItem = ({ id }) => {
         <ShimmerText line={2} gap={10} />
       </div>
     </div>
-  )
-}
+  );
+};
 
 ShimmerShopItem.propTypes = {
   id: PropTypes.number.isRequired

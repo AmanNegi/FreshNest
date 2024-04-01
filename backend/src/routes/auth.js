@@ -1,5 +1,4 @@
-const { User } = require('../models/user')
-const Joi = require('joi')
+const { User, validateLogin, validateGLogin, validateSignUp } = require('../models/user')
 const express = require('express')
 const { getSuccessResponse, getErrorResponse } = require('../utils/response')
 const router = express.Router()
@@ -14,7 +13,6 @@ const { default: mongoose } = require('mongoose')
  * @param {string} req.body.password - The user's password.
  */
 router.post('/login', async (req, res) => {
-  console.log('Request Body: ', req.body)
   const { error } = validateLogin(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
@@ -43,11 +41,11 @@ router.post('/login', async (req, res) => {
  * @param {string} req.body.password - The user's password.
  * @param {string} req.body.userType - The user's type.
  * @param {string} req.body.phone - The user's phone number.
+ * @param {Object} req.body.location - The user's location.
  */
 router.post('/signup', async (req, res) => {
-  console.log('Request Body: ', req.body)
   const { error } = validateSignUp(req.body)
-  if (error) return res.status(400).send(error.details[0].message)
+  if (error) return res.status(400).send(getErrorResponse(error.details[0].message))
 
   let user = await User.findOne({ email: req.body.email })
   if (user) {
@@ -55,10 +53,7 @@ router.post('/signup', async (req, res) => {
   }
 
   let userType = req.body.userType
-  if (!userType || userType === 'admin') userType = 'customer'
-
-  // / NOTE: asterjoules@gmail.com is an admin email
-  if (req.body.email === 'asterjoules@gmail.com') userType = 'admin'
+  if (!userType) userType = 'customer'
 
   user = new User(req.body)
 
@@ -79,7 +74,6 @@ router.post('/signup', async (req, res) => {
  * @param {string} req.body.name - The user's name.
  */
 router.post('/saveGLogin', async (req, res) => {
-  console.log('Request Body: ', req.body)
   const { error } = validateGLogin(req.body)
   if (error) return res.status(400).send(error.details[0].message)
 
@@ -123,8 +117,6 @@ router.post('/saveGLogin', async (req, res) => {
  * @param {string} req.body.adminId - The admin's ID.
  */
 router.post('/getAll', async (req, res) => {
-  console.log('Request Body: ', req.body)
-
   // Validate if Id is valid
   if (!mongoose.Types.ObjectId.isValid(req.body.adminId)) {
     return res.status(404).send(getErrorResponse('Invalid Admin ID'))
@@ -142,13 +134,15 @@ router.post('/getAll', async (req, res) => {
   }
 
   // User is admin, fetch all users and return
-  const users = await User.find({}).select('-__v -password')
-
+  const users = await User.find({}, {
+    password: 0,
+    __v: 0
+  })
   return res.send(getSuccessResponse('Success', users))
 })
 
 /**
- * Check if user exists
+ * Check if a user exists with the given email.
  * @param {Object} req - The request object.
  * @param {string} req.body.email - The user's email.
  */
@@ -168,6 +162,13 @@ router.post('/exists', async (req, res) => {
   )
 })
 
+/**
+ * Add Image to Farmer's Profile
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The user's ID.
+ * @param {Object} req.body - The request body.
+ * @param {string} req.body.image - The image URL to add.
+ */
 router.post('/addImage/:id', async (req, res) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     return res.send(getErrorResponse('Invalid User ID'))
@@ -176,7 +177,6 @@ router.post('/addImage/:id', async (req, res) => {
   const user = await User.findOne({ _id: req.params.id })
   if (!user) return res.send(getErrorResponse('User not found'))
 
-  // { image: "https://your-image-url.png"}
   const image = req.body.image
   if (!image) return res.send(getErrorResponse('No image found'))
 
@@ -186,6 +186,11 @@ router.post('/addImage/:id', async (req, res) => {
   return res.send(getSuccessResponse('Image added successfully', user))
 })
 
+/**
+ * Get a User by ID
+ * @param {Object} req - The request object.
+ * @param {string} req.params.id - The user's ID.
+ */
 router.get('/:id', async (req, res) => {
   const user = await User.findOne({ _id: req.params.id })
   if (!user) return res.send(getErrorResponse('User not found'))
@@ -197,39 +202,5 @@ router.get('/:id', async (req, res) => {
     )
   )
 })
-
-function validateLogin (req) {
-  const schema = Joi.object().keys({
-    email: Joi.string().required().email(),
-    password: Joi.string().required()
-  })
-  return schema.validate(req)
-}
-
-function validateSignUp (req) {
-  const schema = Joi.object().keys({
-    name: Joi.string().required(),
-    email: Joi.string().required().email(),
-    password: Joi.string().required(),
-    phone: Joi.string().required(),
-    userType: Joi.string().default('customer'),
-    location: Joi.object()
-      .keys({
-        type: Joi.string().valid('Point').default('Point'),
-        coordinates: Joi.array().items(Joi.number()).required()
-      })
-      .required()
-  })
-  return schema.validate(req)
-}
-
-function validateGLogin (req) {
-  const schema = Joi.object().keys({
-    name: Joi.string().required(),
-    email: Joi.string().required().email()
-  })
-
-  return schema.validate(req)
-}
 
 module.exports = router

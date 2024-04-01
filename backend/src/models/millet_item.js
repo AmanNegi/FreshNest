@@ -42,7 +42,7 @@ function validateMilletItem (item) {
     listedBy: JoiObjectId().required(),
     name: Joi.string().required(),
     description: Joi.string().required(),
-    images: Joi.array().items(Joi.string().required()).required(),
+    images: Joi.array().items(Joi.string()).required(),
     comments: Joi.array(),
     price: Joi.number().required()
   })

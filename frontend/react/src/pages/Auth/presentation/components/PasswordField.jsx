@@ -2,12 +2,13 @@ import React, { useState } from 'react'
 import { BiHide, BiShow } from 'react-icons/bi'
 import PropTypes from 'prop-types'
 
+
 const PasswordField = ({ handleFieldChange }) => {
-  const [passwordVisible, setPasswordVisible] = useState(false)
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const togglePasswordVisibility = () => {
-    setPasswordVisible(!passwordVisible)
-  }
+    setPasswordVisible(!passwordVisible);
+  };
 
   return (
     <div className="flex flex-col w-[100%] ">
@@ -28,11 +29,12 @@ const PasswordField = ({ handleFieldChange }) => {
         </button>
       </div>
     </div>
-  )
-}
+  );
+};
 
 PasswordField.propTypes = {
   handleFieldChange: PropTypes.func.isRequired
 }
 
 export default PasswordField
+

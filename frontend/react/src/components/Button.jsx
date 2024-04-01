@@ -1,22 +1,18 @@
 import { useNavigate } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
-function NavigationButton ({
-  text = 'Button',
-  additionalClasses = '',
-  path = '/'
-}) {
-  const navigate = useNavigate()
+function NavigationButton({ text = 'Button', additionalClasses = '', path = '/' }) {
+  const navigate = useNavigate();
   return (
     <button
       className="btn btn-accent text-white font-light"
       onClick={() => {
-        navigate(path)
+        navigate(path);
       }}
     >
       {text}
     </button>
-  )
+  );
 }
 
 NavigationButton.propTypes = {
@@ -34,8 +30,9 @@ export function ClickActionButton ({
     <button className="btn btn-accent text-white font-light" onClick={onClick}>
       {text}
     </button>
-  )
+  );
 }
+
 
 ClickActionButton.propTypes = {
   text: PropTypes.string.isRequired,
@@ -44,3 +41,4 @@ ClickActionButton.propTypes = {
 }
 
 export default NavigationButton
+

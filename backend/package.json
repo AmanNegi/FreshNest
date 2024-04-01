@@ -4,15 +4,15 @@
   "description": "Backend for FreshNest",
   "main": "index.js",
   "scripts": {
-    "start": "node index.js",
-    "dev": "nodemon index.js",
+    "test": "cross-env NODE_ENV=test mocha 'test/**/*.js' --timeout 10000 --exit",
+    "dev": "npm run gen-docs && cross-env NODE_ENV=dev nodemon index.js",
+    "prod": "cross-env NODE_ENV=prod nodemon index.js",
     "lint": "eslint .",
-    "test": "mocha 'test/**/*spec.js' --reporter nyan",
-    "stest": "mocha --grep",
-    "gen-docs": "node ./utils/swagger.js"
+    "gen-docs": "node ./src/utils/swagger.js"
   },
   "devDependencies": {
     "chai": "^4.3.10",
+    "cross-env": "^7.0.3",
     "eslint": "^8.57.0",
     "eslint-config-google": "^0.14.0",
     "eslint-config-standard": "^17.1.0",

@@ -42,7 +42,7 @@ class AgroItem extends StatelessWidget {
                   color: Theme.of(context).cardColor,
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.05),
+                      color: Colors.black.withOpacity(0.025),
                       blurRadius: 5.0,
                       spreadRadius: 3.0,
                       offset: const Offset(5.0, 5.0),
@@ -62,7 +62,7 @@ class AgroItem extends StatelessWidget {
                           ),
                           child: Image.network(
                             item.images[0].toString(),
-                            fit: BoxFit.cover,
+                            fit: BoxFit.contain,
                             width: double.infinity,
                             height: double.infinity,
                             loadingBuilder: (context, child, loadingProgress) {
@@ -115,9 +115,12 @@ class AgroItem extends StatelessWidget {
                 child: GestureDetector(
                   onTap: () async {
                     CartItem cartItem = CartItem(item: item.id, count: 1);
-                    ref.read(cartProvider).addItemToCart(cartItem);
-                    CartManager(context, ref, poll: false)
-                        .addItemToCart(item: cartItem);
+                    bool val = ref.read(cartProvider).addItemToCart(cartItem);
+                    //TODO: add feature to increment/decrement
+                    if (val) {
+                      CartManager(context, ref, poll: false)
+                          .addItemToCart(item: cartItem);
+                    }
                   },
                   child: Container(
                     width: 40,

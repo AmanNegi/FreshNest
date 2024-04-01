@@ -1,4 +1,5 @@
 import 'package:fresh_nest/core/auth/application/auth.dart';
+import 'package:fresh_nest/core/auth/application/location_service.dart';
 import 'package:fresh_nest/core/auth/presentation/signup_page.dart';
 import 'package:fresh_nest/core/home/presentation/widgets/loading_widget.dart';
 import 'package:fresh_nest/globals.dart';
@@ -24,6 +25,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   void initState() {
     _authManager = AuthManager(context, ref);
     super.initState();
+    locationService.requestLocation();
   }
 
   @override
@@ -65,11 +67,13 @@ class _LoginPageState extends ConsumerState<LoginPage> {
           ),
           SizedBox(height: 0.025 * getHeight(context)),
           CustomTextField(
+            value: email,
             onChanged: (v) => email = v,
             label: "Email",
           ),
           const SizedBox(height: 10),
           CustomTextField(
+            value: password,
             isPassword: true,
             onChanged: (v) => password = v,
             label: "Password",
@@ -92,6 +96,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 email: email.trim(),
                 password: password.trim(),
               );
+
               if (res == 1 && mounted) {
                 goToPage(context, const RolePage(), clearStack: true);
               }
@@ -106,7 +111,6 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                 goToPage(context, const RolePage(), clearStack: true);
               }
             },
-            // text: "Login using Google",
             child: Container(
               height: 0.06 * getHeight(context),
               decoration: BoxDecoration(

@@ -11,8 +11,8 @@ const QueryError = ({ error, onClick }) => {
         <ClickActionButton onClick={onClick} text="Try again" />
       </div>
     </div>
-  )
-}
+  );
+};
 
 QueryError.propTypes = {
   error: PropTypes.shape({

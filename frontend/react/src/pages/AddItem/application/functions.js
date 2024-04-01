@@ -1,39 +1,39 @@
-import { toast } from 'react-toastify'
-import axios from 'axios'
-import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
-import { v4 as uuidv4 } from 'uuid'
+import { toast } from 'react-toastify';
+import axios from 'axios';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { v4 as uuidv4 } from 'uuid';
 
-import storage from '../../../main'
+import storage from '../../../main';
 
 /**
  *  Uploads a file to Firebase Storage
  * @param {File} file
  * @returns {Promise<string?>} url
  */
-export async function handleUpload (file) {
+export async function handleUpload(file) {
   if (!file) {
-    alert('Please choose a file first!')
+    alert('Please choose a file first!');
   }
 
-  const _id = uuidv4()
-  const extension = file.name.split('.').pop()
+  const _id = uuidv4();
+  const extension = file.name.split('.').pop();
 
-  const storageRef = ref(storage, `/files/${_id + extension}`)
-  const uploadTask = uploadBytesResumable(storageRef, file)
+  const storageRef = ref(storage, `/files/${_id + extension}`);
+  const uploadTask = uploadBytesResumable(storageRef, file);
 
   try {
     // Wait for the upload task to complete
     await new Promise((resolve, reject) => {
-      uploadTask.on('state_changed', null, reject, () => resolve())
-    })
+      uploadTask.on('state_changed', null, reject, () => resolve());
+    });
 
     // Get the download URL
-    const url = await getDownloadURL(uploadTask.snapshot.ref)
-    console.log(url)
-    return url
+    const url = await getDownloadURL(uploadTask.snapshot.ref);
+    console.log(url);
+    return url;
   } catch (error) {
-    console.error(error)
-    return null
+    console.error(error);
+    return null;
   }
 }
 
@@ -49,37 +49,33 @@ export async function handleUpload (file) {
  * @returns {Promise<boolean>} true if successful, false otherwise
  */
 
-export async function addItem (data) {
-  const { listedBy, name, description, price, file } =
-    data
+export async function addItem(data) {
+  const { listedBy, name, description, price, file } = data;
 
   try {
-    const img = await handleUpload(file)
+    const img = await handleUpload(file);
 
-    const res = await axios.post(
-      import.meta.env.VITE_API_URL + '/list/addItem',
-      {
-        listedBy,
-        name,
-        description,
-        images: [img],
-        price,
-        comments: []
-      }
-    )
+    const res = await axios.post(import.meta.env.VITE_API_URL + '/list/addItem', {
+      listedBy,
+      name,
+      description,
+      images: [img],
+      price,
+      comments: []
+    });
 
-    console.log(res)
+    console.log(res);
 
     if (res.data.statusCode === 200) {
-      toast.success(res.data.message)
-      return true
+      toast.success(res.data.message);
+      return true;
     } else {
-      toast.error(res.data.message)
-      return false
+      toast.error(res.data.message);
+      return false;
     }
   } catch (err) {
-    console.log(err)
-    toast.error('Error uploading image')
-    return false
+    console.log(err);
+    toast.error('Error uploading image');
+    return false;
   }
 }

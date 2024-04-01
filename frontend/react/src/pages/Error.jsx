@@ -1,6 +1,6 @@
-import React from 'react'
-import errorImage from '../assets/error.png'
-import NavigationButton from '../components/Button'
+import React from 'react';
+import errorImage from '../assets/error.png';
+import NavigationButton from '../components/Button';
 
 const ErrorPage = () => {
   return (
@@ -11,7 +11,7 @@ const ErrorPage = () => {
       <h5 className="mb-4">Page Not Found</h5>
       <NavigationButton text="Go to Login Page" path="/auth" />
     </div>
-  )
-}
+  );
+};
 
-export default ErrorPage
+export default ErrorPage;

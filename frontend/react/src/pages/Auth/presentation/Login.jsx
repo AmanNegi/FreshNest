@@ -1,58 +1,58 @@
-import { useEffect, useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
-import { toast } from 'react-toastify'
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
-import appState from '../../../data/AppState'
-import getCart from '../../Cart/application/cart'
-import login from '../application/auth'
-import ButtonLoader from '../../../components/ButtonLoader'
-import GLoginButton from './components/GLoginButton'
+import appState from '../../../data/AppState';
+import getCart from '../../Cart/application/cart';
+import login from '../application/auth';
+import ButtonLoader from '../../../components/ButtonLoader';
+import GLoginButton from './components/GLoginButton';
 
-import farm from '../../../assets/farm.jpg'
-import icon from '../../../assets/logo.png'
-import PasswordField from './components/PasswordField'
+import farm from '../../../assets/farm.jpg';
+import icon from '../../../assets/logo.png';
+import PasswordField from './components/PasswordField';
 
-function Login () {
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [loading, setLoading] = useState(false)
+function Login() {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
   const handleLogin = async () => {
     if (email.length === 0) {
-      toast.error('Enter your email to login 😥')
-      return
+      toast.error('Enter your email to login 😥');
+      return;
     }
 
     if (password.length === 0) {
-      toast.error('Enter your password to login 😥')
-      return
+      toast.error('Enter your password to login 😥');
+      return;
     }
 
-    setLoading(true)
+    setLoading(true);
 
     try {
-      const data = await login(email, password)
+      const data = await login(email, password);
       if (data.statusCode === 200) {
-        await getCart()
-        navigate('/home')
+        await getCart();
+        navigate('/home');
       }
     } catch (error) {
-      setLoading(false)
-      toast.error('Error while logging in')
+      setLoading(false);
+      toast.error('Error while logging in');
     } finally {
-      setLoading(false)
+      setLoading(false);
     }
-  }
+  };
 
   useEffect(() => {
     if (appState.isUserLoggedIn()) {
-      console.log(appState)
-      navigate('/shop')
-      toast('Logged in as ' + appState.getUserData().name)
+      console.log(appState);
+      navigate('/shop');
+      toast('Logged in as ' + appState.getUserData().name);
     }
-  }, [])
+  }, []);
 
   return (
     <>
@@ -74,7 +74,7 @@ function Login () {
             <label htmlFor="input">Email</label>
             <input
               onChange={(e) => {
-                setEmail(e.target.value.toLowerCase())
+                setEmail(e.target.value.toLowerCase());
               }}
               type="email"
               placeholder=""
@@ -83,16 +83,12 @@ function Login () {
           </div>
           <div className="pt-2"></div>
           {/* Password Field */}
-          <PasswordField
-            handleFieldChange={(e) => setPassword(e.target.value)}
-          />
+          <PasswordField handleFieldChange={(e) => setPassword(e.target.value)} />
           <div className="pt-5"></div>
           {/* Button */}
           <button
             onClick={handleLogin}
-            className={`btn btn-primary w-full py-3 mb-4 ${
-              loading ? ' cursor-not-allowed' : ''
-            }`}
+            className={`btn btn-primary w-full py-3 mb-4 ${loading ? ' cursor-not-allowed' : ''}`}
             disabled={loading}
           >
             {loading ? <ButtonLoader /> : 'Login'}
@@ -113,7 +109,7 @@ function Login () {
         <img className="w-[100%] h-[100%] object-cover" src={farm} alt="" />
       </section>
     </>
-  )
+  );
 }
 
-export default Login
+export default Login;

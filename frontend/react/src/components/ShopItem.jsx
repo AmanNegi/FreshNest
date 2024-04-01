@@ -19,6 +19,7 @@ import { toast } from 'react-toastify'
 import useShopItemMutations from '../hooks/ShopItemHook'
 import PropTypes from 'prop-types'
 
+
 /**
  *
  * @param {Object} props
@@ -28,27 +29,35 @@ import PropTypes from 'prop-types'
  * @param {function(Item): void} props.onDelete
  * @returns {JSX.Element}
  */
-function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
+function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
   /** @type {[number, function]} */
-  const [count, setCount] = useState(itemCount)
+  const [count, setCount] = useState(itemCount);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
 
-  const {
-    isLoading,
-    isError,
-    data: item,
-    error
-  } = useQuery({
+  const { isLoading, isError, data, error } = useQuery({
     queryKey: ['item', itemId],
-    queryFn: () => getItem(itemId)
-  })
+    queryFn: async () => {
+      const item = await getItem(itemId);
+
+      if (!item) throw Error('An error occured while loading item!');
+
+      const user = await getUserFromId(item?.listedBy);
+
+      if (!user) throw Error('An error occured while loading item!');
+      console.log('IN QUERY: ', item, user);
+      return {
+        item,
+        user
+      };
+    }
+  });
 
   const { deleteItemFromCartMutation, deleteItemMutation, updateCartMutation } =
-    useShopItemMutations(itemId)
+    useShopItemMutations(itemId);
 
   if (isLoading) {
-    return <ShimmerShopItem id={itemId} key={itemId} />
+    return <ShimmerShopItem id={itemId} key={itemId} />;
   }
 
   // If Item removed show this card
@@ -64,26 +73,28 @@ function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
           className="btn btn-error"
           onClick={async (e) => {
             if (isCart) {
-              e.stopPropagation()
-              await removeFromCart(itemId)
-              if (onDelete) onDelete()
+              e.stopPropagation();
+              await removeFromCart(itemId);
+              if (onDelete) onDelete();
             } else {
-              toast.error('An unforseeable error occured!')
+              toast.error('An unforseeable error occured!');
             }
           }}
         >
           Remove From Cart
         </button>
       </div>
-    )
+    );
   }
+  const { item, user: lister } = data;
+  console.log('Shop Item.jsx', data);
 
   return (
     <>
       {
         <motion.div
           onClick={() => {
-            navigate('/item/' + item._id)
+            navigate('/item/' + item._id);
           }}
           key={item._id}
           initial={{ opacity: 0 }}
@@ -112,37 +123,31 @@ function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
 
           <div className="bg-gray-200 inline-flex flex-row mx-2 items-center justify-start px-3 gap-3 py-1 rounded-[5px] text-xs ">
             <FaClockRotateLeft />
-            <TimeAgo date={item.listedAt} />
+            <TimeAgo date={item.listedAt} live={false} />
           </div>
           <div className="px-4 rounded-lg ">
             <h1 className="text-xl font-bold text-gray-700 hover:text-gray-900 hover:cursor-pointer">
               {item.name}
             </h1>
+            {appState.userData._id != lister._id && (
+              <p className="text-sm text-gray-500">{lister.name}</p>
+            )}
 
-            <p className="text-lg font-extrabold text-green-500">
-              {'₹ ' + item.price + '/kg'}
-            </p>
+            <p className="text-lg font-extrabold text-green-500">{'₹ ' + item.price + '/kg'}</p>
 
             {/* Add Button for Customer */}
             {appState.isCustomer() && !isCart && (
               <button
                 onClick={async (e) => {
-                  e.stopPropagation()
-                  await addToCart(item._id, count)
+                  e.stopPropagation();
+                  await addToCart(item._id, count);
                 }}
                 className={cn(
                   'h-[40px] z-10 absolute right-2 bottom-2 flex items-center justify-center transition-all duration-500 rounded-md ',
                   'border-2 border-accentColor bg-accentColor bg-opacity-5'
                 )}
               >
-                <p
-                  className={cn(
-                    'px-4 py-2 text-lg font-bold ',
-                    'text-accentColor'
-                  )}
-                >
-                  ADD
-                </p>
+                <p className={cn('px-4 py-2 text-lg font-bold ', 'text-accentColor')}>ADD</p>
               </button>
             )}
 
@@ -150,19 +155,17 @@ function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
             <div className="h-[8vh]"></div>
 
             {/* Delete Button (Customer|Admin|Farmer) */}
-            {(isCart ||
-              appState.isAdmin() ||
-              appState.isOwner(item.listedBy)) && (
+            {(isCart || appState.isAdmin() || appState.isOwner(item.listedBy)) && (
               <div className="absolute bottom-2 right-2 w-full gap-3 flex flex-row">
                 <div className="flex-grow"></div>
                 <button
                   onClick={async (e) => {
-                    e.stopPropagation()
+                    e.stopPropagation();
                     if (isCart) {
-                      deleteItemFromCartMutation.mutate()
-                      return
+                      deleteItemFromCartMutation.mutate();
+                      return;
                     }
-                    deleteItemMutation.mutate()
+                    deleteItemMutation.mutate();
                   }}
                   className={cn(
                     'h-[40px] flex items-center justify-center transition-all duration-500 border-2 rounded-md bg-opacity-10 hover:bg-opacity-100',
@@ -182,17 +185,17 @@ function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
                   <div className="w-[50%] h-[40px] flex flex-row items-center justify-center border border-lightBorderColor rounded-md px-2">
                     <div
                       onClick={(e) => {
-                        e.stopPropagation()
+                        e.stopPropagation();
 
                         if (count === 1) {
-                          deleteItemFromCartMutation.mutate()
-                          return
+                          deleteItemFromCartMutation.mutate();
+                          return;
                         }
 
                         if (count > 0) {
-                          const newCount = count - 1
-                          setCount(newCount)
-                          updateCartMutation.mutate(newCount)
+                          const newCount = count - 1;
+                          setCount(newCount);
+                          updateCartMutation.mutate(newCount);
                         }
                       }}
                       className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
@@ -204,10 +207,10 @@ function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
                     </div>
                     <div
                       onClick={(e) => {
-                        e.stopPropagation()
-                        const newCount = count + 1
-                        setCount(newCount)
-                        updateCartMutation.mutate(newCount)
+                        e.stopPropagation();
+                        const newCount = count + 1;
+                        setCount(newCount);
+                        updateCartMutation.mutate(newCount);
                       }}
                       className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
                     >
@@ -221,7 +224,7 @@ function ShopItem ({ itemId, itemCount = 1, isCart = false, onDelete }) {
         </motion.div>
       }
     </>
-  )
+  );
 }
 
 ShopItem.propTypes = {

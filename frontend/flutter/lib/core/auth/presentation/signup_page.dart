@@ -1,4 +1,5 @@
 import 'package:fresh_nest/core/auth/application/auth.dart';
+import 'package:fresh_nest/core/auth/application/location_service.dart';
 import 'package:fresh_nest/core/auth/presentation/login_page.dart';
 import 'package:fresh_nest/core/home/presentation/widgets/loading_widget.dart';
 import 'package:fresh_nest/globals.dart';
@@ -6,6 +7,7 @@ import 'package:fresh_nest/widgets/action_button.dart';
 import 'package:fresh_nest/widgets/custom_text_field.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:material_design_icons_flutter/material_design_icons_flutter.dart';
 import 'package:fresh_nest/splash.dart';
 
@@ -25,6 +27,9 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
   void initState() {
     _authManager = AuthManager(context, ref);
     super.initState();
+    if (locationService.locationData == null) {
+      locationService.requestLocation();
+    }
   }
 
   @override
@@ -66,17 +71,20 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           ),
           SizedBox(height: 0.025 * getHeight(context)),
           CustomTextField(
+            value: username,
             onChanged: (v) => username = v,
             label: "Username",
           ),
           const SizedBox(height: 10),
           CustomTextField(
+            value: email,
             keyboardType: TextInputType.emailAddress,
             onChanged: (v) => email = v,
             label: "Email",
           ),
           const SizedBox(height: 10),
           CustomTextField(
+            value: password,
             keyboardType: TextInputType.visiblePassword,
             isPassword: true,
             onChanged: (v) => password = v,
@@ -84,6 +92,7 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           ),
           const SizedBox(height: 10),
           CustomTextField(
+            value: phone,
             keyboardType: TextInputType.phone,
             onChanged: (v) => phone = v,
             label: "Phone",
@@ -93,12 +102,25 @@ class _SignUpPageState extends ConsumerState<SignUpPage> {
           ActionButton(
             isFilled: false,
             onPressed: () async {
-              var res = await _authManager.signUpUsingEmailPassword(
+              if (locationService.locationData == null &&
+                  locationService.locationData!.latitude == null &&
+                  locationService.locationData!.longitude == null) {
+                showToast("Location not found!");
+                locationService.requestLocation();
+                return;
+              }
+              final location = LatLng(
+                locationService.locationData!.latitude!,
+                locationService.locationData!.longitude!,
+              );
+
+              final res = await _authManager.signUpUsingEmailPassword(
                 email: email.trim(),
                 name: username.trim(),
                 password: password.trim(),
                 phone: phone.trim(),
                 userType: dropdownValue,
+                location: location,
               );
               if (res == 1 && mounted) {
                 goToPage(context, const RolePage(), clearStack: true);

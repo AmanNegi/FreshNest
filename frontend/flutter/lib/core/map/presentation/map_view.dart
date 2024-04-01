@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:fresh_nest/core/home/presentation/profile/farm_profile.dart';
 import 'package:fresh_nest/core/map/application/map_manager.dart';
+import 'package:fresh_nest/core/map/application/map_provider.dart';
 import 'package:fresh_nest/data/cache/app_cache.dart';
 import 'package:fresh_nest/globals.dart';
 import 'package:geocoding/geocoding.dart';
@@ -97,7 +98,7 @@ class _MapViewPageState extends ConsumerState<MapViewPage> {
   void getMarkers() async {
     markerIcon = await BitmapDescriptor.fromAssetImage(
       const ImageConfiguration(size: Size(12, 12)),
-      'assets/logo.png',
+      'assets/map_marker.png',
     );
 
     final stores = await _mapManager.getStores();
@@ -125,7 +126,7 @@ class _MapViewPageState extends ConsumerState<MapViewPage> {
     print("Adding marker at ${loc.latitude} ${loc.longitude}");
     markers.add(
       Marker(
-        // icon: markerIcon,
+        icon: markerIcon,
         markerId: MarkerId(DateTime.now().microsecondsSinceEpoch.toString()),
         position: loc,
         onTap: () {
@@ -159,26 +160,121 @@ class _MapViewPageState extends ConsumerState<MapViewPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Find Nearby Stores"),
+        title: const Text("Find Nearby Farms"),
         centerTitle: true,
       ),
-      body: GoogleMap(
-        zoomControlsEnabled: false,
-        // myLocationEnabled: true,
-        scrollGesturesEnabled: true,
-        mapType: MapType.hybrid,
-        initialCameraPosition: currentPosition,
-        compassEnabled: true,
-        myLocationButtonEnabled: true,
-        markers: markers,
-        onMapCreated: (GoogleMapController? c) {
-          if (c != null) {
-            controller = c;
-            if (appCache.currentLocation == null) {
-              _determinePosition();
-            }
-          }
-        },
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: GoogleMap(
+              myLocationEnabled: true,
+              zoomControlsEnabled: false,
+              scrollGesturesEnabled: true,
+              mapType: MapType.hybrid,
+              initialCameraPosition: currentPosition,
+              compassEnabled: true,
+              myLocationButtonEnabled: true,
+              markers: markers,
+              onMapCreated: (GoogleMapController? c) {
+                if (c != null) {
+                  controller = c;
+                  if (appCache.currentLocation == null) {
+                    _determinePosition();
+                  }
+                }
+              },
+            ),
+          ),
+          Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: SizedBox(
+              height: 0.2 * getHeight(context),
+              width: double.infinity,
+              child: ListView.builder(
+                scrollDirection: Axis.horizontal,
+                itemCount: ref.read(mapProvider).getStores().length,
+                itemBuilder: (context, index) {
+                  final item = ref.read(mapProvider).getStores()[index];
+                  return GestureDetector(
+                    onTap: () {
+                      controller!.animateCamera(
+                        CameraUpdate.newCameraPosition(
+                          CameraPosition(
+                            target: LatLng(
+                              item.location.coordinates[0],
+                              item.location.coordinates[1],
+                            ),
+                            zoom: 15.0,
+                          ),
+                        ),
+                      );
+                    },
+                    child: Container(
+                      margin: const EdgeInsets.symmetric(
+                          horizontal: 15.0, vertical: 15.0),
+                      padding: const EdgeInsets.symmetric(
+                        horizontal: 15.0,
+                        vertical: 10.0,
+                      ),
+                      height: 0.15 * getHeight(context),
+                      width: 0.85 * getWidth(context),
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                      ),
+                      child: Row(
+                        children: [
+                          ClipRRect(
+                            borderRadius: BorderRadius.circular(10.0),
+                            child: item.images.isNotEmpty
+                                ? Image.network(
+                                    item.images[0],
+                                    fit: BoxFit.cover,
+                                    width: 0.3 * getWidth(context),
+                                    height: double.infinity,
+                                  )
+                                : Container(
+                                    color: Colors.green[100],
+                                    child: Image.asset(
+                                      "assets/logo.png",
+                                      fit: BoxFit.contain,
+                                      width: 0.3 * getWidth(context),
+                                      height: double.infinity,
+                                    ),
+                                  ),
+                          ),
+                          const SizedBox(width: 15),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  item.name,
+                                  style: const TextStyle(
+                                    fontWeight: FontWeight.bold,
+                                    fontSize: 18,
+                                  ),
+                                ),
+                                Text(
+                                  item.email,
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                ),
+                                // Text(item.location.toString()),
+                              ],
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

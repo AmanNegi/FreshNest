@@ -1,14 +1,12 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 
-function ButtonLoader ({ className = '' }) {
+function ButtonLoader({ className = '' }) {
   return (
     <>
-      <span
-        className={'bg-primary loading loading-dots text-white ' + className}
-      ></span>
+      <span className={'bg-primary loading loading-dots text-white ' + className}></span>
     </>
-  )
+  );
 }
 
 ButtonLoader.propTypes = {
@@ -16,3 +14,4 @@ ButtonLoader.propTypes = {
 }
 
 export default ButtonLoader
+

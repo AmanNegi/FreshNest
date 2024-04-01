@@ -1,10 +1,10 @@
-import React, { useState } from 'react'
+import React, { useState } from 'react';
 
 import { ShimmerThumbnail } from 'react-shimmer-effects-18'
 import PropTypes from 'prop-types'
 
 const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
-  const [isLoading, setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true);
 
   return (
     <div id={_id}>
@@ -22,14 +22,14 @@ const ImageView = ({ url, _id, shimmerClass, imageClass }) => {
           src={url}
           alt=""
           onLoad={() => {
-            console.log('Image has loaded')
-            setIsLoading(false)
+            console.log('Image has loaded');
+            setIsLoading(false);
           }}
         />
       </div>
     </div>
-  )
-}
+  );
+};
 
 ImageView.propTypes = {
   url: PropTypes.string.isRequired,
@@ -39,3 +39,4 @@ ImageView.propTypes = {
 }
 
 export default ImageView
+

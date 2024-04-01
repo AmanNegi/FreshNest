@@ -3,22 +3,24 @@
     "browser": true,
     "es2021": true
   },
-  "extends": ["standard", "plugin:react/recommended"],
+  "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:prettier/recommended"],
   "parserOptions": {
     "ecmaVersion": "latest",
-    "sourceType": "module",
-    "ecmaFeatures": {
-      "jsx": true
-    }
+    "sourceType": "module"
   },
   "plugins": ["react"],
+  "rules": {
+    "react/react-in-jsx-scope": "off",
+    "prettier/prettier": [
+      "error",
+      {
+        "endOfLine": "auto"
+      }
+    ]
+  },
   "settings": {
     "react": {
-      "version": "detect",
-      "runtime": "automatic"
+      "version": "detect"
     }
-  },
-  "rules": {
-    "react/react-in-jsx-scope": "off"
   }
 }

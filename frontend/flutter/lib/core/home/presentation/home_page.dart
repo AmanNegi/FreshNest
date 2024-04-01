@@ -2,6 +2,7 @@ import 'package:fresh_nest/core/home/application/home_manager.dart';
 import 'package:fresh_nest/core/home/application/home_provider.dart';
 import 'package:fresh_nest/core/home/presentation/add_item/add_item.dart';
 import 'package:fresh_nest/core/home/presentation/widgets/agro_grid_view.dart';
+import 'package:fresh_nest/core/home/presentation/widgets/cart_bar.dart';
 import 'package:fresh_nest/core/home/presentation/widgets/drawer.dart';
 import 'package:fresh_nest/core/map/presentation/map_view.dart';
 import 'package:fresh_nest/core/search/presentation/search_page.dart';
@@ -58,19 +59,31 @@ class _HomePageState extends ConsumerState<HomePage> {
             )
         ],
       ),
-      body: RefreshIndicator(
-        onRefresh: () async {
-          _getHeading();
-          AgroGridView(list: ref.watch(homeProvider).getItems());
-        },
-        child: ListView(
-          children: [
-            _getHeading(),
-            AgroGridView(
-              list: ref.watch(homeProvider).getItems(),
+      body: Stack(
+        children: [
+          Positioned.fill(
+            child: RefreshIndicator(
+              onRefresh: () async {
+                await Future.delayed(const Duration(seconds: 2));
+              },
+              child: ListView(
+                children: [
+                  _getHeading(),
+                  AgroGridView(
+                    list: ref.watch(homeProvider).getItems(),
+                  ),
+                  SizedBox(height: 0.1 * getHeight(context)),
+                ],
+              ),
             ),
-          ],
-        ),
+          ),
+          const Positioned(
+            bottom: 0,
+            left: 0,
+            right: 0,
+            child: CartBar(),
+          ),
+        ],
       ),
     );
   }
@@ -78,7 +91,7 @@ class _HomePageState extends ConsumerState<HomePage> {
   Builder _getFloatingActionButton() {
     print(appCache.isLoggedIn());
     print(appCache.isFarmer());
-    
+
     return Builder(
       builder: (context) {
         if (appCache.isLoggedIn() && appCache.isFarmer()) {
