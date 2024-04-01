@@ -9,9 +9,10 @@ import cartEmitter, { getCartCount } from '../../pages/Cart/application/cart_eve
 
 import logo from '../../assets/logo.png';
 
-import { BsSearch } from 'react-icons/bs';
-import { AiOutlineUser, AiOutlineShoppingCart, AiOutlineShop } from 'react-icons/ai';
-import { FaBars } from 'react-icons/fa';
+import { BsSearch } from 'react-icons/bs'
+import { AiOutlineUser, AiOutlineShoppingCart, AiOutlineShop } from 'react-icons/ai'
+import { FaBars } from 'react-icons/fa'
+import PropTypes from 'prop-types'
 
 function NavBar() {
   const navigate = useNavigate();
@@ -89,6 +90,11 @@ function NavBarItem({ text = 'NavItem', route = '/' }) {
       <h6>{text}</h6>
     </li>
   );
+}
+
+NavBarItem.propTypes = {
+  text: PropTypes.string.isRequired,
+  route: PropTypes.string.isRequired
 }
 
 const CartNotifier = () => {

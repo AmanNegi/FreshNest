@@ -9,8 +9,10 @@ import ShimmerShopItem from '../../../components/ShimmerShopItem';
 import appState from '../../../data/AppState';
 import getItems, { sortList } from '../application/shop';
 
-import { FaCaretDown } from 'react-icons/fa';
-import QueryError from '../../../components/QueryError';
+import { FaCaretDown } from 'react-icons/fa'
+import QueryError from '../../../components/QueryError'
+import PropTypes from 'prop-types'
+
 
 function Shop() {
   const [searchParams] = useSearchParams();
@@ -133,6 +135,11 @@ const Filter = ({ filter, updateFilter }) => {
     </details>
   );
 };
+
+Filter.propTypes = {
+  filter: PropTypes.string.isRequired,
+  updateFilter: PropTypes.func.isRequired
+}
 
 const options = [
   { value: '0', label: 'Latest' },

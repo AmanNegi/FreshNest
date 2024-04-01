@@ -1,22 +1,24 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import appState from '../data/AppState';
-import { addToCart, removeFromCart } from '../pages/Cart/application/cart';
-import { getItem, getUserFromId } from '../pages/shop/application/shop';
-import TimeAgo from 'react-timeago';
+import { motion } from 'framer-motion'
+import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
+import appState from '../data/AppState'
+import { addToCart, removeFromCart } from '../pages/Cart/application/cart'
+import { getItem } from '../pages/shop/application/shop'
+import TimeAgo from 'react-timeago'
 
-import { BsFillTrash3Fill } from 'react-icons/bs';
-import { FaClockRotateLeft } from 'react-icons/fa6';
+import { BsFillTrash3Fill } from 'react-icons/bs'
+import { FaClockRotateLeft } from 'react-icons/fa6'
 
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
-import ImageView from './ImageView';
-import { cn } from '../utils/cn';
-import { useQuery } from '@tanstack/react-query';
-import ShimmerShopItem from './ShimmerShopItem';
-import { toast } from 'react-toastify';
+import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai'
+import ImageView from './ImageView'
+import { cn } from '../utils/cn'
+import { useQuery } from '@tanstack/react-query'
+import ShimmerShopItem from './ShimmerShopItem'
+import { toast } from 'react-toastify'
 
-import useShopItemMutations from '../hooks/ShopItemHook';
+import useShopItemMutations from '../hooks/ShopItemHook'
+import PropTypes from 'prop-types'
+
 
 /**
  *
@@ -225,4 +227,11 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
   );
 }
 
-export default ShopItem;
+ShopItem.propTypes = {
+  itemId: PropTypes.string.isRequired,
+  itemCount: PropTypes.number.isRequired,
+  isCart: PropTypes.bool.isRequired,
+  onDelete: PropTypes.func.isRequired
+}
+
+export default ShopItem

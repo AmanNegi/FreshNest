@@ -1,5 +1,10 @@
-import React from 'react';
-import { ShimmerThumbnail, ShimmerTitle, ShimmerText } from 'react-shimmer-effects-18';
+import React from 'react'
+import {
+  ShimmerThumbnail,
+  ShimmerTitle,
+  ShimmerText
+} from 'react-shimmer-effects-18'
+import PropTypes from 'prop-types'
 
 const ShimmerShopItem = ({ id }) => {
   return (
@@ -19,4 +24,8 @@ const ShimmerShopItem = ({ id }) => {
   );
 };
 
-export default ShimmerShopItem;
+ShimmerShopItem.propTypes = {
+  id: PropTypes.number.isRequired
+}
+
+export default ShimmerShopItem

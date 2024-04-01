@@ -1,4 +1,5 @@
-import React from 'react';
+import React from 'react'
+import PropTypes from 'prop-types'
 
 function ButtonLoader({ className = '' }) {
   return (
@@ -8,4 +9,9 @@ function ButtonLoader({ className = '' }) {
   );
 }
 
-export default ButtonLoader;
+ButtonLoader.propTypes = {
+  className: PropTypes.string
+}
+
+export default ButtonLoader
+

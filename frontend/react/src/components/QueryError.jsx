@@ -1,5 +1,6 @@
-import React from 'react';
-import { ClickActionButton } from './Button';
+import React from 'react'
+import { ClickActionButton } from './Button'
+import PropTypes from 'prop-types'
 
 const QueryError = ({ error, onClick }) => {
   return (
@@ -13,4 +14,11 @@ const QueryError = ({ error, onClick }) => {
   );
 };
 
-export default QueryError;
+QueryError.propTypes = {
+  error: PropTypes.shape({
+    message: PropTypes.string.isRequired
+  }).isRequired,
+  onClick: PropTypes.func.isRequired
+}
+
+export default QueryError
