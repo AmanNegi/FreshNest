@@ -9,12 +9,12 @@ dotenv.config({ path: `.env.${env}` })
 
 const app = express()
 
-// if (env === 'dev') {
-const swaggerUi = require('swagger-ui-express')
-const swaggerFile = require('./src/swagger_output.json')
+if (env === 'dev') {
+  const swaggerUi = require('swagger-ui-express')
+  const swaggerFile = require('./src/swagger_output.json')
 
-app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
-// }
+  app.use('/docs', swaggerUi.serve, swaggerUi.setup(swaggerFile))
+}
 
 const corsPrefs = cors({
   origin: ['https://fresh-nest.netlify.app', 'http://localhost:5173'],
