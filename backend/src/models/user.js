@@ -8,8 +8,8 @@ const userSchema = new mongoose.Schema({
     required: true
   },
   phone: {
-    type: String,
-    required: true
+    type: String
+    // required: true
   },
   name: {
     type: String,
@@ -82,14 +82,13 @@ function validateSignUp (req) {
     name: Joi.string().required(),
     email: Joi.string().required().email(),
     password: Joi.string().required(),
-    phone: Joi.string().required(),
+    phone: Joi.string(),
     userType: Joi.string().default('customer'),
     location: Joi.object()
       .keys({
         type: Joi.string().valid('Point').default('Point'),
         coordinates: Joi.array().items(Joi.number()).required()
       })
-      .required()
   })
   return schema.validate(req)
 }
