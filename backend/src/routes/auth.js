@@ -1,6 +1,7 @@
 const { User, validateLogin, validateGLogin, validateSignUp } = require('../models/user')
 const express = require('express')
 const { getSuccessResponse, getErrorResponse } = require('../utils/response')
+const { hashPassword, comparePasswords } = require('../utils/hashUtil')
 const router = express.Router()
 const _ = require('lodash')
 const { default: mongoose } = require('mongoose')
@@ -21,7 +22,7 @@ router.post('/login', async (req, res) => {
     return res.send(getErrorResponse('No User Exists with this email'))
   }
 
-  const validPassword = req.body.password === user.password
+  const validPassword = comparePasswords(req.body.password, user.password)
   if (!validPassword) return res.send(getErrorResponse('Invalid Password'))
 
   return res.send(
@@ -54,7 +55,7 @@ router.post('/signup', async (req, res) => {
 
   let userType = req.body.userType
   if (!userType) userType = 'customer'
-
+  req.body.password = hashPassword(req.body.password)
   user = new User(req.body)
 
   await user.save()
@@ -97,7 +98,7 @@ router.post('/saveGLogin', async (req, res) => {
   user = new User({
     email,
     name: req.body.name,
-    password: email,
+    password: hashPassword(email),
     userType,
     phone: '000 '
   })
