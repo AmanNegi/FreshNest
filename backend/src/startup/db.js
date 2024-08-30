@@ -6,6 +6,7 @@ const logger = require('../utils/logger')
  */
 module.exports = async function () {
   const dbUrl = process.env.DATABASE_URL
+
   try {
     const res = await mongoose
       .connect(dbUrl, {

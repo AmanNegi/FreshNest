@@ -1,8 +1,8 @@
 const { User, validateLogin, validateGLogin, validateSignUp } = require('../models/user')
 const express = require('express')
 const { getSuccessResponse, getErrorResponse } = require('../utils/response')
+const { hashPassword, comparePasswords } = require('../utils/hashUtil')
 const router = express.Router()
-const bcrypt = require('bcrypt')
 const _ = require('lodash')
 const { default: mongoose } = require('mongoose')
 
@@ -22,7 +22,7 @@ router.post('/login', async (req, res) => {
     return res.send(getErrorResponse('No User Exists with this email'))
   }
 
-  const validPassword = await bcrypt.compare(req.body.password, user.password)
+  const validPassword = comparePasswords(req.body.password, user.password)
   if (!validPassword) return res.send(getErrorResponse('Invalid Password'))
 
   return res.send(
@@ -55,9 +55,7 @@ router.post('/signup', async (req, res) => {
 
   let userType = req.body.userType
   if (!userType) userType = 'customer'
-  const salt = await bcrypt.genSalt(10)
-  const hashedPassword = await bcrypt.hash(req.body.password, salt)
-  req.body.password = hashedPassword
+  req.body.password = hashPassword(req.body.password)
   user = new User(req.body)
 
   await user.save()
@@ -95,14 +93,12 @@ router.post('/saveGLogin', async (req, res) => {
     userType = 'admin'
   }
   const email = req.body.email
-  const salt = await bcrypt.genSalt(10)
 
   // By default email is the password itself
-  const hashedPassword = await bcrypt.hash(email, salt)
   user = new User({
     email,
     name: req.body.name,
-    password: hashedPassword,
+    password: hashPassword(email),
     userType,
     phone: '000 '
   })

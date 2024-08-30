@@ -88,7 +88,8 @@ function validateSignUp (req) {
       .keys({
         type: Joi.string().valid('Point').default('Point'),
         coordinates: Joi.array().items(Joi.number()).required()
-      }).required()
+      })
+      .required()
   })
   return schema.validate(req)
 }
