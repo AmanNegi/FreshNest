@@ -1,6 +1,6 @@
 const chai = require('chai')
 const chaiHttp = require('chai-http')
-const app = require('../../index.js')
+const app = require('../index.js')
 const { DBHelper } = require('./db_helper.js')
 
 class FreshNestTester {
