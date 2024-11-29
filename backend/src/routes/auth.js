@@ -55,7 +55,8 @@ router.post('/signup', async (req, res) => {
 
   let userType = req.body.userType
   if (!userType) userType = 'customer'
-  req.body.password = hashPassword(req.body.password)
+  req.body.password = await hashPassword(req.body.password)
+
   user = new User(req.body)
 
   await user.save()

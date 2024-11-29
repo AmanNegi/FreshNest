@@ -1,6 +1,6 @@
 const { MilletItem } = require('../../src/models/millet_item')
 const { User } = require('../../src/models/user')
-const db = require('../../src/startup/db')
+const db = require('./db')
 
 class DBTestHelper {
   /** @type {mongoose} */

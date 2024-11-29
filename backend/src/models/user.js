@@ -45,8 +45,7 @@ const userSchema = new mongoose.Schema({
       default: 'Point'
     },
     coordinates: {
-      type: [Number],
-      required: true
+      type: [Number]
     }
   }
 })
