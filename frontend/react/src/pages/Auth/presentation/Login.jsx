@@ -57,8 +57,11 @@ function Login() {
   return (
     <>
       <section className="float-right relative h-screen w-screen lg:w-[40%]">
-        {/* Top Left Icon and Text */}
-        <div className="absolute right-3 top-3">
+        {/* Top Right Icon and Text */}
+        <div 
+          className="absolute right-3 top-3 cursor-pointer z-[1]" 
+          onClick={() => navigate("/")} 
+        >
           <img className="h-[75px] object-contain  mr-1" src={icon} alt="" />
         </div>
 
