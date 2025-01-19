@@ -29,8 +29,6 @@ export async function getFourItems() {
   let list = [];
   const res = await axios.get(`${import.meta.env.VITE_API_URL}/list/getRecent`);
 
-  console.log('Get four items:', res);
-
   if (res.data.statusCode === 200 && res.data.data) {
     list = res.data.data.slice(0, 4);
   }
@@ -143,8 +141,6 @@ export async function addComment(comment) {
   });
 
   toast.success('Comment added successfully!');
-  console.log(res);
-
   return res.data.data;
 }
 
@@ -161,7 +157,6 @@ export async function deleteItem(itemId, listedBy) {
       itemId
     });
 
-    console.log(res);
     if (res.data.statusCode === 200) {
       toast.success(res.data.message);
       return res.data.data;
@@ -170,7 +165,6 @@ export async function deleteItem(itemId, listedBy) {
       return 0;
     }
   }
-  console.log(appState.getUserData(), listedBy);
   if (appState.getUserData().userType !== 'admin') {
     toast.error('You must be an admin to delete an item');
   }

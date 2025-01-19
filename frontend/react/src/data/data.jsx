@@ -1,13 +1,9 @@
-// Icons
-import { BiSolidAward, BiSolidCoinStack, BiStoreAlt } from 'react-icons/bi';
-import { BsEyeFill, BsListCheck } from 'react-icons/bs';
-import { FaHandsHelping } from 'react-icons/fa';
-import { GiCurledLeaf } from 'react-icons/gi';
+import { Award, Coins, Store, Eye, List, HelpingHand, Leaf } from 'lucide-react';
 
 export const data = [
-  { name: 'Vocal for Local', icon: <BiStoreAlt /> },
-  { name: 'Support Local Farmers', icon: <FaHandsHelping /> },
-  { name: 'Natural and Organic', icon: <GiCurledLeaf /> }
+  { name: 'Vocal for Local', icon: <Store /> },
+  { name: 'Support Local Farmers', icon: <HelpingHand /> },
+  { name: 'Natural and Organic', icon: <Leaf /> }
 ];
 
 export const features = [
@@ -15,24 +11,24 @@ export const features = [
     title: 'Product Quality',
     description:
       'Farmers can directly sell their products to customers, ensuring that the products are of high quality and fresh',
-    icon: <BiSolidAward />
+    icon: <Award />
   },
   {
     title: 'Cost Efficient',
     description:
       'Farmers can directly sell their products to customers, ensuring that the products are of high quality and fresh',
-    icon: <BiSolidCoinStack />
+    icon: <Coins />
   },
   {
     title: 'Transparency',
     description:
       'Farmers can directly sell their products to customers, ensuring that the products are of high quality and fresh',
-    icon: <BsEyeFill />
+    icon: <Eye />
   },
   {
     title: 'Product Variety',
     description:
       'Farmers can directly sell their products to customers, ensuring that the products are of high quality and fresh',
-    icon: <BsListCheck />
+    icon: <List />
   }
 ];

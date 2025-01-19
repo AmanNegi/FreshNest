@@ -16,7 +16,7 @@ function Footer() {
             className="flex flex-row items-center justify-center w-auto hover:scale-[1.025] transition-all duration-300 cursor-pointer"
           >
             <p className="px-4 py-[4px] mx-auto text-black text-opacity-80 border border-black border-opacity-60 rounded-full flex flex-row items-center justify-center text-[12px]">
-              <img className="max-h-[20px max-w-[15px]" src="/github-mark.png" alt="" />
+              <img className="h-[20px] w-[20px]" src="/github-mark.png" alt="" />
               <span className="w-2"></span>
               Proudly OpenSource
               <svg

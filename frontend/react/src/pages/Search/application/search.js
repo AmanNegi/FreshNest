@@ -8,7 +8,6 @@ import { toast } from 'react-toastify';
  */
 export default async function search(query) {
   const res = await axios.get(import.meta.env.VITE_API_URL + `/search/${query}`);
-  console.log(res);
   if (res.data.statusCode === 200) {
     return res.data.data;
   }

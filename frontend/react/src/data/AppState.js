@@ -28,9 +28,9 @@ class AppState {
   isLoggedIn = false;
 
   __init__() {
-    console.log('In __init__ AppState.js...');
+    console.info('In __init__ AppState.js...');
     const data = JSON.parse(localStorage.getItem(APP_STATE_KEY)) ?? {};
-    console.log('Local AppState Data: ', data);
+    console.info('Local AppState Data: ', data);
     this.userData = data.userData ?? {};
     this.isLoggedIn = data.isLoggedIn ?? false;
   }

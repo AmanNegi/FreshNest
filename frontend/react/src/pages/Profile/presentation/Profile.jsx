@@ -3,8 +3,7 @@ import { useRef, useState } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useNavigate } from 'react-router-dom';
 
-import { FiSettings } from 'react-icons/fi';
-
+import { Settings } from 'lucide-react';
 import UpdateModal from './UpdateModal';
 import Loading from '../../../components/Loading';
 import QueryError from '../../../components/QueryError';
@@ -25,20 +24,17 @@ function Profile() {
     data: user,
     isLoading,
     isError,
-    error,
-    status
+    error
   } = useQuery({
     queryKey: ['profile'],
     queryFn: () => getUser(navigate)
   });
-  console.log(status, isLoading, isError, error, user);
 
   const [pattern, setPattern] = useState('pattern1');
   const patterns = ['pattern1', 'pattern2', 'pattern3'];
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0];
-    console.log('Selected File:', selectedFile);
 
     if (selectedFile) {
       addFarmImageMutation.mutate(selectedFile);
@@ -79,7 +75,7 @@ function Profile() {
         <div className="flex justify-end right-10">
           <div className="dropdown md:dropdown-left  ">
             <label tabIndex={0} className="btn btn-circle btn-ghost btn-md m-4">
-              <FiSettings />
+              <Settings />
             </label>
             <ul
               tabIndex={0}
@@ -91,7 +87,6 @@ function Profile() {
                   const modal = document.getElementById('my_modal_1');
                   const handleClose = () => {
                     if (modal.returnValue === '1') {
-                      console.log('refreshing');
                       // location.reload();
                       modal.removeEventListener('close', handleClose);
                     }

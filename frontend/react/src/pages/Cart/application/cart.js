@@ -17,12 +17,11 @@ export default async function getCart() {
   const id = appState.userData._id;
   const res = await axios.get(import.meta.env.VITE_API_URL + `/cart/get/${id}`);
 
-  console.log('cart.js: ', res);
   emitCartUpdateEvent(res.data.data.items.length);
   saveCartCount(res.data.data.items.length);
 
   if (res.data.data == undefined || res.data.data.items == undefined) {
-    console.log('cart.js: An error occurred', res);
+    console.warn('cart.js: An error occurred', res);
     throw new Error('Error occured while getting items');
   }
   return res.data.data.items;
@@ -47,7 +46,6 @@ export async function addToCart(itemId, count) {
   });
 
   if (res.data.statusCode === 200) {
-    console.log(res.data.data.items);
     emitCartUpdateEvent(res.data.data.items.length);
     saveCartCount(res.data.data.items.length);
 
@@ -56,12 +54,10 @@ export async function addToCart(itemId, count) {
     toast.error(res.data.message);
   }
 
-  console.log(res);
   return 1;
 }
 
 export async function updateCartCount(itemId, count) {
-  console.log('updateCartCount  ', itemId, count);
   if (!appState.isUserLoggedIn()) {
     toast.error('You must be logged in to update cart');
     return 0;
@@ -74,7 +70,7 @@ export async function updateCartCount(itemId, count) {
   });
 
   if (res.data.statusCode === 200) {
-    console.log('Updated Cart Successfully');
+    console.info('Updated Cart Successfully');
   } else {
     toast.error(res.data.message);
   }
@@ -104,6 +100,5 @@ export async function removeFromCart(itemId) {
     toast.error(res.data.message);
   }
 
-  console.log('cart.js | removeFromCart()', res);
   return 1;
 }

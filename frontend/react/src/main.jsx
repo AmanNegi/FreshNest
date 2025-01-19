@@ -14,7 +14,9 @@ import './index.css';
 import 'react-toastify/dist/ReactToastify.css';
 import Loading from './components/Loading';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
+
+// add before using: "@tanstack/react-query-devtools": "^5.18.1",
+// import { ReactQueryDevtools } from '@tanstack/react-query-devtools';
 
 appState.__init__();
 
@@ -40,7 +42,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
         </Suspense>
         <ToastContainer theme="dark" autoClose={1500} />
         {/* ! USE FOR DEV MODE ONLY */}
-        <ReactQueryDevtools initialIsOpen={true} />
+        {/* <ReactQueryDevtools initialIsOpen={true} /> */}
       </main>
     </GoogleOAuthProvider>
   </QueryClientProvider>

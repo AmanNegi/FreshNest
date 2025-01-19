@@ -17,7 +17,6 @@ export default async function updateUser(body) {
     _id: appState.getUserData()._id
   });
 
-  console.log(res);
   if (res.status !== 200) {
     toast.error('An error occurred while updating your profile. Please try again later.');
     throw new Error('An error occurred while updating your profile');
@@ -59,7 +58,6 @@ export async function getUser(navigate) {
   }
 
   const res = await axios.get(import.meta.env.VITE_API_URL + `/auth/${appState.getUserData()._id}`);
-  console.log('Server Respponse: ', res);
 
   if (res.status === 200) {
     appState.setUserData(res.data.data);

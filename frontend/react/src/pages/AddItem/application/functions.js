@@ -29,7 +29,6 @@ export async function handleUpload(file) {
 
     // Get the download URL
     const url = await getDownloadURL(uploadTask.snapshot.ref);
-    console.log(url);
     return url;
   } catch (error) {
     console.error(error);
@@ -64,8 +63,6 @@ export async function addItem(data) {
       comments: []
     });
 
-    console.log(res);
-
     if (res.data.statusCode === 200) {
       toast.success(res.data.message);
       return true;
@@ -74,7 +71,7 @@ export async function addItem(data) {
       return false;
     }
   } catch (err) {
-    console.log(err);
+    console.warn(err);
     toast.error('Error uploading image');
     return false;
   }

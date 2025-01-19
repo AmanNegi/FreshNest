@@ -6,10 +6,8 @@ import { addToCart, removeFromCart } from '../pages/Cart/application/cart';
 import { getItem, getUserFromId } from '../pages/shop/application/shop';
 import TimeAgo from 'react-timeago';
 
-import { BsFillTrash3Fill } from 'react-icons/bs';
-import { FaClockRotateLeft } from 'react-icons/fa6';
+import { Trash, Clock, Minus, Plus } from 'lucide-react';
 
-import { AiOutlineMinus, AiOutlinePlus } from 'react-icons/ai';
 import ImageView from './ImageView';
 import { cn } from '../utils/cn';
 import { useQuery } from '@tanstack/react-query';
@@ -44,7 +42,6 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
       const user = await getUserFromId(item?.listedBy);
 
       if (!user) throw Error('An error occured while loading item!');
-      console.log('IN QUERY: ', item, user);
       return {
         item,
         user
@@ -86,7 +83,6 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
     );
   }
   const { item, user: lister } = data;
-  console.log('Shop Item.jsx', data);
 
   return (
     <>
@@ -121,7 +117,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
           </div>
 
           <div className="bg-gray-200 inline-flex flex-row mx-2 items-center justify-start px-3 gap-3 py-1 rounded-[5px] text-xs ">
-            <FaClockRotateLeft />
+            <Clock />
             <TimeAgo date={item.listedAt} live={false} />
           </div>
           <div className="px-4 rounded-lg ">
@@ -177,7 +173,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
                       'text-errorColor'
                     )}
                   >
-                    <BsFillTrash3Fill />
+                    <Trash />
                   </p>
                 </button>
                 {appState.isCustomer() && isCart && (
@@ -199,7 +195,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
                       }}
                       className="cursor-pointer flex-1 h-[100%] flex justify-center items-center"
                     >
-                      <AiOutlineMinus />
+                      <Minus />
                     </div>
                     <div className="flex-1 h-[100%] flex justify-center items-center text-center bg-lightBorderColor">
                       {count}
@@ -213,7 +209,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
                       }}
                       className="cursor-pointer flex-1 h-[100%] flex justify-center items-center text-center"
                     >
-                      <AiOutlinePlus />
+                      <Plus />
                     </div>
                   </div>
                 )}

@@ -75,7 +75,7 @@ const AddItem = () => {
       price: data.price,
       file: data.file
     };
-    console.log(newData);
+
     const res = await addItem(newData);
     setIsLoading(false);
 

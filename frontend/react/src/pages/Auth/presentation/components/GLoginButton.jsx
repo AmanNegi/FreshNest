@@ -15,7 +15,6 @@ const GLoginButton = () => {
     <GoogleLogin
       onSuccess={async (credentialResponse) => {
         const data = jwtDecode(credentialResponse.credential);
-        console.log(data);
 
         const { data: user, statusCode } = await gSignUp(data.name, data.email);
 
@@ -38,7 +37,7 @@ const GLoginButton = () => {
         navigate('/home');
       }}
       onError={() => {
-        console.log('Login Failed');
+        console.warn('Login Failed');
       }}
     />
   );

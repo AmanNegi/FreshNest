@@ -1,10 +1,9 @@
-import { useState } from 'react'
-import Loading from '../../../components/Loading'
-import search from '../application/search'
-import { toast } from 'react-toastify'
-import ShopItem from '../../../components/ShopItem'
-import PropTypes from 'prop-types'
-
+import { useState } from 'react';
+import Loading from '../../../components/Loading';
+import search from '../application/search';
+import { toast } from 'react-toastify';
+import ShopItem from '../../../components/ShopItem';
+import PropTypes from 'prop-types';
 
 function Search() {
   const [loading, setLoading] = useState(false);
@@ -17,7 +16,6 @@ function Search() {
   const searchForQuery = async () => {
     setLoading(true);
     if (query.length >= 3 && query) {
-      console.log(query);
       const data = await search(query);
       setLoading(false);
       setItems(data);
@@ -88,7 +86,6 @@ LoadedPage.propTypes = {
       _id: PropTypes.string.isRequired
     }).isRequired
   ).isRequired
-}
+};
 
-export default Search
-
+export default Search;

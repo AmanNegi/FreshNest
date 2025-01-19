@@ -1,7 +1,8 @@
-import React, { useState } from 'react'
-import { BiHide, BiShow } from 'react-icons/bi'
-import PropTypes from 'prop-types'
+import React, { useState } from 'react';
 
+import { EyeOff, Eye } from 'lucide-react';
+
+import PropTypes from 'prop-types';
 
 const PasswordField = ({ handleFieldChange }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
@@ -25,7 +26,7 @@ const PasswordField = ({ handleFieldChange }) => {
           className="ml-2 btn btn-primary"
           onClick={togglePasswordVisibility}
         >
-          {passwordVisible ? <BiHide /> : <BiShow />}
+          {passwordVisible ? <EyeOff /> : <Eye />}
         </button>
       </div>
     </div>
@@ -34,7 +35,6 @@ const PasswordField = ({ handleFieldChange }) => {
 
 PasswordField.propTypes = {
   handleFieldChange: PropTypes.func.isRequired
-}
+};
 
-export default PasswordField
-
+export default PasswordField;
