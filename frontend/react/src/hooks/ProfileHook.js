@@ -10,13 +10,12 @@ export default function useProfileMutations() {
     onSuccess: (e) => {
       toast.success('Image uploaded successfully');
       queryClient.setQueryData(['profile'], (old) => {
-        console.log(old, e);
         old.images.push(e);
         return { ...old };
       });
     },
     onError: (e) => {
-      console.log(e);
+      console.error(e);
       toast.error('An error occured while uploading the image!');
       queryClient.invalidateQueries(['profile']);
     }
@@ -25,12 +24,11 @@ export default function useProfileMutations() {
   const updateUserMutation = useMutation({
     mutationFn: (data) => updateUser(data),
     onError: (e) => {
-      console.log('error occurred', e);
+      console.error('error occurred', e);
       toast.error('An error occured while updating the profile!');
       queryClient.invalidateQueries(['profile']);
     },
     onSuccess: (e) => {
-      console.log('Success', e);
       toast.success('Profile updated successfully');
       queryClient.setQueryData(['profile'], () => {
         return e;

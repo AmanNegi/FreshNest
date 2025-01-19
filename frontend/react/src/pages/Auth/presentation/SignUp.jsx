@@ -33,8 +33,6 @@ function SignUp() {
   }, []);
 
   const handleSignUp = async () => {
-    console.log(data);
-
     if (data.email.length === 0) {
       toast.error('Enter your email to sign up');
       return;
@@ -76,8 +74,8 @@ function SignUp() {
   return (
     <>
       <section className="float-right relative h-screen w-screen lg:w-[40%]">
-        {/* Top Left Icon and Text */}
-        <div className="absolute right-3 top-3">
+        {/* Top Right Icon and Text */}
+        <div className="absolute right-3 top-3 cursor-pointer z-[1]" onClick={() => navigate('/')}>
           <img className="h-[75px] object-contain  mr-1" src={icon} alt="" />
         </div>
 
@@ -183,9 +181,9 @@ export default SignUp;
 const getLocation = (setData, data) => {
   function success(pos) {
     const crd = pos.coords;
-    console.log('Your current position is:');
-    console.log(`Latitude : ${crd.latitude}`);
-    console.log(`Longitude: ${crd.longitude}`);
+    console.info('Your current position is:');
+    console.info(`Latitude : ${crd.latitude}`);
+    console.info(`Longitude: ${crd.longitude}`);
 
     setData({ ...data, latitude: crd.latitude, longitude: crd.longitude });
   }
@@ -201,7 +199,6 @@ const getLocation = (setData, data) => {
   };
   if (navigator.geolocation) {
     navigator.permissions.query({ name: 'geolocation' }).then(function (result) {
-      console.log(result);
       if (result.state === 'granted') {
         navigator.geolocation.getCurrentPosition(success, errors, options);
       } else if (result.state === 'prompt') {
@@ -211,6 +208,6 @@ const getLocation = (setData, data) => {
       }
     });
   } else {
-    console.log('Geolocation is not supported by this browser.');
+    console.warn('Geolocation is not supported by this browser.');
   }
 };

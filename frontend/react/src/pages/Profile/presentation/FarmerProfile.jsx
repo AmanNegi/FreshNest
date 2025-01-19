@@ -27,7 +27,7 @@ function FarmProfile() {
 
       const farmItems = await getAllFarmerItems(user._id);
       if (!farmItems) {
-        console.log('An error occured while loading farm items');
+        console.warn('An error occured while loading farm items');
       }
 
       return { user, farmItems };

@@ -7,8 +7,8 @@ import NavigationButton from '../../../components/Button';
 import { data, features } from '../../../data/data';
 import { getFourItems } from '../../shop/application/shop';
 
-import landingBg from '../../../assets/landing_bg.jpg';
-import exploreImage from '../../../assets/explore.png';
+import landingBg from '../../../assets/landing_bg.webp';
+import exploreImage from '../../../assets/explore.webp';
 import { useQuery } from '@tanstack/react-query';
 
 function Home() {

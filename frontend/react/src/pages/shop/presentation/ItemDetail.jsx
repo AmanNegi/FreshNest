@@ -11,8 +11,7 @@ import { toast } from 'react-toastify';
 import appState from '../../../data/AppState';
 import QueryError from '../../../components/QueryError';
 
-import { AiFillStar, AiOutlineStar } from 'react-icons/ai';
-
+import { Star, StarOff } from 'lucide-react';
 function ItemDetail() {
   const { id } = useParams();
 
@@ -34,7 +33,6 @@ function ItemDetail() {
 
       if (!user) throw Error('An error occured while loading item!');
 
-      console.log('IN QUERY: ', item, user);
       return {
         item,
         user
@@ -109,8 +107,8 @@ function ItemDetail() {
                 <Rating
                   initialRating={4.0}
                   readonly={true}
-                  fullSymbol={<AiFillStar className="text-amber-400" />}
-                  emptySymbol={<AiOutlineStar className="text-gray-300" />}
+                  fullSymbol={<Star className="text-amber-400" />}
+                  emptySymbol={<StarOff className="text-gray-300" />}
                 />
                 <h6 className="text-slate-500">4.5 out of 5</h6>
               </div>

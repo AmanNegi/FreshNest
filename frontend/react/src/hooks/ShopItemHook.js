@@ -17,12 +17,11 @@ export default function useShopItemMutations(itemId) {
   const updateCartMutation = useMutation({
     mutationFn: (e) => updateCartCount(itemId, e),
     onError: (e) => {
-      console.log(e);
+      console.warn(e);
       toast.error('An error occured while updating the cart!');
       queryClient.invalidateQueries('cart');
     },
-    onSuccess: (e) => {
-      console.log('Success', e);
+    onSuccess: () => {
       queryClient.invalidateQueries(['cart']);
     }
   });
@@ -30,12 +29,11 @@ export default function useShopItemMutations(itemId) {
   const deleteItemFromCartMutation = useMutation({
     mutationFn: () => removeFromCart(itemId),
     onError: (e) => {
-      console.log(e);
+      console.warn(e);
       toast.error('An error occured while removing the item from the cart!');
       queryClient.invalidateQueries('cart');
     },
-    onSuccess: (e) => {
-      console.log('Success', e);
+    onSuccess: () => {
       queryClient.invalidateQueries(['cart']);
     }
   });
@@ -43,11 +41,10 @@ export default function useShopItemMutations(itemId) {
   const deleteItemMutation = useMutation({
     mutationFn: () => deleteItem(itemId, appState.userData?._id),
     onError: (e) => {
-      console.log('Error is ', e);
       toast.error(e.message);
     },
     onSuccess: (e) => {
-      console.log('Success', e);
+      console.warn(e);
       queryClient.invalidateQueries(['items']);
     }
   });

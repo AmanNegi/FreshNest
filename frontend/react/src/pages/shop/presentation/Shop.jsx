@@ -9,10 +9,10 @@ import ShimmerShopItem from '../../../components/ShimmerShopItem';
 import appState from '../../../data/AppState';
 import getItems, { sortList } from '../application/shop';
 
-import { FaCaretDown } from 'react-icons/fa'
-import QueryError from '../../../components/QueryError'
-import PropTypes from 'prop-types'
+import { ChevronDown } from 'lucide-react';
 
+import QueryError from '../../../components/QueryError';
+import PropTypes from 'prop-types';
 
 function Shop() {
   const [searchParams] = useSearchParams();
@@ -119,7 +119,7 @@ const Filter = ({ filter, updateFilter }) => {
     <details className="dropdown dropdown-end">
       <summary className="m-1 btn">
         {options[filter].label}
-        <FaCaretDown />
+        <ChevronDown />
       </summary>
       <ul className="p-2 shadow menu dropdown-content z-[1] bg-base-100 rounded-box w-52">
         {options.map((e, i) => {
@@ -139,7 +139,7 @@ const Filter = ({ filter, updateFilter }) => {
 Filter.propTypes = {
   filter: PropTypes.string.isRequired,
   updateFilter: PropTypes.func.isRequired
-}
+};
 
 const options = [
   { value: '0', label: 'Latest' },

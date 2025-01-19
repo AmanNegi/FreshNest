@@ -1,9 +1,8 @@
-import React, { useState } from 'react'
-import { toast } from 'react-toastify'
-import _ from 'lodash'
-import useProfileMutations from '../../../hooks/ProfileHook'
-import PropTypes from 'prop-types'
-
+import React, { useState } from 'react';
+import { toast } from 'react-toastify';
+import _ from 'lodash';
+import useProfileMutations from '../../../hooks/ProfileHook';
+import PropTypes from 'prop-types';
 
 const UpdateModal = ({ user }) => {
   const { updateUserMutation } = useProfileMutations();
@@ -102,7 +101,6 @@ const UpdateModal = ({ user }) => {
         message += errors[key] + '\n';
       }
       toast.error(message);
-      console.log(errors);
       modal.returnValue = 0;
     }
     modal.close();
@@ -115,7 +113,6 @@ UpdateModal.propTypes = {
     email: PropTypes.string.isRequired,
     phone: PropTypes.string
   }).isRequired
-}
+};
 
-export default UpdateModal
-
+export default UpdateModal;

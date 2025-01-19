@@ -49,7 +49,6 @@ export async function signUp(data) {
     }
   });
 
-  console.log(res);
   if (res.data.statusCode === 200) {
     toast.success(res.data.message);
   } else {
@@ -70,6 +69,5 @@ export async function gSignUp(name, email) {
     email: email.toLowerCase()
   });
 
-  console.log(res);
   return res.data;
 }
