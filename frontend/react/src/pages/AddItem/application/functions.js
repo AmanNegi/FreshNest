@@ -3,8 +3,6 @@ import axios from 'axios';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
 
-import storage from '../../../main';
-
 /**
  *  Uploads a file to Firebase Storage
  * @param {File} file
@@ -14,6 +12,21 @@ export async function handleUpload(file) {
   if (!file) {
     alert('Please choose a file first!');
   }
+  // Initialize Firebase
+  const { initializeApp } = await import('firebase/app');
+  const { getStorage } = await import('firebase/storage');
+
+  const app = initializeApp({
+    apiKey: import.meta.env.VITE_API_KEY,
+    authDomain: import.meta.env.VITE_AUTH_DOMAIN,
+    projectId: import.meta.env.VITE_PROJECT_ID,
+    storageBucket: import.meta.env.VITE_STORAGE_BUCKET,
+    messagingSenderId: import.meta.env.VITE_MESSAGING_SENDER_ID,
+    appId: import.meta.env.VITE_APP_ID,
+    measurementId: import.meta.env.VITE_MEASUREMENT_ID
+  });
+
+  const storage = getStorage(app);
 
   const _id = uuidv4();
   const extension = file.name.split('.').pop();

@@ -8,7 +8,7 @@ import login from '../application/auth';
 import ButtonLoader from '../../../components/ButtonLoader';
 import GLoginButton from './components/GLoginButton';
 
-import farm from '../../../assets/farm.jpg';
+import farm from '../../../assets/farm.webp';
 import icon from '../../../assets/logo.png';
 import PasswordField from './components/PasswordField';
 

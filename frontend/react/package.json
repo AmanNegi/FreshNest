@@ -19,7 +19,6 @@
     "firebase": "^10.0.0",
     "framer-motion": "^10.11.6",
     "jwt-decode": "^3.1.2",
-    "lodash": "^4.17.21",
     "lucide-react": "^0.473.0",
     "prop-types": "^15.8.1",
     "react": "^18.2.0",
