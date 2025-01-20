@@ -151,7 +151,7 @@ function SignUp() {
           <div className="mt-10">
             <p>
               {'Already have an account? '}
-              <Link to="/" className="text-lightColor font-bold">
+              <Link to="/auth" className="text-lightColor font-bold">
                 Login
               </Link>
             </p>

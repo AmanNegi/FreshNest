@@ -18,12 +18,12 @@ const GLoginButton = () => {
 
         const { data: user, statusCode } = await gSignUp(data.name, data.email);
 
-        // TODO: Save user to backend as well
-
+        console.log(user, statusCode);
         if (statusCode !== 200) {
           toast.error('Error while logging in');
           return;
         }
+
         appState.saveUserData(
           {
             _id: user._id,
