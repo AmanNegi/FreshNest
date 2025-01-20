@@ -2,6 +2,7 @@ import { toast } from 'react-toastify';
 import axios from 'axios';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
 import { v4 as uuidv4 } from 'uuid';
+// import Compressor from 'compressorjs';
 
 /**
  *  Uploads a file to Firebase Storage
@@ -32,7 +33,14 @@ export async function handleUpload(file) {
   const extension = file.name.split('.').pop();
 
   const storageRef = ref(storage, `/files/${_id + extension}`);
-  const uploadTask = uploadBytesResumable(storageRef, file);
+  const compressedImage = await compressImage(file);
+
+  if (!compressedImage) {
+    console.error('Error compressing image');
+    return null;
+  }
+
+  const uploadTask = uploadBytesResumable(storageRef, compressedImage);
 
   try {
     // Wait for the upload task to complete
@@ -88,4 +96,25 @@ export async function addItem(data) {
     toast.error('Error uploading image');
     return false;
   }
+}
+
+async function compressImage(file) {
+  const Compressor = (await import('compressorjs')).default;
+
+  let compressedImage = undefined;
+  try {
+    compressedImage = await new Promise((resolve, reject) => {
+      new Compressor(file, {
+        quality: 0.6,
+        height: 400,
+        width: 800,
+        success: resolve,
+        error: reject
+      });
+    });
+  } catch (error) {
+    console.error(error);
+  }
+
+  return compressedImage;
 }

@@ -19,6 +19,7 @@ function Shop() {
   const navigate = useNavigate();
 
   const queryClient = useQueryClient();
+
   const { isLoading, isError, error, data } = useQuery({
     queryKey: ['items'],
     queryFn: () => getItems(searchParams.get('sort') || '0')
@@ -73,6 +74,7 @@ function Shop() {
                   return (
                     <ShopItem
                       key={e._id}
+                      itemCount={0} //TODO: fix this behaviour
                       itemId={e._id}
                       isCart={false}
                       onDelete={(item) => {

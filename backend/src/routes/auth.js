@@ -99,9 +99,9 @@ router.post('/saveGLogin', async (req, res) => {
   user = new User({
     email,
     name: req.body.name,
-    password: hashPassword(email),
+    password: await hashPassword(email),
     userType,
-    phone: '000 '
+    phone: '000'
   })
 
   await user.save()

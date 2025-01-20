@@ -96,7 +96,7 @@ function ShopItem({ itemId, itemCount = 1, isCart = false, onDelete }) {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.25, duration: 0.25 }}
           viewport={{ once: true }}
-          className="relative transition duration-500 bg-white border-2 rounded-lg cursor-pointer border-lightBorderColor hover:shadow-md "
+          className="relative transition duration-500 bg-white border rounded-lg cursor-pointer border-lightBorderColor hover:shadow-md "
         >
           <div className="relative m-2">
             <div className="w-full h-40 ">
