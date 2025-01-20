@@ -1,11 +1,14 @@
 import { Outlet, createBrowserRouter } from 'react-router-dom';
 import { lazy } from 'react';
+import { Suspense } from 'react';
+import { RouterProvider } from 'react-router-dom';
 
-import NavBar from './components/NavBar/NavBar';
-import Footer from './components/Footer';
-import ErrorPage from './pages/Error';
-import FarmerProfile from './pages/Profile/presentation/FarmerProfile';
+const NavBar = lazy(() => import('./components/NavBar/NavBar'));
+const Footer = lazy(() => import('./components/Footer'));
+const Loading = lazy(() => import('./components/Loading'));
 
+const ErrorPage = lazy(() => import('./pages/Error'));
+const FarmerProfile = lazy(() => import('./pages/Profile/presentation/FarmerProfile'));
 const Login = lazy(() => import('./pages/Auth/presentation/Login'));
 const Landing = lazy(() => import('./pages/Landing/presentation/Landing'));
 const Shop = lazy(() => import('./pages/shop/presentation/Shop'));
@@ -90,4 +93,10 @@ const routes = createBrowserRouter([
   }
 ]);
 
-export default routes;
+export default function Router() {
+  return (
+    <Suspense fallback={<Loading />}>
+      <RouterProvider router={routes} />
+    </Suspense>
+  );
+}

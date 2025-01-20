@@ -1,9 +1,9 @@
 import { motion } from 'framer-motion';
 import { useEffect } from 'react';
 
-import aboutImg from '../../../assets/about_img.jpg';
-import aboutImg2 from '../../../assets/about_img_2.jpg';
-import aboutImg3 from '../../../assets/about_img_3.jpg';
+import aboutImg from '../../../assets/about_img.webp';
+import aboutImg2 from '../../../assets/about_img_2.webp';
+import aboutImg3 from '../../../assets/about_img_3.webp';
 
 const problemStatement =
   'Many consumers struggle to find fresh and high-quality vegetables while local vegetable sellers and farmers face challenges in reaching a wider customer base. Limited access, lack of transparency, and reliance on intermediaries create barriers to connecting consumers directly with local produce.';

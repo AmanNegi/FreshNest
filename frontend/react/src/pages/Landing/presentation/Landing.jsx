@@ -7,7 +7,6 @@ import NavigationButton from '../../../components/Button';
 import { data, features } from '../../../data/data';
 import { getFourItems } from '../../shop/application/shop';
 
-import landingBg from '../../../assets/landing_bg.webp';
 import exploreImage from '../../../assets/explore.webp';
 import { useQuery } from '@tanstack/react-query';
 
@@ -61,7 +60,7 @@ function Home() {
         <section
           className="bg-cover bg-right bg-fixed relative"
           style={{
-            backgroundImage: `url(${landingBg})`
+            backgroundImage: `url(/landing_bg.webp)`
           }}
         >
           <div className="overlay absolute inset-0 bg-black opacity-50"></div>
@@ -84,7 +83,9 @@ function TopSection() {
   return (
     <section
       className="relative h-[92vh] w-[100%] bg-slate-200 bg-cover bg-right bg-fixed"
-      style={{ backgroundImage: `url(${landingBg})` }}
+      style={{
+        backgroundImage: `url(/landing_bg.webp)`
+      }}
     >
       <div className="absolute inset-0 bg-gradient-to-b from-[#00000065] to-[#000000ac]"></div>
 

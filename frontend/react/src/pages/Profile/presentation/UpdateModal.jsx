@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import { toast } from 'react-toastify';
-import _ from 'lodash';
 import useProfileMutations from '../../../hooks/ProfileHook';
 import PropTypes from 'prop-types';
 
@@ -76,23 +75,23 @@ const UpdateModal = ({ user }) => {
   async function validateFields() {
     const errors = {};
 
-    if (_.isEmpty(data.name)) {
+    if (isEmpty(data.name)) {
       errors.name = 'Name is required';
     }
-    if (_.isEmpty(data.email)) {
+    if (isEmpty(data.email)) {
       errors.email = 'Email is required';
     } else if (!/\S+@\S+\.\S+/.test(data.email)) {
       errors.email = 'Invalid email address';
     }
 
-    if (_.isEmpty(data.phone)) {
+    if (isEmpty(data.phone)) {
       errors.phone = 'Phone is required';
     } else if (!/^\d{10}$/.test(data.phone)) {
       errors.phone = 'Invalid phone number';
     }
 
     const modal = document.getElementById('my_modal_1');
-    if (_.isEmpty(errors)) {
+    if (isEmpty(errors)) {
       updateUserMutation.mutate(data);
       modal.returnValue = 1;
     } else {
@@ -114,5 +113,9 @@ UpdateModal.propTypes = {
     phone: PropTypes.string
   }).isRequired
 };
+
+function isEmpty(value) {
+  return value === undefined || value === null || value === '';
+}
 
 export default UpdateModal;
