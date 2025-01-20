@@ -2,6 +2,8 @@ import { saveCartCount } from '../pages/Cart/application/cart_event';
 
 const APP_STATE_KEY = 'AgroMillets-AppState';
 
+//TODO(amannegi): Migrate to a better state solution like Zustand or Recoil
+
 class AppState {
   /**
    * @typedef {Object} User
@@ -51,7 +53,7 @@ class AppState {
   }
 
   isUserLoggedIn() {
-    return this.isLoggedIn;
+    return this.isLoggedIn && this.userData._id;
   }
 
   /**
